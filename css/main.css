@@ -1324,6 +1324,7 @@ pre code {
   border: 1px solid #eee;
   max-width: 120px;
   padding: 2px;
+  border-radius: 50%;
 }
 .site-author-name {
   color: var(--text-color);
@@ -2709,4 +2710,19 @@ ul.breadcrumb li:last-child {
   .pagination {
     margin-bottom: 10px;
   }
+}
+.post-body p a {
+  color: #0593d3;
+  border-bottom: none;
+}
+.post-body p a:hover {
+  color: #e71df7;
+}
+a,
+span.exturl {
+  border-bottom: none;
+}
+a:hover,
+span.exturl:hover {
+  color: #76c4f5;
 }
