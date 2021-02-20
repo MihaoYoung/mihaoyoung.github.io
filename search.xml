@@ -136,6 +136,8 @@
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">permalink: :abbrlink/</span><br><span class="line">abbrlink:</span><br><span class="line">  alg: crc32  # 算法：crc16(default) and crc32</span><br><span class="line">  rep: hex    # 进制：dec(default) and hex</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
 <h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><blockquote>
 <p>感谢以下文章的帮助</p>
+<p><a href="https://zhuanlan.zhihu.com/p/251383216">hexo主题安装以及next8.0主题美化</a></p>
+<p><a href="https://www.hxhowl.com/posts/e6f9a475/">blog - hexo NexT主题下配置和美化</a></p>
 </blockquote>
 ]]></content>
       <categories>
