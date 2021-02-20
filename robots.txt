@@ -4,8 +4,9 @@ Allow: /
 Allow: /home/
 Allow: /about/
 Allow: /archives/
-Allow: /categories/
-Allow: /tags/
+Disallow: /categories/
+Disallow: /guestbook/
+Disallow: /tags/
 Disallow: /js/
 Disallow: /css/
 Disallow: /fonts/
