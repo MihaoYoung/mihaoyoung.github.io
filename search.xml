@@ -149,4 +149,24 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Linux多节点环境打造</title>
+    <url>/d49360d3/</url>
+    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
+<img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;">
+
+<p>选择CentOS7下的x86_64</p>
+<img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;">
+
+
+
+<p><a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
