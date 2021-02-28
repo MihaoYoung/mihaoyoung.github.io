@@ -271,10 +271,410 @@
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>-Linux</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>-Linux</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java后端学习之路</title>
+    <url>/6714d3d6/</url>
+    <content><![CDATA[<p><img src="/6714d3d6/Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91.png" alt="Java后端开发"></p>
+<h1 id="Java后端开发"><a href="#Java后端开发" class="headerlink" title="Java后端开发"></a>Java后端开发</h1><h2 id="编程基础"><a href="#编程基础" class="headerlink" title="编程基础"></a>编程基础</h2><h3 id="Java语言"><a href="#Java语言" class="headerlink" title="Java语言"></a>Java语言</h3><ul>
+<li><p>语言基础</p>
+<ul>
+<li>基础语法</li>
+<li>面向对象</li>
+<li>接口</li>
+<li>容器</li>
+<li>异常</li>
+<li>泛型</li>
+<li>反射</li>
+<li>注解</li>
+<li>I/O</li>
+<li>图形化</li>
+</ul>
+</li>
+<li><p>JVM虚拟机</p>
+<ul>
+<li>类加载机制</li>
+<li>字节码执行机制</li>
+<li>JVM内存模型</li>
+<li>GC垃圾回收</li>
+<li>JVM性能监控与故障定位</li>
+<li>JVM调优</li>
+</ul>
+</li>
+<li><p>多线程/并发</p>
+<ul>
+<li>并发编程的基础</li>
+<li>线程池</li>
+<li>锁</li>
+<li>并发容器</li>
+<li>原子类</li>
+<li>JUC并发工具类</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据结构和算法"><a href="#数据结构和算法" class="headerlink" title="数据结构和算法"></a>数据结构和算法</h3><ul>
+<li><p>数据结构</p>
+<ul>
+<li>字符串</li>
+<li>数组</li>
+<li>链表</li>
+<li>堆，栈，队列</li>
+<li>二叉树</li>
+<li>哈希</li>
+<li>图</li>
+</ul>
+</li>
+<li><p>算法</p>
+<ul>
+<li>排序</li>
+<li>查找</li>
+<li>贪心</li>
+<li>分治</li>
+<li>动态规划</li>
+<li>回溯</li>
+</ul>
+</li>
+</ul>
+<h3 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h3><ul>
+<li>ARP协议</li>
+<li>IP协议，ICMP协议</li>
+<li>TCP，UDP协议</li>
+<li>DNS，HTTP，HTTPS协议</li>
+<li>session，cookie</li>
+</ul>
+<h3 id="SQL-数据库"><a href="#SQL-数据库" class="headerlink" title="SQL/数据库"></a>SQL/数据库</h3><ul>
+<li>SQL语句的书写</li>
+<li>SQL语句的优化</li>
+<li>事物，隔离级别</li>
+<li>索引</li>
+<li>锁</li>
+</ul>
+<h3 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h3><ul>
+<li>进程，线程</li>
+<li>并发，锁</li>
+<li>内存管理和调度</li>
+<li>I/O原理</li>
+</ul>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><ul>
+<li>单例</li>
+<li>工厂</li>
+<li>代理</li>
+<li>策略</li>
+<li>模版方法</li>
+<li>观察者</li>
+<li>适配器</li>
+<li>责任链</li>
+<li>建造者</li>
+</ul>
+<h2 id="研发工具"><a href="#研发工具" class="headerlink" title="研发工具"></a>研发工具</h2><h3 id="集成开发环境"><a href="#集成开发环境" class="headerlink" title="集成开发环境"></a>集成开发环境</h3><ul>
+<li>eclipse</li>
+<li>intellij IDEA</li>
+<li>VSCode</li>
+</ul>
+<h3 id="Linux系统"><a href="#Linux系统" class="headerlink" title="Linux系统"></a>Linux系统</h3><ul>
+<li>常用命令</li>
+<li>shell脚本</li>
+</ul>
+<h3 id="项目管理-构建工具"><a href="#项目管理-构建工具" class="headerlink" title="项目管理/构建工具"></a>项目管理/构建工具</h3><ul>
+<li>Maven</li>
+<li>Gradle</li>
+</ul>
+<h3 id="代码管理工具"><a href="#代码管理工具" class="headerlink" title="代码管理工具"></a>代码管理工具</h3><ul>
+<li>git</li>
+<li>s v n</li>
+</ul>
+<h2 id="应用框架"><a href="#应用框架" class="headerlink" title="应用框架"></a>应用框架</h2><h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><ul>
+<li><p>Spring家族框架</p>
+<ul>
+<li><p>Spring</p>
+<ul>
+<li>loC</li>
+<li>AOP</li>
+</ul>
+</li>
+<li><p>SpringMC</p>
+</li>
+<li><p>Spring Boot</p>
+<ul>
+<li><p>自动配置，开箱即用</p>
+</li>
+<li><p>整合Web</p>
+</li>
+<li><p>整合数据库（事物问题）</p>
+</li>
+<li><p>整合权限</p>
+<ul>
+<li>Shiro</li>
+<li>Spring Security</li>
+</ul>
+</li>
+<li><p>整合各种中间件</p>
+<ul>
+<li>Redis，MQ，PRC框架，NIO框架</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务器软件</p>
+<ul>
+<li><p>Web服务器</p>
+<ul>
+<li>N g i n x</li>
+</ul>
+</li>
+<li><p>应用服务器</p>
+<ul>
+<li>Tomcat</li>
+<li>Jetty</li>
+<li>Undertow</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>中间件</p>
+<ul>
+<li><p>缓存</p>
+<ul>
+<li><p>Redis</p>
+<ul>
+<li>5大基础数据类型</li>
+<li>事物</li>
+<li>管道</li>
+<li>持久化</li>
+<li>集群</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>消息队列</p>
+<ul>
+<li>RocketMQ</li>
+<li>R a b bi t MQ</li>
+<li>Kafka</li>
+</ul>
+</li>
+<li><p>RPC框架</p>
+<ul>
+<li>Dubbo</li>
+<li>gRPC</li>
+<li>Thrift</li>
+<li>Spring Cloud</li>
+<li>Netty</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数据库框架</p>
+<ul>
+<li><p>ORM层框架</p>
+<ul>
+<li>Mybatis</li>
+<li>Hibernate</li>
+<li>JPA</li>
+</ul>
+</li>
+<li><p>连接池</p>
+<ul>
+<li>Druid</li>
+<li>HikariCP</li>
+<li>C3P0</li>
+</ul>
+</li>
+<li><p>分库分表</p>
+<ul>
+<li>M y CAT</li>
+<li>Sharding-JDBC</li>
+<li>Sharding- Sphere</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>搜索引擎</p>
+<ul>
+<li>ElasticSearch</li>
+<li>S o l r</li>
+</ul>
+</li>
+<li><p>分布式/微服务</p>
+<ul>
+<li><p>服务发现/注册</p>
+<ul>
+<li>Eureka</li>
+<li>Consul</li>
+<li>Zookeeper</li>
+<li>Nacos</li>
+</ul>
+</li>
+<li><p>网关</p>
+<ul>
+<li>Zuul</li>
+<li>Gateway</li>
+</ul>
+</li>
+<li><p>服务调用（负载均衡）</p>
+<ul>
+<li>Ribbon</li>
+<li>Feign</li>
+</ul>
+</li>
+<li><p>熔断/降级</p>
+<ul>
+<li>Hystrix</li>
+</ul>
+</li>
+<li><p>配置中心</p>
+<ul>
+<li>Config</li>
+<li>Apollo</li>
+<li>Nacos</li>
+</ul>
+</li>
+<li><p>认证和鉴权</p>
+<ul>
+<li>Spring Security</li>
+<li>OAuth2</li>
+<li>SSO单点登录</li>
+</ul>
+</li>
+<li><p>分布式事务</p>
+<ul>
+<li><p>JTA接口</p>
+<ul>
+<li>Atomikos组件</li>
+</ul>
+</li>
+<li><p>2PC，3PC</p>
+</li>
+<li><p>XA模式</p>
+</li>
+<li><p>TCC模式</p>
+<ul>
+<li>tcc-transaction</li>
+<li>ByteTCC</li>
+<li>EasyTransaction</li>
+<li>Seata</li>
+</ul>
+</li>
+<li><p>SAGA模式</p>
+<ul>
+<li>ServiceComb</li>
+<li>Seata</li>
+</ul>
+</li>
+<li><p>LCN模式</p>
+<ul>
+<li>tx-lcn</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>任务调度</p>
+<ul>
+<li>Quartz</li>
+<li>Elastic-Job</li>
+</ul>
+</li>
+<li><p>链路追踪和监控</p>
+<ul>
+<li>Zipkin</li>
+<li>Sleuth</li>
+<li>Skywalking</li>
+</ul>
+</li>
+<li><p>日志分析与监控</p>
+<ul>
+<li><p>ELK</p>
+<ul>
+<li>ElasticSearch</li>
+<li>Logstash</li>
+<li>Kibana</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>虚拟化/容器化</p>
+<ul>
+<li><p>容器技术</p>
+<ul>
+<li>Docker</li>
+</ul>
+</li>
+<li><p>容器编排技术</p>
+<ul>
+<li>Kubernetes</li>
+<li>Swarm</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><ul>
+<li><p>基础套餐</p>
+<ul>
+<li><p>三大件</p>
+<ul>
+<li>HTML</li>
+<li>JavaScript</li>
+<li>CSS</li>
+</ul>
+</li>
+<li><p>基础库</p>
+<ul>
+<li>JQuery</li>
+<li>Ajax</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>模版框架</p>
+<ul>
+<li>JSP/JSTL</li>
+<li>Thymeleaf</li>
+<li>FreeMarker</li>
+</ul>
+</li>
+<li><p>组件化框架</p>
+<ul>
+<li>Node</li>
+<li>Vue</li>
+<li>React</li>
+<li>Angular</li>
+</ul>
+</li>
+</ul>
+<h2 id="运维知识"><a href="#运维知识" class="headerlink" title="运维知识"></a>运维知识</h2><h3 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h3><ul>
+<li>Nginx</li>
+</ul>
+<h3 id="应用服务器"><a href="#应用服务器" class="headerlink" title="应用服务器"></a>应用服务器</h3><ul>
+<li>Tomcat</li>
+<li>Jetty</li>
+<li>Undertow</li>
+</ul>
+<h3 id="CDN加速"><a href="#CDN加速" class="headerlink" title="CDN加速"></a>CDN加速</h3><h3 id="持续集成-持续部署"><a href="#持续集成-持续部署" class="headerlink" title="持续集成/持续部署"></a>持续集成/持续部署</h3><ul>
+<li>Jenkins</li>
+</ul>
+<h3 id="代码质量检查"><a href="#代码质量检查" class="headerlink" title="代码质量检查"></a>代码质量检查</h3><ul>
+<li>sonar</li>
+</ul>
+<h3 id="日志收集和分析"><a href="#日志收集和分析" class="headerlink" title="日志收集和分析"></a>日志收集和分析</h3><ul>
+<li>ELK</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>后端</tag>
       </tags>
   </entry>
 </search>
