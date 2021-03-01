@@ -2866,13 +2866,6 @@ span.exturl:hover {
 .popup {
   opacity: 0.9;
 }
-body {
-  background: url("/images/background.jpg");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 50% 50%;
-  background-size: cover;
-}
 code {
   background: #fcdf9a;
   color: #ff7029;

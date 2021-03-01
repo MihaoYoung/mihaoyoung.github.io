@@ -67,13 +67,6 @@
 
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/Linux/</loc>
-    <lastmod>2021-03-01</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://mihaoyoung.github.io/tags/Java/</loc>
     <lastmod>2021-03-01</lastmod>
     <changefreq>daily</changefreq>
@@ -82,6 +75,13 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/tags/%E5%90%8E%E7%AB%AF/</loc>
+    <lastmod>2021-03-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/Linux/</loc>
     <lastmod>2021-03-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -104,14 +104,14 @@
 
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/Linux/</loc>
+    <loc>https://mihaoyoung.github.io/categories/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2021-03-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/%E5%90%8E%E7%AB%AF/</loc>
+    <loc>https://mihaoyoung.github.io/categories/Linux/</loc>
     <lastmod>2021-03-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -125,14 +125,14 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/hexo/next/</loc>
+    <loc>https://mihaoyoung.github.io/categories/%E5%90%8E%E7%AB%AF/Java/</loc>
     <lastmod>2021-03-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/%E5%90%8E%E7%AB%AF/Java/</loc>
+    <loc>https://mihaoyoung.github.io/categories/hexo/next/</loc>
     <lastmod>2021-03-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
