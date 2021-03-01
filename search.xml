@@ -511,6 +511,14 @@
 <p><code>b = &quot;2&quot;</code>会在公共池中新建一个“2”字符串，b指向新建的“2”</p>
 <p>a 指向原来的 “1” 不变</p>
 </blockquote>
+<h5 id="intern"><a href="#intern" class="headerlink" title="intern()"></a><code>intern()</code></h5><blockquote>
+<p>检查常量池中是否有匹配的字符串</p>
+<p>若存在，返回对应常量池字符串的引用</p>
+<p>否则，将该字符串添加到常量池中并返回其引用</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">System.out.println(s1 == s2.intern());</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true</span></span><br></pre></td></tr></table></figure>
+
+
 <h5 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h5><h5 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h5><h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><blockquote>
 <p>一旦没有变量引用某个对象，该对象就会被标记为垃圾， Java 在下次收集垃圾时会将其销毁</p>
 <p>只要对象至少有一个引用，该对象即被视为活跃对象并且不会被销毁。如果你想尽快处理对象，可以通过为引用该对象的所有变量赋值 <strong>null</strong> 来清除该对象的所有引用。</p>
@@ -521,6 +529,31 @@
 <blockquote>
 <p><code>change2()</code>结果是，两个引用指向两个不同的变量</p>
 </blockquote>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><h3 id="非static函数工作原理"><a href="#非static函数工作原理" class="headerlink" title="非static函数工作原理"></a>非static函数工作原理</h3><blockquote>
+<p>使用&lt;对象&gt;.&lt;方法名称&gt; 调用函数</p>
+<p>实际上是在调用类对应函数，并将该对象作为第一个参数进行传递。在函数内，该对象称为<code>this</code>。函数中的所有操作都是针对此对象及其数据执行的。</p>
+</blockquote>
+<h3 id="static函数工作原理"><a href="#static函数工作原理" class="headerlink" title="static函数工作原理"></a>static函数工作原理</h3><blockquote>
+<p>使用&lt;类名&gt;.&lt;方法名称&gt; 调用函数</p>
+<p>不会传递任何对象，即<code>this</code>为<code>null</code></p>
+<p>因此，<strong>static 函数无法访问非 static 变量和函数</strong></p>
+</blockquote>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><h3 id><a href="#" class="headerlink" title="=="></a><code>==</code></h3><blockquote>
+<p>比较引用对象时，不是比较对象的属性</p>
+<p>即，只有两个引用变量是对同一个对象的引用时，才返回<code>true</code></p>
+</blockquote>
+<h3 id="equal"><a href="#equal" class="headerlink" title="equal()"></a><code>equal()</code></h3><blockquote>
+<p><code>equals()</code>属于<code>Object</code>类-Java中最重要的类，是所有其他类的派生类</p>
+<p>需对类中的<code>equals()</code>重写</p>
+</blockquote>
+<h3 id="equalsIgnoreCase"><a href="#equalsIgnoreCase" class="headerlink" title="equalsIgnoreCase()"></a><code>equalsIgnoreCase()</code></h3><blockquote>
+<p>无视字符串中的大小写</p>
+</blockquote>
+<h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
+<p><code>System.in</code>是一个<code>InputStream</code>对象</p>
+<p><code>System.in.read()</code>读取的是<strong>字节</strong></p>
+<p><code>InputStreamReader</code>不仅从流接收数据。它还将<strong>字节流转换为字符流</strong></p>
+<p><code>BufferedReader</code>读取数据时，它使用一个称为<strong>缓冲区</strong>的特殊区域，在该区域中“存储”读取的字符。最终，当程序中需要这些字符时，它们将从缓冲区中获取，而不是直接从数据源（键盘，文件等）中获取。这样可以节省大量资源。</p>
 <h1 id="持续更新中"><a href="#持续更新中" class="headerlink" title="持续更新中"></a>持续更新中</h1>]]></content>
       <categories>
         <category>后端</category>
