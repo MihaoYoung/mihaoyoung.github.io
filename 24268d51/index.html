@@ -36,7 +36,7 @@
 <meta property="og:description" content="Java学习之路上的一些经验，总结，踩坑">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-28T15:14:42.000Z">
-<meta property="article:modified_time" content="2021-03-01T14:58:24.000Z">
+<meta property="article:modified_time" content="2021-03-02T16:41:32.549Z">
 <meta property="article:author" content="Mihao">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="后端">
@@ -222,7 +222,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">变量类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%EF%BC%88%E5%8E%9F%E5%A7%8B%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">简单（原始）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%EF%BC%88%E5%BC%95%E7%94%A8%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">复合（引用）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String%E6%B7%B1%E5%85%A5%E6%8E%A2%E8%AE%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">String深入探讨</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.2.1.1.</span> <span class="nav-text">两种创建方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%80%A7"><span class="nav-number">1.1.2.1.2.</span> <span class="nav-text">不可变性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#intern"><span class="nav-number">1.1.2.1.3.</span> <span class="nav-text">intern()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#StringBuffer"><span class="nav-number">1.1.2.1.4.</span> <span class="nav-text">StringBuffer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#StringBuilder"><span class="nav-number">1.1.2.1.5.</span> <span class="nav-text">StringBuilder</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">方法重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-number">1.4.1.</span> <span class="nav-text">值传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-number">1.4.2.</span> <span class="nav-text">引用传递</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static"><span class="nav-number">1.5.</span> <span class="nav-text">static</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9Estatic%E5%87%BD%E6%95%B0%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.1.</span> <span class="nav-text">非static函数工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static%E5%87%BD%E6%95%B0%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.2.</span> <span class="nav-text">static函数工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">1.6.</span> <span class="nav-text">比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.6.1.</span> <span class="nav-text">&#x3D;&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equal"><span class="nav-number">1.6.2.</span> <span class="nav-text">equal()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equalsIgnoreCase"><span class="nav-number">1.6.3.</span> <span class="nav-text">equalsIgnoreCase()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IO"><span class="nav-number">2.</span> <span class="nav-text">IO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81"><span class="nav-number">2.1.</span> <span class="nav-text">输入流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="nav-number">3.</span> <span class="nav-text">持续更新中</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">变量类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%EF%BC%88%E5%8E%9F%E5%A7%8B%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">简单（原始）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%EF%BC%88%E5%BC%95%E7%94%A8%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">复合（引用）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String%E6%B7%B1%E5%85%A5%E6%8E%A2%E8%AE%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">String深入探讨</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.2.1.1.</span> <span class="nav-text">两种创建方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%80%A7"><span class="nav-number">1.1.2.1.2.</span> <span class="nav-text">不可变性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#intern"><span class="nav-number">1.1.2.1.3.</span> <span class="nav-text">intern()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#StringBuffer"><span class="nav-number">1.1.2.1.4.</span> <span class="nav-text">StringBuffer</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#StringBuilder"><span class="nav-number">1.1.2.1.5.</span> <span class="nav-text">StringBuilder</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.2.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="nav-number">1.3.</span> <span class="nav-text">方法重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-number">1.4.1.</span> <span class="nav-text">值传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-number">1.4.2.</span> <span class="nav-text">引用传递</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static"><span class="nav-number">1.5.</span> <span class="nav-text">static</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9Estatic%E5%87%BD%E6%95%B0%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.1.</span> <span class="nav-text">非static函数工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static%E5%87%BD%E6%95%B0%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.2.</span> <span class="nav-text">static函数工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83"><span class="nav-number">1.6.</span> <span class="nav-text">比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.6.1.</span> <span class="nav-text">&#x3D;&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equal"><span class="nav-number">1.6.2.</span> <span class="nav-text">equal()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equalsIgnoreCase"><span class="nav-number">1.6.3.</span> <span class="nav-text">equalsIgnoreCase()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">1.7.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.7.1.</span> <span class="nav-text">初始化顺序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IO"><span class="nav-number">2.</span> <span class="nav-text">IO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81"><span class="nav-number">2.1.</span> <span class="nav-text">输入流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%E4%B8%AD"><span class="nav-number">3.</span> <span class="nav-text">持续更新中</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -238,7 +238,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -355,7 +355,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-01 22:58:24" itemprop="dateModified" datetime="2021-03-01T22:58:24+08:00">2021-03-01</time>
+        <time title="修改时间：2021-03-03 00:41:32" itemprop="dateModified" datetime="2021-03-03T00:41:32+08:00">2021-03-03</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -509,7 +509,7 @@
 <h3 id="equalsIgnoreCase"><a href="#equalsIgnoreCase" class="headerlink" title="equalsIgnoreCase()"></a><code>equalsIgnoreCase()</code></h3><blockquote>
 <p>无视字符串中的大小写</p>
 </blockquote>
-<h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
 <p><code>System.in</code>是一个<code>InputStream</code>对象</p>
 <p><code>System.in.read()</code>读取的是<strong>字节</strong></p>
 <p><code>InputStreamReader</code>不仅从流接收数据。它还将<strong>字节流转换为字符流</strong></p>
@@ -553,6 +553,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2af416/" rel="next" title="Java 类的初始化顺序">
+                  Java 类的初始化顺序 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -611,14 +614,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">17k</span>
+    <span title="站点总字数">18k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15 分钟</span>
+    <span title="站点阅读时长">17 分钟</span>
   </span>
 </div><script color="242,129,214" opacity="0.8" zIndex="-1" count="120" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 

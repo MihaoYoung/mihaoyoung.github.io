@@ -549,7 +549,7 @@
 <h3 id="equalsIgnoreCase"><a href="#equalsIgnoreCase" class="headerlink" title="equalsIgnoreCase()"></a><code>equalsIgnoreCase()</code></h3><blockquote>
 <p>无视字符串中的大小写</p>
 </blockquote>
-<h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
 <p><code>System.in</code>是一个<code>InputStream</code>对象</p>
 <p><code>System.in.read()</code>读取的是<strong>字节</strong></p>
 <p><code>InputStreamReader</code>不仅从流接收数据。它还将<strong>字节流转换为字符流</strong></p>
@@ -798,6 +798,70 @@
       <tags>
         <tag>hexo</tag>
         <tag>next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 类的初始化顺序</title>
+    <url>/2af416/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>静态变量，静态代码块&gt;主函数main&gt;变量，构造代码块&gt;构造方法</strong></p>
+</blockquote>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><blockquote>
+<ul>
+<li>只有创建对象，构造函数才会执行</li>
+<li>只运行一次</li>
+<li>给对象进行初始化</li>
+</ul>
+</blockquote>
+<h1 id="构造代码块"><a href="#构造代码块" class="headerlink" title="构造代码块"></a>构造代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>创建对象时执行，且<strong>优先于构造函数</strong></li>
+<li>无法自行调用</li>
+<li>给<strong>对象</strong>经行统一初始化</li>
+</ul>
+</blockquote>
+<h1 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>随着类的加载而执行，且<strong>只执行一次</strong>，<strong>优先于主函数</strong></li>
+<li>给<strong>类</strong>进行初始化</li>
+<li>块中变量为<strong>局部变量</strong></li>
+<li>一个类可以有<strong>多个</strong>静态代码块</li>
+</ul>
+</blockquote>
+<h2 id="类的加载时机"><a href="#类的加载时机" class="headerlink" title="类的加载时机"></a>类的加载时机</h2><blockquote>
+<ul>
+<li>new 创建该类对象时</li>
+<li>使用java.lang.reflext进行反射调用时</li>
+<li>无事先加载该类，而加载该类的子类时</li>
+<li>虚拟机启动，初始化main函数所在的类</li>
+</ul>
+</blockquote>
+<h1 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        test1 b = <span class="keyword">new</span> test1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str1 = <span class="string">&quot;静态变量&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span>  String str2 = <span class="string">&quot;变量&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        System.out.println(str2);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        <span class="comment">// System.out.println(str2);</span></span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        <span class="comment">//test1 b = new test1();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">静态变量</span><br><span class="line">---------------</span><br><span class="line">构造代码块</span><br><span class="line">静态变量</span><br><span class="line">变量</span><br><span class="line">---------------</span><br><span class="line">构造函数</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>执行顺序</p>
+<blockquote>
+<ul>
+<li>执行父类静态代码块，初始化父类静态成员变量</li>
+<li>执行子类静态代码块，初始化子类静态成员变量</li>
+<li>执行父类构造代码块，父类构造函数，父类普通成员变量</li>
+<li>执行子类构造代码块，子类构造函数，子类普通成员变量</li>
+</ul>
+</blockquote>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://zhuanlan.zhihu.com/p/122554857">知乎-Java初始化顺序</a></p>
+<p><a href="https://blog.csdn.net/z69183787/article/details/25366627?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&dist_request_id=1328593.10670.16147488454022055&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control">CSDN-Java初始化顺序</a></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
 </search>
