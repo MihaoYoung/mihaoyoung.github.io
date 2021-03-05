@@ -1018,4 +1018,42 @@
         <tag>Linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>吴恩达——机器学习</title>
+    <url>/91a709bb/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><blockquote>
+<p>A computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E.                                                                ——Tom Mitchell</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Example: playing checkers.</span><br><span class="line"></span><br><span class="line">E = the experience of playing many games of checkers</span><br><span class="line"></span><br><span class="line">T = the task of playing checkers.</span><br><span class="line"></span><br><span class="line">P = the probability that the program will win the next game.</span><br></pre></td></tr></table></figure>
+<h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><blockquote>
+<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong></p>
+</blockquote>
+<p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
+<blockquote>
+<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，因此，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
+</blockquote>
+<blockquote>
+<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
+</blockquote>
+<h2 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h2><blockquote>
+<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>，且不用关注变量（输入数据）的影响</p>
+<p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
+<p>没有基于预测结果的反馈</p>
+</blockquote>
+<blockquote>
+<p>Clustering（聚类算法），</p>
+<p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
+<p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
+</blockquote>
+<blockquote>
+<p>Non-clustering</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
 </search>
