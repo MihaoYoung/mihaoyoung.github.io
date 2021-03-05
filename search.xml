@@ -557,7 +557,69 @@
 <h3 id="equalsIgnoreCase"><a href="#equalsIgnoreCase" class="headerlink" title="equalsIgnoreCase()"></a><code>equalsIgnoreCase()</code></h3><blockquote>
 <p>无视字符串中的大小写</p>
 </blockquote>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h3><h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><blockquote>
+<p>泛型是带有参数的类型。在 Java 中，容器类允许你指出其内部对象的类型</p>
+<p>声明泛型变量时,指出变量类型和它所存储的数据的类型</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();	</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>任何类都可以作为类型参数</p>
+<p>不能是原始类型，所有类型参数都必须从 Object 类继承</p>
+</blockquote>
+<p>原始类型对应包装类</p>
+<table>
+<thead>
+<tr>
+<th>原始类型</th>
+<th>类</th>
+<th>列表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>Integer</td>
+<td>ArrayList<Integer></Integer></td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+<td>ArrayList<Double></Double></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+<td>ArrayList<Boolean></Boolean></td>
+</tr>
+<tr>
+<td>char</td>
+<td>Character</td>
+<td>ArrayList<Character></Character></td>
+</tr>
+<tr>
+<td>byte</td>
+<td>Byte</td>
+<td>ArrayList<Byte></Byte></td>
+</tr>
+</tbody></table>
+<h2 id="数组与ArraysList"><a href="#数组与ArraysList" class="headerlink" title="数组与ArraysList"></a>数组与ArraysList</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span>[] numbers = &#123;<span class="number">167</span>, -<span class="number">2</span>, <span class="number">16</span>, <span class="number">99</span>, <span class="number">26</span>, <span class="number">92</span>, <span class="number">43</span>, -<span class="number">234</span>, <span class="number">35</span>, <span class="number">80</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>Arrays.sort()</code>方法对数组进行排序</p>
+<p><code>Arrays.toString()</code>将数组转换为字符串</p>
+<p><code>Arrays.copyOf()</code>复制数组</p>
+<p><code>Arrays.equals()</code>比较数组</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Arrays.sort(numbers);</span><br><span class="line"><span class="keyword">int</span> [] numbersCopy = Arrays.copyOf(numbers, <span class="number">4</span>);</span><br><span class="line">System.out.println(Arrays.toString(numbers));</span><br><span class="line">System.out.println(Arrays.equals(numbers, numbers2));</span><br></pre></td></tr></table></figure>
+<h3 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h3><p><code>Arrays.deepEquals()</code></p>
+<p><code>Arrays.deepToString()</code></p>
+<h3 id="ArraysList"><a href="#ArraysList" class="headerlink" title="ArraysList"></a>ArraysList</h3><p>创建一个具有特定大小的数组的列表：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;Car&gt; cars = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<p>一次分配一个包含100个元素的数组的内存，从而使该数组效率更高（不需要扩展）</p>
+<p>缺点，<strong>从中删除对象时<code>ArrayList</code>，内部数组的大小不会自动减小。</strong> </p>
+<p>使用<code>ArrayList</code>该类的一种特殊方法来优化内存使用：<code>trimToSize()</code>。此方法将内部数组的长度“修剪”到当前存储在内部数组中的元素数量。</p>
+<h2 id="Collections"><a href="#Collections" class="headerlink" title="Collections"></a>Collections</h2><h1 id="集合与接口"><a href="#集合与接口" class="headerlink" title="集合与接口"></a>集合与接口</h1><p>四个列表、三个集和四个映射</p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line">   set.add(<span class="string">&quot;西班牙&quot;</span>);</span><br><span class="line">   set.add(<span class="string">&quot;的&quot;</span>);</span><br><span class="line">   set.add(<span class="string">&quot;雨&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取集的迭代器</span></span><br><span class="line">    Iterator&lt;String&gt; iterator = set.iterator();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (iterator.hasNext())        <span class="comment">// 检查是否存在另一个元素</span></span><br><span class="line">   &#123;</span><br><span class="line">      <span class="comment">// 获取当前元素并移至下一个</span></span><br><span class="line">      String text = iterator.next();</span><br><span class="line"></span><br><span class="line">       System.out.println(text);</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//简写</span></span><br><span class="line"><span class="keyword">for</span> (String text : set)</span><br><span class="line">   &#123;</span><br><span class="line">       System.out.println(text);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 所有元素成对存储</span></span><br><span class="line">    Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;第一个&quot;</span>, <span class="string">&quot;西班牙&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;第二个&quot;</span>, <span class="string">&quot;的&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;第三个&quot;</span>, <span class="string">&quot;雨&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = map.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (iterator.hasNext())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 获取键-值对</span></span><br><span class="line">        Map.Entry&lt;String, String&gt; pair = iterator.next();</span><br><span class="line">        String key = pair.getKey();            <span class="comment">// 键</span></span><br><span class="line">        String value = pair.getValue();        <span class="comment">// 值</span></span><br><span class="line">        System.out.println(key + <span class="string">&quot;:&quot;</span> + value);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//简写</span></span><br><span class="line">	<span class="keyword">for</span> (Map.Entry&lt;String, String&gt; pair : map.entrySet())</span><br><span class="line">    &#123;</span><br><span class="line">        String key = pair.getKey();                      <span class="comment">// 键</span></span><br><span class="line">        String value = pair.getValue();                  <span class="comment">// 值</span></span><br><span class="line">        System.out.println(key + <span class="string">&quot;:&quot;</span> + value);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
 <p><code>System.in</code>是一个<code>InputStream</code>对象</p>
 <p><code>System.in.read()</code>读取的是<strong>字节</strong></p>
 <p><code>InputStreamReader</code>不仅从流接收数据。它还将<strong>字节流转换为字符流</strong></p>
@@ -932,6 +994,28 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java-异常</title>
+    <url>/c2b6c13e/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>Java的基本理念是“结构不佳的代码不能运行”</strong></p>
+<p>使用异常，可以降低错误处理代码的复杂度</p>
+<blockquote>
+<ul>
+<li>不必在方法调用处进行检查，异常机制会捕捉该错误</li>
+<li>只需在一个地方（异常处理程序）中处理错误，节省代码</li>
+</ul>
+</blockquote>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>《Java编程思想》</p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>异常</tag>
       </tags>
   </entry>
 </search>
