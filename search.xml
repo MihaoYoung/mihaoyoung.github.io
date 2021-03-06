@@ -1026,28 +1026,153 @@
 </blockquote>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Example: playing checkers.</span><br><span class="line"></span><br><span class="line">E = the experience of playing many games of checkers</span><br><span class="line"></span><br><span class="line">T = the task of playing checkers.</span><br><span class="line"></span><br><span class="line">P = the probability that the program will win the next game.</span><br></pre></td></tr></table></figure>
 <h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><blockquote>
-<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong></p>
+<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong>，</p>
+<p>即，<strong>在知道输入和输出的情况下训练出一个模型，将输入映射到输出</strong></p>
 </blockquote>
+<p>流程</p>
+<ul>
+<li>选择一个适合目标任务的数学模型</li>
+<li>先把一部分已知的“问题和答案”（训练集）给机器去学习</li>
+<li>机器总结出了自己的“方法论”</li>
+<li>人类把”新的问题”（测试集）给机器，让他去解答</li>
+</ul>
 <p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
 <blockquote>
-<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，因此，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
+<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
+<p>例，市场价格预测，降水量预测等问题</p>
 </blockquote>
 <blockquote>
-<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
+<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
+<p>例，植物品种、客户年龄和偏好的预测问题</p>
 </blockquote>
 <h2 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h2><blockquote>
-<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>，且不用关注变量（输入数据）的影响</p>
+<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>（不确定的），且不用关注变量（输入数据）的影响</p>
 <p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
 <p>没有基于预测结果的反馈</p>
+<p>例，设想我们有一批照片其中包含着不同颜色的几何形状。在这里计算机面对的是没有任何标记的图片，它并不知道几何形状的颜色和外形，它看到的只是一张张照片而已。但通过将数据输入到非监督学习的模型中去，算法可以尝试着理解图中的内容，通过相关性和特征将图中的相似的物体聚为一类。在<strong>理想的情况</strong>下它可以将不同形状不同颜色的几何形状聚集到不同的类别中去，特征提取和标签都是<strong>机器自己完成</strong>的。</p>
 </blockquote>
+<p>使用场景</p>
+<ul>
+<li>发现异常，通过无监督学习，快速将数据分类，虽然不知道这些分类的意义，但可以快速排出正常的数据，更有针对性的对异常数据进行深入分析</li>
+<li>用户细分，如广告平台对用户按性别，年龄，位置，行为等维度进行用户细分，使广告投放更有针对性</li>
+<li>推荐系统，如淘宝根据我们的浏览行为推荐相关商品。无监督学习通过聚类得到购物行为相似的用户，然后将这类用户的商品推荐给我们</li>
+</ul>
 <blockquote>
-<p>Clustering（聚类算法），</p>
+<p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
 <p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
 <p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
 </blockquote>
 <blockquote>
 <p>Non-clustering</p>
 </blockquote>
+<blockquote>
+<p>降维</p>
+</blockquote>
+<h2 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h2><table>
+<thead>
+<tr>
+<th>监督学习</th>
+<th>无监督学习</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
+<td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
+</tr>
+<tr>
+<td>数据<strong>有标签</strong></td>
+<td>数据<strong>没有标签</strong></td>
+</tr>
+<tr>
+<td>目标明确，可以衡量效果</td>
+<td>几乎无法评估效果</td>
+</tr>
+<tr>
+<td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
+<td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>监督学习与无监督学习</title>
+    <url>/72510051/</url>
+    <content><![CDATA[<h1 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h1><blockquote>
+<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong>，</p>
+<p>即，<strong>在知道输入和输出的情况下训练出一个模型，将输入映射到输出</strong></p>
+</blockquote>
+<p>流程</p>
+<ul>
+<li>选择一个适合目标任务的数学模型</li>
+<li>先把一部分已知的“问题和答案”（训练集）给机器去学习</li>
+<li>机器总结出了自己的“方法论”</li>
+<li>人类把”新的问题”（测试集）给机器，让他去解答</li>
+</ul>
+<p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
+<blockquote>
+<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
+<p>例，市场价格预测，降水量预测等问题</p>
+</blockquote>
+<blockquote>
+<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
+<p>例，植物品种、客户年龄和偏好的预测问题</p>
+</blockquote>
+<h1 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h1><blockquote>
+<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>（不确定的），且不用关注变量（输入数据）的影响</p>
+<p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
+<p>没有基于预测结果的反馈</p>
+<p>例，设想我们有一批照片其中包含着不同颜色的几何形状。在这里计算机面对的是没有任何标记的图片，它并不知道几何形状的颜色和外形，它看到的只是一张张照片而已。但通过将数据输入到非监督学习的模型中去，算法可以尝试着理解图中的内容，通过相关性和特征将图中的相似的物体聚为一类。在<strong>理想的情况</strong>下它可以将不同形状不同颜色的几何形状聚集到不同的类别中去，特征提取和标签都是<strong>机器自己完成</strong>的。</p>
+</blockquote>
+<p>使用场景</p>
+<ul>
+<li>发现异常，通过无监督学习，快速将数据分类，虽然不知道这些分类的意义，但可以快速排出正常的数据，更有针对性的对异常数据进行深入分析</li>
+<li>用户细分，如广告平台对用户按性别，年龄，位置，行为等维度进行用户细分，使广告投放更有针对性</li>
+<li>推荐系统，如淘宝根据我们的浏览行为推荐相关商品。无监督学习通过聚类得到购物行为相似的用户，然后将这类用户的商品推荐给我们</li>
+</ul>
+<blockquote>
+<p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
+<p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
+<p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
+</blockquote>
+<blockquote>
+<p>Non-clustering</p>
+</blockquote>
+<blockquote>
+<p>降维</p>
+</blockquote>
+<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><table>
+<thead>
+<tr>
+<th>监督学习</th>
+<th>无监督学习</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
+<td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
+</tr>
+<tr>
+<td>数据<strong>有标签</strong></td>
+<td>数据<strong>没有标签</strong></td>
+</tr>
+<tr>
+<td>目标明确，可以衡量效果</td>
+<td>几乎无法评估效果</td>
+</tr>
+<tr>
+<td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
+<td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
+</tr>
+</tbody></table>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://easyai.tech/blog/supervised-reinforcement-unsupervised-learning/">机器学习三兄弟概念大揭秘：「监督学习」「非监督学习」「强化学习」</a></p>
+<p><a href="https://easyai.tech/ai-definition/unsupervised-learning/">无监督学习 – Unsupervised learning | UL</a></p>
+<p><a href="https://easyai.tech/ai-definition/supervised-learning/">监督学习 – Supervised learning</a></p>
 ]]></content>
       <categories>
         <category>机器学习</category>
