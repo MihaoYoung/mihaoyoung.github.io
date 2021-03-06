@@ -193,8 +193,6 @@
     <title>Java后端学习之路</title>
     <url>/6714d3d6/</url>
     <content><![CDATA[<p><img src="/6714d3d6/Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91.png" alt="Java后端开发"></p>
-<a id="more"></a>
-
 <h1 id="Java后端开发"><a href="#Java后端开发" class="headerlink" title="Java后端开发"></a>Java后端开发</h1><h2 id="编程基础"><a href="#编程基础" class="headerlink" title="编程基础"></a>编程基础</h2><h3 id="Java语言"><a href="#Java语言" class="headerlink" title="Java语言"></a>Java语言</h3><ul>
 <li><p>语言基础</p>
 <ul>
@@ -1092,6 +1090,44 @@
 <td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
 </tr>
 </tbody></table>
+<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><blockquote>
+<p>To describe the supervised learning problem slightly more formally, our goal is, given a training set, to learn a function h : X → Y so that h(x) is a “good” predictor for the corresponding value of y. For historical reasons, this function h is called a <strong>hypothesis</strong>. </p>
+</blockquote>
+<img src="/91a709bb/image-20210306142126309.png" style="zoom:80%;">
+
+<h1 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h1><blockquote>
+<p>通过 cost Function 来确定我们的hypothesis，即，h(X)。</p>
+</blockquote>
+<p>$$<br>h_\Theta(x)=\Theta_0+\Theta_1x<br>$$</p>
+<p>$$<br>J(\Theta_0,\Theta_1)=\frac {1}{2m}\sum_{i=1}^m(\hat y_i-y_i)^2=\frac {1}{2m}\sum_{i=1}^m(h_\Theta(x_i)-y_i)^2<br>$$</p>
+<blockquote>
+<p>cost Function 越小，表示hypothesis（拟合函数）约合理</p>
+<p>因此寻找出使 cost Function 最小的参数</p>
+</blockquote>
+<h1 id="梯度下降算法Gradient-Descent"><a href="#梯度下降算法Gradient-Descent" class="headerlink" title="梯度下降算法Gradient Descent"></a>梯度下降算法Gradient Descent</h1><p><img src="/91a709bb/image-20210306163104402.png"></p>
+<p>重复，直到趋近最小值(收敛)<br>$$<br>\Theta_j:=\Theta_j-\alpha\frac {\partial}{\partial{\Theta_j}}J(\Theta_0,\Theta_1)<br>$$</p>
+<blockquote>
+<p>首先假设一对$\Theta_0,\Theta_1$,然后由costFunction的导数确定梯度下降最大的方向，逐步找到costFunction的最小值（可能是局部最小值）</p>
+<p>参数$\alpha$(学习速率)确定每一步的大小，即更新$\Theta_j$大小的幅度</p>
+<p>不同的起点，可能会导致不同的结果，这也是梯度下降算法的重要特征</p>
+</blockquote>
+<p>梯度下降方程，需同步更新$\Theta_0,\Theta_1$</p>
+<p>$temp0:=\Theta_0-\alpha\frac {\partial}{\partial{\Theta_0}}J(\Theta_0,\Theta_1)$</p>
+<p>$temp1:=\Theta_1-\alpha\frac {\partial}{\partial{\Theta_1}}J(\Theta_0,\Theta_1)$</p>
+<p>$\Theta_0:=temp0$</p>
+<p>$\Theta_1:=temp1$</p>
+<blockquote>
+<p>利用梯度下降法，可以优化找到<strong>任何</strong>costFunction的(局部)最小值</p>
+</blockquote>
+<h1 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h1><p>$$<br>h_\Theta(x)=\Theta_0+\Theta_1x<br>$$</p>
+<p>重复，直到收敛</p>
+<p>$temp0:=\Theta_0-\alpha\frac {1}{m}\sum_{i=1}^{m}(h_\Theta(x_i)-y_i)$</p>
+<p>$temp1:=\Theta_1-\alpha\frac {1}{m}\sum_{i=1}^{m}((h_\Theta(x_i)-y_i)x_i)$</p>
+<p>$\Theta_0:=temp0$</p>
+<p>$\Theta_1:=temp1$</p>
+<blockquote>
+<p>梯度下降法——线性回归，得到的是最优解，而不是局部最优解</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>机器学习</category>
