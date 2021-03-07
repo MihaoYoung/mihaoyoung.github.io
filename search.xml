@@ -579,7 +579,20 @@
 <li>只需在一个地方（异常处理程序）中处理错误，节省代码</li>
 </ul>
 </blockquote>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>《Java编程思想》</p>
+<h1 id="基本异常"><a href="#基本异常" class="headerlink" title="基本异常"></a>基本异常</h1><p><strong>抛出异常</strong>：从当前环境中跳出，把问题提交给上一级环境</p>
+<p>问题指的是，当前方法或作用域被阻止而无法继续执行，即<strong>异常情形</strong></p>
+<blockquote>
+<p>抛出异常后，将使用<code>new</code>在堆上<strong>创建异常对象</strong>,然后当前路径不会再继续执行，并且从当前环境中<strong>弹出异常对象的引用</strong>，此时，<strong>异常处理机制</strong>接管程序，并在<a href="#ycclcx"><strong>异常处理程序</strong></a>继续执行程序</p>
+<p>异常对象的<strong>引用</strong>将传给<code>throw</code>，可以<strong>简单地</strong>把异常处理看成是一种<strong>不同的返回机制</strong>，因此，利用抛出异常的方式可以<strong>从当前作用域退出</strong></p>
+<p>返回的“地点”是<strong>异常处理程序</strong>，可能跨越方法调用栈的许多层次</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String t = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (t == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">// 抛出异常</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>异常允许我们<strong>强制程序停止运行</strong>，并告诉我们出现的问题，或者<strong>强制程序处理问题</strong>，并返回到稳定状态</p>
+<h2 id="异常参数"><a href="#异常参数" class="headerlink" title="异常参数"></a>异常参数</h2><p>标准异常类有<strong>两个</strong>构造器，分别是<strong>默认构造器</strong>，<strong>接受字符串作为参数</strong>的构造器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">&quot;t = null&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h1><h2 id="try块"><a href="#try块" class="headerlink" title="try块"></a>try块</h2><p>如果在方法内部或方法内部调用其他方法抛出异常，这个方法将在抛出异常的过程中结束，因此，为了不让方法结束，我们使用<strong>try块</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// 可能产生异常的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异常处理程序"><a href="#异常处理程序" class="headerlink" title="异常处理程序"></a><p id="ycclcx">异常处理程序</p></h2><h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>《Java编程思想》</p>
 ]]></content>
       <categories>
         <category>后端</category>
