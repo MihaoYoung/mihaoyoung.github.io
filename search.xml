@@ -956,7 +956,7 @@
   <entry>
     <title>从线性变换角度理解线性代数</title>
     <url>/47d0bf4a/</url>
-    <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量<br>$$<br>\begin{bmatrix}<br>1<br>\2<br>\end{bmatrix}<br>=1\hat i+2\hat j<br>$$</p>
+    <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量<br>$$<br>\begin{bmatrix}<br>1\\<br>2<br>\end{bmatrix}<br>=1\hat i+2\hat j<br>$$</p>
 ]]></content>
       <categories>
         <category>线性代数</category>
@@ -1239,7 +1239,7 @@
 <blockquote>
 <p>如$0&lt;x_1&lt;10$，则$0&lt;x_1^2&lt;100$</p>
 </blockquote>
-<h1 id="正规方程"><a href="#正规方程" class="headerlink" title="正规方程"></a>正规方程</h1><p>一次性求解$\theta$的最优值，不需要像梯度下降法多次迭代<br>$$<br>\theta=(X^TX)^{-1}X^Ty<br>$$<br>有m个样本$(x^{(1)},y^{(1)},…,(x^{(m)},y^{(m)}))$，n个特征变量<br>$$<br>x^{(i)}=<br>\begin{bmatrix}<br>x_0^{(i)}\<br>x_1^{(i)}\<br>\vdots\<br>x_n^{(i)}\<br>\end{bmatrix}<br>\in R^{n+1}<br>$$<br>设计矩阵design matrix (m*(n+1))<br>$$<br>X=\begin{bmatrix}<br>(x^{(1)})^T\<br>(x^{(2)})^T\<br>\vdots\<br>(x^{(m)})^T<br>\end{bmatrix}<br>$$</p>
+<h1 id="正规方程"><a href="#正规方程" class="headerlink" title="正规方程"></a>正规方程</h1><p>一次性求解$\theta$的最优值，不需要像梯度下降法多次迭代<br>$$<br>\theta=(X^TX)^{-1}X^Ty<br>$$<br>有m个样本$(x^{(1)},y^{(1)},…,(x^{(m)},y^{(m)}))$，n个特征变量<br>$$<br>x^{(i)}=<br>\begin{bmatrix}<br>x_0^{(i)}\<br>x_1^{(i)}\<br>\vdots\\<br>x_n^{(i)}\\<br>\end{bmatrix}<br>\in R^{n+1}<br>$$<br>设计矩阵design matrix (m*(n+1))<br>$$<br>X=\begin{bmatrix}<br>(x^{(1)})^T\\<br>(x^{(2)})^T\\<br>\vdots\\<br>(x^{(m)})^T<br>\end{bmatrix}<br>$$</p>
 <table>
 <thead>
 <tr>
