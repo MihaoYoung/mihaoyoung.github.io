@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210306163104402.png">
 <meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210307131430617.png">
 <meta property="article:published_time" content="2021-03-05T14:16:50.000Z">
-<meta property="article:modified_time" content="2021-03-15T01:17:23.382Z">
+<meta property="article:modified_time" content="2021-03-15T15:02:32.899Z">
 <meta property="article:author" content="Mihao">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -358,7 +358,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-15 09:17:23" itemprop="dateModified" datetime="2021-03-15T09:17:23+08:00">2021-03-15</time>
+        <time title="修改时间：2021-03-15 23:02:32" itemprop="dateModified" datetime="2021-03-15T23:02:32+08:00">2021-03-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -521,7 +521,7 @@
 <h2 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h2><blockquote>
 <p>n表示特征变量个数</p>
 </blockquote>
-<p>hypothesis:<br>$$<br>h_\Theta(x)=\Theta_0+\Theta_1x_1+\Theta_2x_2+\cdots+\Theta_nx_n<br>$$<br>由矩阵乘法，简化上式<br>$$<br>h_\Theta(x)=<br>\begin{bmatrix}<br>\Theta_0&amp;\Theta_1\cdots\Theta_n<br>\end{bmatrix}<br>\begin{bmatrix}<br>x_0\x_1\\vdots\x_n<br>\end{bmatrix}<br>=\Theta^Tx<br>$$</p>
+<p>hypothesis:<br>$$<br>h_\Theta(x)=\Theta_0+\Theta_1x_1+\Theta_2x_2+\cdots+\Theta_nx_n<br>$$<br>由矩阵乘法，简化上式<br>$$<br>h_\Theta(x)=<br>\begin{bmatrix}<br>\Theta_0&amp;\Theta_1\cdots\Theta_n<br>\end{bmatrix}<br>\begin{bmatrix}<br>x_0\<br>x_1\<br>\vdots\<br>x_n<br>\end{bmatrix}<br>=\Theta^Tx<br>$$</p>
 <h2 id="多个变量的梯度下降"><a href="#多个变量的梯度下降" class="headerlink" title="多个变量的梯度下降"></a>多个变量的梯度下降</h2><p>$$<br>\Theta_j:=\Theta_j-\alpha\frac {1}{m}\sum_{i=1}^{m}(h_\Theta(x^{(i)})-y^{(i)})x_j^{(i)}<br>$$</p>
 <h2 id="优化梯度下降算法"><a href="#优化梯度下降算法" class="headerlink" title="优化梯度下降算法"></a>优化梯度下降算法</h2><p>当样本不均匀时，如0&lt;$x_1$&lt;20000，0&lt;$x_2$&lt;5，$\Theta$下降会十分缓慢，因此采用<strong>特征放缩</strong>和<strong>均值归一化</strong>将所有变量大致控制在较小范围<br>$$<br>x_i:=\frac{x_i-\mu_i}{s_i}<br>$$</p>
 <blockquote>
