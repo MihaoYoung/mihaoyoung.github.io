@@ -423,7 +423,7 @@
 <li>只需在一个地方（异常处理程序）中处理错误，节省代码</li>
 </ul>
 </blockquote>
-<p><img src="/c2b6c13e/1080.webp"></p>
+<p><img src="/c2b6c13e/1080.webp" alt></p>
 <h1 id="基本异常"><a href="#基本异常" class="headerlink" title="基本异常"></a>基本异常</h1><p><strong>抛出异常</strong>：从当前环境中跳出，把问题提交给上一级环境</p>
 <p>问题指的是，当前方法或作用域被阻止而无法继续执行，即<strong>异常情形</strong></p>
 <blockquote>
@@ -474,9 +474,9 @@
 <p>其它类型的异常类，使用<code>initCause()</code>方法</p>
 <h1 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h1><p><code>Error</code>表示编译时的系统错误</p>
 <p><code>Exception</code>是可以抛出的基本类型</p>
-<p><img src="/c2b6c13e/1080.webp"></p>
+<p><img src="/c2b6c13e/1080.webp" alt></p>
 <p>不接受检查的异常，如<code>RuntimeException</code>类，这种异常会被<strong>自动捕获</strong></p>
-<p><img src="/c2b6c13e/1080.webp"></p>
+<p><img src="/c2b6c13e/1080.webp" alt></p>
 <h1 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h1><p>无论异常是否被抛出，<code>finally</code>始终被执行</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>即使异常没有当前异常处理程序捕获，异常处理机制也会在跳到更高一层的异常处理程序之前，执行<code>finally</code>语句</p>
@@ -490,10 +490,6 @@
 <p>在这种方法中，finally只有在p对象构造成功才会执行</p>
 <h1 id="异常匹配"><a href="#异常匹配" class="headerlink" title="异常匹配"></a>异常匹配</h1><p>派生类的对象也可以匹配基类的处理程序</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception1</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception2</span> <span class="keyword">extends</span> <span class="title">Exception1</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception2();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception1 e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常Exception1&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
 <h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>《Java编程思想》</p>
 <p><a target="_blank" rel="noopener" href="https://codegym.cc/groups/posts/28-exceptions-checked-unchecked-and-custom">Java的异常</a></p>
 
@@ -716,7 +712,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.0/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
     script.defer = true;
     document.head.appendChild(script);
   } else {

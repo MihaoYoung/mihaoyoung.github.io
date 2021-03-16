@@ -28,12 +28,12 @@
     var CONFIG = {"hostname":"mihaoyoung.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="基本准备软件资源准备Linux CentOS7进入CentOS官网，点击CentOS Linux   选择CentOS7下的x86_64   选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso  也可以点击安装链接直接安装">
+  <meta name="description" content="基本准备软件资源准备Linux CentOS7进入CentOS官网，点击CentOS Linux  选择CentOS7下的x86_64  选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso  也可以点击安装链接直接安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux多节点环境打造">
 <meta property="og:url" content="https://mihaoyoung.github.io/d49360d3/">
 <meta property="og:site_name" content="养羊小站">
-<meta property="og:description" content="基本准备软件资源准备Linux CentOS7进入CentOS官网，点击CentOS Linux   选择CentOS7下的x86_64   选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso  也可以点击安装链接直接安装">
+<meta property="og:description" content="基本准备软件资源准备Linux CentOS7进入CentOS官网，点击CentOS Linux  选择CentOS7下的x86_64  选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso  也可以点击安装链接直接安装">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mihaoyoung.github.io/d49360d3/image-20210221150445096.png">
 <meta property="og:image" content="https://mihaoyoung.github.io/d49360d3/image-20210221151338404.png">
@@ -419,70 +419,54 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a target="_blank" rel="noopener" href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
-<img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
 <p>选择CentOS7下的x86_64</p>
-<img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
 <p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
 <p>也可以点击<a target="_blank" rel="noopener" href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
 <a id="more"></a>
-
 <h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
 <p>点击<a target="_blank" rel="noopener" href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
 <p>若使用mac操作系统，请下载<a target="_blank" rel="noopener" href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
 <h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a target="_blank" rel="noopener" href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
 <h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a target="_blank" rel="noopener" href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
 <h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
-<img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
 <p>选择-典型</p>
-<img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
 <p>选择-稍后安装操作系统</p>
-<img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
 <p>选择-CentOS7 64位版本</p>
-<img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
 <p>设置名称和路径</p>
-<img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
 <p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
-<img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
 <p>自定义硬件</p>
 <p>选择刚刚下载CentOS7 ios文件</p>
-<img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
 <p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
-<img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
 <p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
-<img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
 <p>点击完成，然后启动</p>
 <p>按下键盘↑方向键，回车</p>
-<img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
 <p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
 <p>设置root密码</p>
-<img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
 <p>静静等待安装~</p>
 <p>最后创建用户名即可</p>
 <h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
 <p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
 <p>如何查看自己的网卡</p>
 <p>打开网络与共享中心——点击你所连接的网络——属性</p>
-<img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
 <h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
 <p>输入密码（密码不会显示），回车</p>
 <p>输入<code>dhclient</code></p>
 <p>输入<code>ifconfig</code></p>
-<img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;">
-
+<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
 <p>ens33下的inet会有一串ip，记住</p>
 <p>然后输入</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
@@ -492,19 +476,16 @@
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
 <p>打开网络与共享中心</p>
 <p>点击你所连接的网络</p>
-<img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;">
-
+<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
 <p>点击详细信息，即可看到所需信息</p>
-<img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;">
-
+<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
 <p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
 <p>输入以下命令，重启网卡</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
 <p>检验是否可以连接外网</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
 <p>若有数据，即成功</p>
-<img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;">
-
+<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
 <h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
 <p>虚拟机——管理——克隆——创建完整克隆</p>
 <p>设置静态ip参考上文</p>
@@ -727,7 +708,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.0/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
     script.defer = true;
     document.head.appendChild(script);
   } else {

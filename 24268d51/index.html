@@ -415,6 +415,7 @@
 <p>直接存储值</p>
 <p>赋值时，复制该值</p>
 </blockquote>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -423,7 +424,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>float</td>
 <td></td>
 <td></td>
@@ -436,9 +438,10 @@
 <tr>
 <td></td>
 <td></td>
-<td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="复合（引用）"><a href="#复合（引用）" class="headerlink" title="复合（引用）"></a>复合（引用）</h3><blockquote>
 <p>所有复合类型都由简单类型组成，称为<strong>类</strong></p>
 <p>存储对象的引用</p>
@@ -481,8 +484,6 @@
 <p>否则，将该字符串添加到常量池中并返回其引用</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">System.out.println(s1 == s2.intern());</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回true</span></span><br></pre></td></tr></table></figure>
-
-
 <h5 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h5><h5 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h5><h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><blockquote>
 <p>一旦没有变量引用某个对象，该对象就会被标记为垃圾， Java 在下次收集垃圾时会将其销毁</p>
 <p>只要对象至少有一个引用，该对象即被视为活跃对象并且不会被销毁。如果你想尽快处理对象，可以通过为引用该对象的所有变量赋值 <strong>null</strong> 来清除该对象的所有引用。</p>
@@ -531,6 +532,7 @@
 <p>不能是原始类型，所有类型参数都必须从 Object 类继承</p>
 </blockquote>
 <p>原始类型对应包装类</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -539,7 +541,8 @@
 <th>列表</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>int</td>
 <td>Integer</td>
 <td>ArrayList<Integer></Integer></td>
@@ -564,7 +567,9 @@
 <td>Byte</td>
 <td>ArrayList<Byte></Byte></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="数组与ArraysList"><a href="#数组与ArraysList" class="headerlink" title="数组与ArraysList"></a>数组与ArraysList</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] numbers = &#123;<span class="number">167</span>, -<span class="number">2</span>, <span class="number">16</span>, <span class="number">99</span>, <span class="number">26</span>, <span class="number">92</span>, <span class="number">43</span>, -<span class="number">234</span>, <span class="number">35</span>, <span class="number">80</span>&#125;;</span><br></pre></td></tr></table></figure>
 <p><code>Arrays.sort()</code>方法对数组进行排序</p>
 <p><code>Arrays.toString()</code>将数组转换为字符串</p>
@@ -581,8 +586,6 @@
 <h2 id="Collections"><a href="#Collections" class="headerlink" title="Collections"></a>Collections</h2><h1 id="集合与接口"><a href="#集合与接口" class="headerlink" title="集合与接口"></a>集合与接口</h1><p>四个列表、三个集和四个映射</p>
 <h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">   Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line">   set.add(<span class="string">&quot;西班牙&quot;</span>);</span><br><span class="line">   set.add(<span class="string">&quot;的&quot;</span>);</span><br><span class="line">   set.add(<span class="string">&quot;雨&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取集的迭代器</span></span><br><span class="line">    Iterator&lt;String&gt; iterator = set.iterator();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (iterator.hasNext())        <span class="comment">// 检查是否存在另一个元素</span></span><br><span class="line">   &#123;</span><br><span class="line">      <span class="comment">// 获取当前元素并移至下一个</span></span><br><span class="line">      String text = iterator.next();</span><br><span class="line"></span><br><span class="line">       System.out.println(text);</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">//简写</span></span><br><span class="line"><span class="keyword">for</span> (String text : set)</span><br><span class="line">   &#123;</span><br><span class="line">       System.out.println(text);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 所有元素成对存储</span></span><br><span class="line">    Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">    map.put(<span class="string">&quot;第一个&quot;</span>, <span class="string">&quot;西班牙&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;第二个&quot;</span>, <span class="string">&quot;的&quot;</span>);</span><br><span class="line">    map.put(<span class="string">&quot;第三个&quot;</span>, <span class="string">&quot;雨&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = map.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (iterator.hasNext())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 获取键-值对</span></span><br><span class="line">        Map.Entry&lt;String, String&gt; pair = iterator.next();</span><br><span class="line">        String key = pair.getKey();            <span class="comment">// 键</span></span><br><span class="line">        String value = pair.getValue();        <span class="comment">// 值</span></span><br><span class="line">        System.out.println(key + <span class="string">&quot;:&quot;</span> + value);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//简写</span></span><br><span class="line">	<span class="keyword">for</span> (Map.Entry&lt;String, String&gt; pair : map.entrySet())</span><br><span class="line">    &#123;</span><br><span class="line">        String key = pair.getKey();                      <span class="comment">// 键</span></span><br><span class="line">        String value = pair.getValue();                  <span class="comment">// 值</span></span><br><span class="line">        System.out.println(key + <span class="string">&quot;:&quot;</span> + value);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
 <h1 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h1><h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">String s = reader.readLine();</span><br></pre></td></tr></table></figure>
 <p><code>System.in</code>是一个<code>InputStream</code>对象</p>
 <p><code>System.in.read()</code>读取的是<strong>字节</strong></p>
@@ -808,7 +811,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.0/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
     script.defer = true;
     document.head.appendChild(script);
   } else {

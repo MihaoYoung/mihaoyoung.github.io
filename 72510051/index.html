@@ -415,8 +415,6 @@
 <blockquote>
 <p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
 <p>例，市场价格预测，降水量预测等问题</p>
-</blockquote>
-<blockquote>
 <p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
 <p>例，植物品种、客户年龄和偏好的预测问题</p>
 </blockquote>
@@ -436,21 +434,19 @@
 <p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
 <p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
 <p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
-</blockquote>
-<blockquote>
 <p>Non-clustering</p>
-</blockquote>
-<blockquote>
 <p>降维</p>
 </blockquote>
-<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><table>
+<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>监督学习</th>
 <th>无监督学习</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
 <td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
 </tr>
@@ -466,7 +462,9 @@
 <td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
 <td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a target="_blank" rel="noopener" href="https://easyai.tech/blog/supervised-reinforcement-unsupervised-learning/">机器学习三兄弟概念大揭秘：「监督学习」「非监督学习」「强化学习」</a></p>
 <p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/unsupervised-learning/">无监督学习 – Unsupervised learning | UL</a></p>
 <p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/supervised-learning/">监督学习 – Supervised learning</a></p>
@@ -689,7 +687,7 @@
       }
     };
     const script = document.createElement('script');
-    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.0/es5/tex-mml-chtml.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
     script.defer = true;
     document.head.appendChild(script);
   } else {
