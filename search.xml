@@ -104,6 +104,70 @@
       </tags>
   </entry>
   <entry>
+    <title>Java 类的初始化顺序</title>
+    <url>/2af416/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>静态变量，静态代码块&gt;主函数main&gt;变量，构造代码块&gt;构造方法</strong></p>
+</blockquote>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><blockquote>
+<ul>
+<li>只有创建对象，构造函数才会执行</li>
+<li>只运行一次</li>
+<li>给对象进行初始化</li>
+</ul>
+</blockquote>
+<h1 id="构造代码块"><a href="#构造代码块" class="headerlink" title="构造代码块"></a>构造代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>创建对象时执行，且<strong>优先于构造函数</strong></li>
+<li>无法自行调用</li>
+<li>给<strong>对象</strong>经行统一初始化</li>
+</ul>
+</blockquote>
+<h1 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>随着类的加载而执行，且<strong>只执行一次</strong>，<strong>优先于主函数</strong></li>
+<li>给<strong>类</strong>进行初始化</li>
+<li>块中变量为<strong>局部变量</strong></li>
+<li>一个类可以有<strong>多个</strong>静态代码块</li>
+</ul>
+</blockquote>
+<h2 id="类的加载时机"><a href="#类的加载时机" class="headerlink" title="类的加载时机"></a>类的加载时机</h2><blockquote>
+<ul>
+<li>new 创建该类对象时</li>
+<li>使用java.lang.reflext进行反射调用时</li>
+<li>无事先加载该类，而加载该类的子类时</li>
+<li>虚拟机启动，初始化main函数所在的类</li>
+</ul>
+</blockquote>
+<h1 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        test1 b = <span class="keyword">new</span> test1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str1 = <span class="string">&quot;静态变量&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span>  String str2 = <span class="string">&quot;变量&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        System.out.println(str2);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        <span class="comment">// System.out.println(str2);</span></span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        <span class="comment">//test1 b = new test1();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">静态变量</span><br><span class="line">---------------</span><br><span class="line">构造代码块</span><br><span class="line">静态变量</span><br><span class="line">变量</span><br><span class="line">---------------</span><br><span class="line">构造函数</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>执行顺序</p>
+<blockquote>
+<ul>
+<li>执行父类静态代码块，初始化父类静态成员变量</li>
+<li>执行子类静态代码块，初始化子类静态成员变量</li>
+<li>执行父类构造代码块，父类构造函数，父类普通成员变量</li>
+<li>执行子类构造代码块，子类构造函数，子类普通成员变量</li>
+</ul>
+</blockquote>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://zhuanlan.zhihu.com/p/122554857">知乎-Java初始化顺序</a></p>
+<p><a href="https://blog.csdn.net/z69183787/article/details/25366627?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&dist_request_id=1328593.10670.16147488454022055&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control">CSDN-Java初始化顺序</a></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java-异常</title>
     <url>/c2b6c13e/</url>
     <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>Java的基本理念是“结构不佳的代码不能运行”</strong></p>
@@ -195,70 +259,6 @@
       <tags>
         <tag>Java</tag>
         <tag>异常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 类的初始化顺序</title>
-    <url>/2af416/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>静态变量，静态代码块&gt;主函数main&gt;变量，构造代码块&gt;构造方法</strong></p>
-</blockquote>
-<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><blockquote>
-<ul>
-<li>只有创建对象，构造函数才会执行</li>
-<li>只运行一次</li>
-<li>给对象进行初始化</li>
-</ul>
-</blockquote>
-<h1 id="构造代码块"><a href="#构造代码块" class="headerlink" title="构造代码块"></a>构造代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>创建对象时执行，且<strong>优先于构造函数</strong></li>
-<li>无法自行调用</li>
-<li>给<strong>对象</strong>经行统一初始化</li>
-</ul>
-</blockquote>
-<h1 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>随着类的加载而执行，且<strong>只执行一次</strong>，<strong>优先于主函数</strong></li>
-<li>给<strong>类</strong>进行初始化</li>
-<li>块中变量为<strong>局部变量</strong></li>
-<li>一个类可以有<strong>多个</strong>静态代码块</li>
-</ul>
-</blockquote>
-<h2 id="类的加载时机"><a href="#类的加载时机" class="headerlink" title="类的加载时机"></a>类的加载时机</h2><blockquote>
-<ul>
-<li>new 创建该类对象时</li>
-<li>使用java.lang.reflext进行反射调用时</li>
-<li>无事先加载该类，而加载该类的子类时</li>
-<li>虚拟机启动，初始化main函数所在的类</li>
-</ul>
-</blockquote>
-<h1 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        test1 b = <span class="keyword">new</span> test1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str1 = <span class="string">&quot;静态变量&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span>  String str2 = <span class="string">&quot;变量&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        System.out.println(str2);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        <span class="comment">// System.out.println(str2);</span></span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        <span class="comment">//test1 b = new test1();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">静态变量</span><br><span class="line">---------------</span><br><span class="line">构造代码块</span><br><span class="line">静态变量</span><br><span class="line">变量</span><br><span class="line">---------------</span><br><span class="line">构造函数</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
-<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>执行顺序</p>
-<blockquote>
-<ul>
-<li>执行父类静态代码块，初始化父类静态成员变量</li>
-<li>执行子类静态代码块，初始化子类静态成员变量</li>
-<li>执行父类构造代码块，父类构造函数，父类普通成员变量</li>
-<li>执行子类构造代码块，子类构造函数，子类普通成员变量</li>
-</ul>
-</blockquote>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://zhuanlan.zhihu.com/p/122554857">知乎-Java初始化顺序</a></p>
-<p><a href="https://blog.csdn.net/z69183787/article/details/25366627?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&dist_request_id=1328593.10670.16147488454022055&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control">CSDN-Java初始化顺序</a></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -663,6 +663,107 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux多节点环境打造</title>
+    <url>/d49360d3/</url>
+    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
+<img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;">
+
+<p>选择CentOS7下的x86_64</p>
+<img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;">
+
+<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
+<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
+<a id="more"></a>
+
+<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
+<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
+<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
+<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
+<img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;">
+
+<p>选择-典型</p>
+<img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;">
+
+<p>选择-稍后安装操作系统</p>
+<img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;">
+
+<p>选择-CentOS7 64位版本</p>
+<img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;">
+
+<p>设置名称和路径</p>
+<img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;">
+
+<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
+<img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;">
+
+<p>自定义硬件</p>
+<p>选择刚刚下载CentOS7 ios文件</p>
+<img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;">
+
+<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
+<img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;">
+
+<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
+<img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;">
+
+<p>点击完成，然后启动</p>
+<p>按下键盘↑方向键，回车</p>
+<img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;">
+
+<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
+<p>设置root密码</p>
+<img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;">
+
+<p>静静等待安装~</p>
+<p>最后创建用户名即可</p>
+<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
+<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
+<p>如何查看自己的网卡</p>
+<p>打开网络与共享中心——点击你所连接的网络——属性</p>
+<img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;">
+
+<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
+<p>输入密码（密码不会显示），回车</p>
+<p>输入<code>dhclient</code></p>
+<p>输入<code>ifconfig</code></p>
+<img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;">
+
+<p>ens33下的inet会有一串ip，记住</p>
+<p>然后输入</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
+<p>修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>添加</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
+<p>打开网络与共享中心</p>
+<p>点击你所连接的网络</p>
+<img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;">
+
+<p>点击详细信息，即可看到所需信息</p>
+<img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;">
+
+<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
+<p>输入以下命令，重启网卡</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
+<p>检验是否可以连接外网</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>若有数据，即成功</p>
+<img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;">
+
+<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
+<p>虚拟机——管理——克隆——创建完整克隆</p>
+<p>设置静态ip参考上文</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java基础语言</title>
     <url>/24268d51/</url>
     <content><![CDATA[<h1 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><h3 id="简单（原始）"><a href="#简单（原始）" class="headerlink" title="简单（原始）"></a>简单（原始）</h3><blockquote>
@@ -853,119 +954,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux多节点环境打造</title>
-    <url>/d49360d3/</url>
-    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
-<img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;">
-
-<p>选择CentOS7下的x86_64</p>
-<img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;">
-
-<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
-<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
-<a id="more"></a>
-
-<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
-<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
-<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
-<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
-<img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;">
-
-<p>选择-典型</p>
-<img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;">
-
-<p>选择-稍后安装操作系统</p>
-<img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;">
-
-<p>选择-CentOS7 64位版本</p>
-<img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;">
-
-<p>设置名称和路径</p>
-<img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;">
-
-<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
-<img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;">
-
-<p>自定义硬件</p>
-<p>选择刚刚下载CentOS7 ios文件</p>
-<img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;">
-
-<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
-<img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;">
-
-<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
-<img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;">
-
-<p>点击完成，然后启动</p>
-<p>按下键盘↑方向键，回车</p>
-<img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;">
-
-<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
-<p>设置root密码</p>
-<img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;">
-
-<p>静静等待安装~</p>
-<p>最后创建用户名即可</p>
-<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
-<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
-<p>如何查看自己的网卡</p>
-<p>打开网络与共享中心——点击你所连接的网络——属性</p>
-<img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;">
-
-<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
-<p>输入密码（密码不会显示），回车</p>
-<p>输入<code>dhclient</code></p>
-<p>输入<code>ifconfig</code></p>
-<img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;">
-
-<p>ens33下的inet会有一串ip，记住</p>
-<p>然后输入</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
-<p>修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
-<p>添加</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
-<p>打开网络与共享中心</p>
-<p>点击你所连接的网络</p>
-<img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;">
-
-<p>点击详细信息，即可看到所需信息</p>
-<img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;">
-
-<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
-<p>输入以下命令，重启网卡</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
-<p>检验是否可以连接外网</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-<p>若有数据，即成功</p>
-<img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;">
-
-<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
-<p>虚拟机——管理——克隆——创建完整克隆</p>
-<p>设置静态ip参考上文</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从线性变换角度理解线性代数</title>
-    <url>/47d0bf4a/</url>
-    <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量<br>$$<br>\begin{bmatrix}<br>1\\<br>2<br>\end{bmatrix}<br>=1\hat i+2\hat j<br>$$</p>
-]]></content>
-      <categories>
-        <category>线性代数</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>next8.0主题配置</title>
     <url>/4c5284d4/</url>
     <content><![CDATA[<h1 id="next主题安装及美化"><a href="#next主题安装及美化" class="headerlink" title="next主题安装及美化"></a>next主题安装及美化</h1><h2 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h2><p><a href="https://theme-next.js.org/">next主题官方文档</a></p>
@@ -1098,6 +1086,99 @@
       <tags>
         <tag>hexo</tag>
         <tag>next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从线性变换角度理解线性代数</title>
+    <url>/47d0bf4a/</url>
+    <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量<br>$$<br>\begin{bmatrix}<br>1\\<br>2<br>\end{bmatrix}<br>=1\hat i+2\hat j<br>$$</p>
+]]></content>
+      <categories>
+        <category>线性代数</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>监督学习与无监督学习</title>
+    <url>/72510051/</url>
+    <content><![CDATA[<h1 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h1><blockquote>
+<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong>，</p>
+<p>即，<strong>在知道输入和输出的情况下训练出一个模型，将输入映射到输出</strong></p>
+</blockquote>
+<p>流程</p>
+<ul>
+<li>选择一个适合目标任务的数学模型</li>
+<li>先把一部分已知的“问题和答案”（训练集）给机器去学习</li>
+<li>机器总结出了自己的“方法论”</li>
+<li>人类把”新的问题”（测试集）给机器，让他去解答</li>
+</ul>
+<p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
+<blockquote>
+<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
+<p>例，市场价格预测，降水量预测等问题</p>
+</blockquote>
+<blockquote>
+<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
+<p>例，植物品种、客户年龄和偏好的预测问题</p>
+</blockquote>
+<h1 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h1><blockquote>
+<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>（不确定的），且不用关注变量（输入数据）的影响</p>
+<p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
+<p>没有基于预测结果的反馈</p>
+<p>例，设想我们有一批照片其中包含着不同颜色的几何形状。在这里计算机面对的是没有任何标记的图片，它并不知道几何形状的颜色和外形，它看到的只是一张张照片而已。但通过将数据输入到非监督学习的模型中去，算法可以尝试着理解图中的内容，通过相关性和特征将图中的相似的物体聚为一类。在<strong>理想的情况</strong>下它可以将不同形状不同颜色的几何形状聚集到不同的类别中去，特征提取和标签都是<strong>机器自己完成</strong>的。</p>
+</blockquote>
+<p>使用场景</p>
+<ul>
+<li>发现异常，通过无监督学习，快速将数据分类，虽然不知道这些分类的意义，但可以快速排出正常的数据，更有针对性的对异常数据进行深入分析</li>
+<li>用户细分，如广告平台对用户按性别，年龄，位置，行为等维度进行用户细分，使广告投放更有针对性</li>
+<li>推荐系统，如淘宝根据我们的浏览行为推荐相关商品。无监督学习通过聚类得到购物行为相似的用户，然后将这类用户的商品推荐给我们</li>
+</ul>
+<blockquote>
+<p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
+<p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
+<p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
+</blockquote>
+<blockquote>
+<p>Non-clustering</p>
+</blockquote>
+<blockquote>
+<p>降维</p>
+</blockquote>
+<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><table>
+<thead>
+<tr>
+<th>监督学习</th>
+<th>无监督学习</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
+<td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
+</tr>
+<tr>
+<td>数据<strong>有标签</strong></td>
+<td>数据<strong>没有标签</strong></td>
+</tr>
+<tr>
+<td>目标明确，可以衡量效果</td>
+<td>几乎无法评估效果</td>
+</tr>
+<tr>
+<td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
+<td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
+</tr>
+</tbody></table>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://easyai.tech/blog/supervised-reinforcement-unsupervised-learning/">机器学习三兄弟概念大揭秘：「监督学习」「非监督学习」「强化学习」</a></p>
+<p><a href="https://easyai.tech/ai-definition/unsupervised-learning/">无监督学习 – Unsupervised learning | UL</a></p>
+<p><a href="https://easyai.tech/ai-definition/supervised-learning/">监督学习 – Supervised learning</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -1286,87 +1367,6 @@
 <p>通过<strong>hypothesis function</strong>来找到合适的$\theta$</p>
 <h2 id="Cost-Function-1"><a href="#Cost-Function-1" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>训练集，m个样本</p>
 <p>$$<br>\begin{Bmatrix}<br>(x^{(1)},y^{(1)},x^{(2)},y^{(2)},\cdots,x^{(m)},y^{(m)})<br>\end{Bmatrix}<br>\\<br>x=\in<br>\begin{bmatrix}<br>x_0\\<br>x_1\\<br>\vdots\\<br>x_n<br>\end{bmatrix}<br>\ \ \ \<br>x_0=1\ \ \ \<br>y=<br>\begin{Bmatrix}<br>0,1<br>\end{Bmatrix}<br>$$<br><strong>hypothesis function</strong><br>$$<br>h_\theta(x)=\frac {1}{1+e^{-\theta^Tx}}<br>$$<br><strong>Logistic regression cost function</strong><br>$$<br>Cost(h_\theta(x),y)=<br>\begin{cases}<br>-log(h_\theta(x)),&amp; if \ y=1<br>\\<br>-log(1-h_\theta(x)),&amp;if\ y=0<br>\end{cases}<br>$$<br><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210316172644451.png" style="zoom:50%;"><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210316172711040.png" style="zoom:50%;"><br>$$<br>Cost(h_\theta(x),y)=0 \ if \ h_\theta(x)=y\\<br>Cost(h_\theta(x),y)\rightarrow\infty \ if \ y=0\ and\ h_\theta(x)\rightarrow1\\<br>Cost(h_\theta(x),y)\rightarrow\infty \ if \ y=1 \ and\ h_\theta(x)\rightarrow0<br>$$</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>监督学习与无监督学习</title>
-    <url>/72510051/</url>
-    <content><![CDATA[<h1 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h1><blockquote>
-<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong>，</p>
-<p>即，<strong>在知道输入和输出的情况下训练出一个模型，将输入映射到输出</strong></p>
-</blockquote>
-<p>流程</p>
-<ul>
-<li>选择一个适合目标任务的数学模型</li>
-<li>先把一部分已知的“问题和答案”（训练集）给机器去学习</li>
-<li>机器总结出了自己的“方法论”</li>
-<li>人类把”新的问题”（测试集）给机器，让他去解答</li>
-</ul>
-<p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
-<blockquote>
-<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
-<p>例，市场价格预测，降水量预测等问题</p>
-</blockquote>
-<blockquote>
-<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
-<p>例，植物品种、客户年龄和偏好的预测问题</p>
-</blockquote>
-<h1 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h1><blockquote>
-<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>（不确定的），且不用关注变量（输入数据）的影响</p>
-<p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
-<p>没有基于预测结果的反馈</p>
-<p>例，设想我们有一批照片其中包含着不同颜色的几何形状。在这里计算机面对的是没有任何标记的图片，它并不知道几何形状的颜色和外形，它看到的只是一张张照片而已。但通过将数据输入到非监督学习的模型中去，算法可以尝试着理解图中的内容，通过相关性和特征将图中的相似的物体聚为一类。在<strong>理想的情况</strong>下它可以将不同形状不同颜色的几何形状聚集到不同的类别中去，特征提取和标签都是<strong>机器自己完成</strong>的。</p>
-</blockquote>
-<p>使用场景</p>
-<ul>
-<li>发现异常，通过无监督学习，快速将数据分类，虽然不知道这些分类的意义，但可以快速排出正常的数据，更有针对性的对异常数据进行深入分析</li>
-<li>用户细分，如广告平台对用户按性别，年龄，位置，行为等维度进行用户细分，使广告投放更有针对性</li>
-<li>推荐系统，如淘宝根据我们的浏览行为推荐相关商品。无监督学习通过聚类得到购物行为相似的用户，然后将这类用户的商品推荐给我们</li>
-</ul>
-<blockquote>
-<p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
-<p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
-<p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
-</blockquote>
-<blockquote>
-<p>Non-clustering</p>
-</blockquote>
-<blockquote>
-<p>降维</p>
-</blockquote>
-<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><table>
-<thead>
-<tr>
-<th>监督学习</th>
-<th>无监督学习</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
-<td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
-</tr>
-<tr>
-<td>数据<strong>有标签</strong></td>
-<td>数据<strong>没有标签</strong></td>
-</tr>
-<tr>
-<td>目标明确，可以衡量效果</td>
-<td>几乎无法评估效果</td>
-</tr>
-<tr>
-<td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
-<td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
-</tr>
-</tbody></table>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://easyai.tech/blog/supervised-reinforcement-unsupervised-learning/">机器学习三兄弟概念大揭秘：「监督学习」「非监督学习」「强化学习」</a></p>
-<p><a href="https://easyai.tech/ai-definition/unsupervised-learning/">无监督学习 – Unsupervised learning | UL</a></p>
-<p><a href="https://easyai.tech/ai-definition/supervised-learning/">监督学习 – Supervised learning</a></p>
 ]]></content>
       <categories>
         <category>机器学习</category>
