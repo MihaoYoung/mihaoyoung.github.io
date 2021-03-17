@@ -649,220 +649,6 @@
       </tags>
   </entry>
   <entry>
-    <title>next8.0主题配置</title>
-    <url>/4c5284d4/</url>
-    <content><![CDATA[<h1 id="next主题安装及美化"><a href="#next主题安装及美化" class="headerlink" title="next主题安装及美化"></a>next主题安装及美化</h1><h2 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h2><p><a href="https://theme-next.js.org/">next主题官方文档</a></p>
-<p>使用工具 Notepad++、Typora、Git</p>
-<blockquote>
-<p>博主一开始直接使用next 8.2.0版本（当时最新版本），由于该版本不再支持valine评论系统，所以博主安装了next 8.0.0 版本</p>
-<p>但8.2.0支持其它评论系统，读者可以在<a href="https://theme-next.js.org/docs/third-party-services/comments.html">官方文档</a>阅读查看</p>
-</blockquote>
-<a id="more"></a>
-<p>在你的博客路径下</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ cd blog</span><br></pre></td></tr></table></figure>
-<p>安装最新版next</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>镜像安装，速度较快（推荐）</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone https://gitlab.com/hexo-theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>指定安装版本text</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone --branch v8.0.0 https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>镜像安装，速度较快（推荐）</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone --branch v8.0.0 https://gitlab.com/hexo-theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>然后将你博客根目录下的_config.yml打开（使用 Notepad++ 打开）</p>
-<p>搜索themes，将里面的值改为next</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
-<h2 id="text基本配置信息"><a href="#text基本配置信息" class="headerlink" title="text基本配置信息"></a>text基本配置信息</h2><blockquote>
-<p>由于next版本升级后，官方不建议直接修改next文件夹下的_config.yml</p>
-<p>因此我们将 themes/next/config.yml 复制到你的博客根目录，重命名为_config.next.yml</p>
-</blockquote>
-<p>选择Schemes</p>
-<p>打开 _config.next.yml，通过 Ctrl+F 搜索Scheme Settings，里面提供了四种模式，可以根据自己的喜好更改。</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">#scheme: MuseC</span><br><span class="line">#scheme: Mist</span><br><span class="line">scheme: Pisces</span><br><span class="line">#scheme: Gemini</span><br></pre></td></tr></table></figure>
-<h2 id="设置菜单栏"><a href="#设置菜单栏" class="headerlink" title="设置菜单栏"></a>设置菜单栏</h2><p>搜索menu，可以设置菜单显示内容，此版本next支持font awesome图标，可以去<a href="https://link.zhihu.com/?target=https%3A//fontawesome.com/">官网</a>更换其它图标。</p>
-<p>若出现页面404情况，可将||前面空格删去</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line"> home: / || fa fa-home</span><br><span class="line"> #about: /about/ || fa fa-user</span><br><span class="line"> tags: /tags/ || fa fa-tags</span><br><span class="line"> categories: /categories/ || fa fa-th</span><br><span class="line"> archives: /archives/ || fa fa-archive</span><br><span class="line"> #schedule: /schedule/ || fa fa-calendar</span><br><span class="line"> #sitemap: /sitemap.xml || fa fa-sitemap</span><br><span class="line"> #commonweal: /404/ || fa fa-heartbeat</span><br></pre></td></tr></table></figure>
-<h2 id="开启tags标签栏"><a href="#开启tags标签栏" class="headerlink" title="开启tags标签栏"></a>开启tags标签栏</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ cd blog</span><br><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
-<p>此时在你的 source/ 文件夹下会出现一个对应的tags文件夹，打开index.md（使用Typora）并编辑为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2021-02-19 20:08:14</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>其它菜单栏同理操作，编辑各自对应type类型即可</p>
-<h2 id="设置新建文章模板"><a href="#设置新建文章模板" class="headerlink" title="设置新建文章模板"></a>设置新建文章模板</h2><p>新建文章</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> blog</span><br><span class="line"><span class="variable">$</span> hexo new <span class="string">&quot;文章名称&quot;</span></span><br></pre></td></tr></table></figure>
-<p>进入 scaffolds 文件夹，打开 post.md 文件，根据你刚刚开启的菜单栏进行修改</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br></pre></td></tr></table></figure>
-<h2 id="设置超链接样式"><a href="#设置超链接样式" class="headerlink" title="设置超链接样式"></a>设置超链接样式</h2><p>在根目录的source里新建 _data/styles.styl 文件，然后进入_config.next.yml，搜索 custom_file_path，删去下面style前面的#</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: <span class="keyword">source</span><span class="regexp">/_data/</span>head.njk</span><br><span class="line">  #header: <span class="keyword">source</span><span class="regexp">/_data/</span>header.njk</span><br><span class="line">  #sidebar: <span class="keyword">source</span><span class="regexp">/_data/</span>sidebar.njk</span><br><span class="line">  #postMeta: <span class="keyword">source</span><span class="regexp">/_data/</span>post-meta.njk</span><br><span class="line">  #postBodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>post-body-end.njk</span><br><span class="line">  #footer: <span class="keyword">source</span><span class="regexp">/_data/</span>footer.njk</span><br><span class="line">  #bodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>body-end.njk</span><br><span class="line">  #variable: <span class="keyword">source</span><span class="regexp">/_data/</span>variables.styl</span><br><span class="line">  #mixin: <span class="keyword">source</span><span class="regexp">/_data/mi</span>xins.styl</span><br><span class="line">  style: <span class="keyword">source</span><span class="regexp">/_data/</span>styles.styl</span><br></pre></td></tr></table></figure>
-<p>然后打开刚刚新建的 styles.styl ，添加以下信息，颜色代码可在该<a href="https://htmlcolorcodes.com/zh/">网站</a>查询</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 修改链接样式</span><br><span class="line">// 修改文章内</span><br><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#E71DF7</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 修改侧栏</span><br><span class="line"><span class="selector-tag">a</span>, <span class="selector-tag">span</span><span class="selector-class">.exturl</span> &#123;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#76C4F5</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="菜单侧栏设置"><a href="#菜单侧栏设置" class="headerlink" title="菜单侧栏设置"></a>菜单侧栏设置</h2><p>打开 _config.next.yml ，搜索sidebar</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sidebar</span>:<span class="string"></span></span><br><span class="line"><span class="comment">  # Sidebar Position.</span></span><br><span class="line">  <span class="attr">position</span>: <span class="string">left</span></span><br><span class="line"><span class="comment">  #position: right</span></span><br><span class="line"></span><br><span class="line"><span class="comment">  # Manual define the sidebar width. If commented, will be default for:</span></span><br><span class="line"><span class="comment">  # Muse | Mist: 320</span></span><br><span class="line"><span class="comment">  # Pisces | Gemini: 240</span></span><br><span class="line"><span class="comment">  #width: 300</span></span><br><span class="line"></span><br><span class="line"><span class="comment">  # Sidebar Display (only for Muse | Mist), available values:</span></span><br><span class="line"><span class="comment">  #  - post    expand on posts automatically. Default.</span></span><br><span class="line"><span class="comment">  #  - always  expand for all pages automatically.</span></span><br><span class="line"><span class="comment">  #  - hide    expand only when click on the sidebar toggle icon.</span></span><br><span class="line"><span class="comment">  #  - remove  totally remove sidebar including sidebar toggle.</span></span><br><span class="line">  <span class="attr">display</span>: <span class="string">post</span></span><br><span class="line"></span><br><span class="line"><span class="comment">  # Sidebar padding in pixels.</span></span><br><span class="line">  <span class="attr">padding</span>: <span class="string">18</span></span><br><span class="line"><span class="comment">  # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).</span></span><br><span class="line">  <span class="attr">offset</span>: <span class="string">12</span></span><br></pre></td></tr></table></figure>
-<h2 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h2><p>打开 _config.next.yml ，搜索Sidebar Avatar</p>
-<p>将你的头像图片命名好，我的是header.jpg，然后放入 themes/next/source/images  里</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Sidebar Avatar</span></span><br><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="comment"># Replace the default image and set the url here.</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/images/header.jpg</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be dispalyed in circle.</span></span><br><span class="line">  <span class="attr">rounded:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be rotated with the cursor.</span></span><br><span class="line">  <span class="attr">rotated:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<h2 id="设置代码高亮"><a href="#设置代码高亮" class="headerlink" title="设置代码高亮"></a>设置代码高亮</h2><p>进入 _config.yml ，搜索hightlight，将auto_detect改为true:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span></span><br></pre></td></tr></table></figure>
-<p>进入 _config.next.yml ，搜索 codeblock ，修改theme下的主题，可以该<a href="https://theme-next.js.org/highlight/">网站</a>查找自己喜欢的代码高亮样式</p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="symbol">codeblock:</span></span><br><span class="line">  <span class="meta"># Code Highlight theme</span></span><br><span class="line">  <span class="meta"># All available themes: https:<span class="comment">//theme-next.js.org/highlight/</span></span></span><br><span class="line"><span class="symbol">  theme:</span></span><br><span class="line"><span class="symbol">    light:</span> tomorrow-night-eighties</span><br><span class="line"><span class="symbol">    dark:</span> tomorrow-night-eighties</span><br><span class="line"><span class="symbol">  prism:</span></span><br><span class="line"><span class="symbol">    light:</span> prism</span><br><span class="line"><span class="symbol">    dark:</span> prism-dark</span><br><span class="line">  <span class="meta"># Add copy button on codeblock</span></span><br><span class="line"><span class="symbol">  copy_button:</span></span><br><span class="line"><span class="symbol">    enable:</span> false</span><br><span class="line">    <span class="meta"># Available values: default | flat | mac</span></span><br><span class="line"><span class="symbol">    style:</span></span><br></pre></td></tr></table></figure>
-<h2 id="添加阅读全文按钮和修改其样式"><a href="#添加阅读全文按钮和修改其样式" class="headerlink" title="添加阅读全文按钮和修改其样式"></a>添加阅读全文按钮和修改其样式</h2><p>添加按钮</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">文章中添加<span class="comment">&lt;!--more--&gt;</span>,你想再哪儿截止就在哪儿添加</span><br></pre></td></tr></table></figure>
-<p>修改样式</p>
-<p>进入之前的 styles.styl ，添加以下代码，读者可以根据自己喜好进行修改</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">// [Read More]按钮样式</span><br><span class="line">.post-button .btn &#123;</span><br><span class="line">    color: #555 !important;</span><br><span class="line">    background-color: rgb(255, 255, 255);</span><br><span class="line">    border-radius: 3px;</span><br><span class="line">    font-size: 15px;</span><br><span class="line">    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.35);</span><br><span class="line">    border: none !important;</span><br><span class="line">    transition-property: unset;</span><br><span class="line">    padding: 0px 15px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.post-button .btn:hover &#123;</span><br><span class="line">    color: rgb(255, 255, 255) !important;</span><br><span class="line">    border-radius: 3px;</span><br><span class="line">    font-size: 15px;</span><br><span class="line">    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.35);</span><br><span class="line">    background-image: linear-gradient(90deg, #a166ab 0%, #ef4e7b 25%, #f37055 50%, #ef4e7b 75%, #a166ab 100%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="修改标题栏颜色"><a href="#修改标题栏颜色" class="headerlink" title="修改标题栏颜色"></a>修改标题栏颜色</h2><p>进入之前的 styles.styl ，添加以下代码，读者可以根据自己喜好进行修改</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">.site-meta &#123;</span><br><span class="line">  background: #FF8C00; //修改为自己喜欢的颜色</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="添加本地搜索功能"><a href="#添加本地搜索功能" class="headerlink" title="添加本地搜索功能"></a>添加本地搜索功能</h2><p>安装 <a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fflashlab%2Fhexo-generator-search">hexo-generator-searchdb</a> 插件</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>打开 _config.yml ，添加以下代码</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 搜索</span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
-<p>打开 _config.next.yml ，搜索local_search </p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: true</span><br><span class="line">  # If auto, trigger search by changing input.</span><br><span class="line">  # If manual, trigger search by pressing enter key or search button.</span><br><span class="line">  trigger: auto</span><br><span class="line">  # Show top n results per article, show all results by setting to -1</span><br><span class="line">  top_n_per_article: 1</span><br><span class="line">  # Unescape html strings to the readable one.</span><br><span class="line">  unescape: false</span><br><span class="line">  # Preload the search data when the page loads.</span><br><span class="line">  preload: false</span><br></pre></td></tr></table></figure>
-<h2 id="添加个人社交链接"><a href="#添加个人社交链接" class="headerlink" title="添加个人社交链接"></a>添加个人社交链接</h2><p>打开 _config.next.yml ，搜索social</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">social:</span><br><span class="line">  GitHub: https://github.com/xxxxx || fab fa-github</span><br><span class="line">  E-Mail: mailto:xxxxxx@gmail.com || fa fa-envelope</span><br><span class="line">  QQ-Mail: mailto:xxxxxx@qq.com || fab fa-qq</span><br><span class="line">  #Weibo: https://weibo.com/yourname || fab fa-weibo</span><br><span class="line">  #Google: https://plus.google.com/yourname || fab fa-google</span><br><span class="line">  #Twitter: https://twitter.com/yourname || fab fa-twitter</span><br><span class="line">  #FB Page: https://www.facebook.com/yourname || fab fa-facebook</span><br><span class="line">  #StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow</span><br><span class="line">  #YouTube: https://youtube.com/yourname || fab fa-youtube</span><br><span class="line">  #Instagram: https://instagram.com/yourname || fab fa-instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || fab fa-skype</span><br></pre></td></tr></table></figure>
-<h2 id="友情链接添加"><a href="#友情链接添加" class="headerlink" title="友情链接添加"></a>友情链接添加</h2><p>打开 _config.next.yml ，搜索 links</p>
-<p>链接格式设置，block 一行一个链接，inline一行多个链接</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">links_settings:</span><br><span class="line">  icon: fa fa-globe</span><br><span class="line">  title: Links</span><br><span class="line">  # Available values: block | inline</span><br><span class="line">  layout: inline</span><br></pre></td></tr></table></figure>
-<p>添加友情链接</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">links:</span><br><span class="line">  #Title: http://yoursite.com</span><br><span class="line">  Bing: https://cn.bing.com/</span><br><span class="line">  Google: https://www.google.com/</span><br><span class="line">  BiliBili: https://www.bilibili.com/</span><br><span class="line">  YouTube: https://www.youtube.com/</span><br><span class="line">  知乎: https://www.zhihu.com/</span><br></pre></td></tr></table></figure>
-<h2 id="修改文章底部tag的"><a href="#修改文章底部tag的" class="headerlink" title="修改文章底部tag的"></a>修改文章底部tag的</h2><p>进入themes\next\layout_macro，打开post.njk，搜索” rel=”tag”，将后面的替换成<code>&lt;i class=&quot;fas fa-tags&quot;&gt;&lt;/i&gt;</code></p>
-<h2 id="网站logo"><a href="#网站logo" class="headerlink" title="网站logo"></a>网站logo</h2><p>从<a href="https://link.zhihu.com/?target=http%3A//www.iconfont.cn/">阿里巴巴矢量图标库</a>查找自己喜欢的的图标或者在<a href="https://www.bitbug.net/">比特虫</a>制作图标</p>
-<p>将制作好图标重新命名，然后放入image文件夹中</p>
-<p>打开_config.next.yml，搜索favicon，将刚刚重新命名的文件填入</p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="symbol">favicon:</span></span><br><span class="line"><span class="symbol">  small:</span> <span class="meta-keyword">/images/</span>favicon_16x16.ico</span><br><span class="line"><span class="symbol">  medium:</span> <span class="meta-keyword">/images/</span>favicon_32x32.ico</span><br></pre></td></tr></table></figure>
-<h2 id="添加动态背景"><a href="#添加动态背景" class="headerlink" title="添加动态背景"></a>添加动态背景</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ cd themes/next</span><br><span class="line">$ git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
-<p>打开_config.next.yml ，添加以下信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># Canvas-nest</span><br><span class="line"># Dependencies: https://github.com/theme-next/theme-next-canvas-nest</span><br><span class="line">canvas_nest:</span><br><span class="line">  enable: true</span><br><span class="line">  onmobile: true # display on mobile or not</span><br><span class="line">  color: &quot;0,0,255&quot; # RGB values, use &#x27;,&#x27; to separate</span><br><span class="line">  opacity: 0.5 # the opacity of line: 0~1</span><br><span class="line">  zIndex: -1 # z-index property of the background</span><br><span class="line">  count: 99 # the number of lines</span><br></pre></td></tr></table></figure>
-<p>然后在_data文件夹下新建footer.njk，添加以下信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;script color=&quot;0,0,255&quot; opacity=&quot;0.5&quot; zIndex=&quot;-1&quot; count=&quot;99&quot; src=&quot;https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>打开_config.next.yml，搜索<code>custom_file_path</code>，删去footer前的#</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: <span class="keyword">source</span><span class="regexp">/_data/</span>head.njk</span><br><span class="line">  #header: <span class="keyword">source</span><span class="regexp">/_data/</span>header.njk</span><br><span class="line">  #sidebar: <span class="keyword">source</span><span class="regexp">/_data/</span>sidebar.njk</span><br><span class="line">  #postMeta: <span class="keyword">source</span><span class="regexp">/_data/</span>post-meta.njk</span><br><span class="line">  #postBodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>post-body-end.njk</span><br><span class="line">  footer: <span class="keyword">source</span><span class="regexp">/_data/</span>footer.njk</span><br><span class="line">  #bodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>body-end.njk</span><br><span class="line">  #variable: <span class="keyword">source</span><span class="regexp">/_data/</span>variables.styl</span><br><span class="line">  #mixin: <span class="keyword">source</span><span class="regexp">/_data/mi</span>xins.styl</span><br><span class="line">  style: <span class="keyword">source</span><span class="regexp">/_data/</span>styles.styl</span><br></pre></td></tr></table></figure>
-<h2 id="添加文章计数功能"><a href="#添加文章计数功能" class="headerlink" title="添加文章计数功能"></a>添加文章计数功能</h2><p>参考<a href="https://theme-next.js.org/docs/theme-settings/posts.html">官方文档</a></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-word-counter</span><br></pre></td></tr></table></figure>
-<p>打开_config.yml，添加以下信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: true # 文章字数统计</span><br><span class="line">  time: true # 文章时长统计</span><br><span class="line">  total_symbols: true # 全局字数统计</span><br><span class="line">  total_time: true # 全局时长统计</span><br><span class="line">  exclude_codeblock: false  # 排除代码字数统计</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br></pre></td></tr></table></figure>
-<p>打开_config.next.yml，搜索symbols_count_time</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true #分行显示</span><br><span class="line">  item_text_total: true #显示文本</span><br></pre></td></tr></table></figure>
-<h2 id="添加阅读进度条"><a href="#添加阅读进度条" class="headerlink" title="添加阅读进度条"></a>添加阅读进度条</h2><p>打开 _config.next.yml ，搜索reading</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># Reading progress bar</span><br><span class="line">reading_progress:</span><br><span class="line">  enable: true</span><br><span class="line">  # Available values: top | bottom</span><br><span class="line">  position: top</span><br><span class="line">  color: &quot;#FDDF96&quot;</span><br><span class="line">  height: 5px</span><br></pre></td></tr></table></figure>
-<h2 id="修改博客底部显示"><a href="#修改博客底部显示" class="headerlink" title="修改博客底部显示"></a>修改博客底部显示</h2><p>打开 _config.next.yml ，搜索 <code>footer</code></p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">footer:</span><br><span class="line">  # Specify the date when the site was setup. If not defined, current year will be used.</span><br><span class="line">  #since: 2021</span><br><span class="line"></span><br><span class="line">  # Icon between year and copyright info.</span><br><span class="line">  icon:</span><br><span class="line">    # Icon name in Font Awesome. See: https://fontawesome.com/icons</span><br><span class="line">    name: fa fa-heart</span><br><span class="line">    # If you want to animate the icon, set it to true.</span><br><span class="line">    animated: true</span><br><span class="line">    # Change the color of icon, using Hex Code.</span><br><span class="line">    color: &quot;#ff0000&quot;</span><br><span class="line"></span><br><span class="line">  # If not defined, `author` from Hexo `_config.yml` will be used.</span><br><span class="line">  copyright:</span><br><span class="line"></span><br><span class="line">  # Powered by Hexo &amp; NexT</span><br><span class="line">  powered: false</span><br></pre></td></tr></table></figure>
-<h2 id="添加网站运行时间"><a href="#添加网站运行时间" class="headerlink" title="添加网站运行时间"></a>添加网站运行时间</h2><p>打开 footer.njk ,添加以下信息</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;span&gt;本站已运行&lt;span id=&quot;showDays&quot;&gt;&lt;/span&gt;&lt;/span&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var seconds = 1000;</span><br><span class="line">  var minutes = seconds * 60;</span><br><span class="line">  var hours = minutes * 60;</span><br><span class="line">  var days = hours * 24;</span><br><span class="line">  var years = days * 365;</span><br><span class="line">  var birthDay = Date.UTC(2021,02,20,08,00,00); // 这里设置建站时间</span><br><span class="line">  setInterval(function() &#123;</span><br><span class="line">    var today = new Date();</span><br><span class="line">    var todayYear = today.getFullYear();</span><br><span class="line">    var todayMonth = today.getMonth()+1;</span><br><span class="line">    var todayDate = today.getDate();</span><br><span class="line">    var todayHour = today.getHours();</span><br><span class="line">    var todayMinute = today.getMinutes();</span><br><span class="line">    var todaySecond = today.getSeconds();</span><br><span class="line">    var now = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);</span><br><span class="line">    var diff = now - birthDay;</span><br><span class="line">    var diffYears = Math.floor(diff/years);</span><br><span class="line">    var diffDays = Math.floor((diff/days)-diffYears*365);</span><br><span class="line">    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);</span><br><span class="line">    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);</span><br><span class="line">    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);</span><br><span class="line">      document.getElementById(&#x27;showDays&#x27;).innerHTML=&quot;&quot;+diffYears+&quot;年&quot;+diffDays+&quot;天&quot;+diffHours+&quot;小时&quot;+diffMinutes+&quot;分钟&quot;+diffSeconds+&quot;秒&quot;;</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="添加文章版权声明"><a href="#添加文章版权声明" class="headerlink" title="添加文章版权声明"></a>添加文章版权声明</h2><p>打开 _config.next.yml ,搜索creative_commons</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">creative_commons:</span><br><span class="line">  license: by-nc-sa</span><br><span class="line">  sidebar: false</span><br><span class="line">  post: true</span><br><span class="line">  language:</span><br></pre></td></tr></table></figure>
-<p>打开 _config.yml ,将url设置为自己的域名</p>
-<h2 id="图片放大查看"><a href="#图片放大查看" class="headerlink" title="图片放大查看"></a>图片放大查看</h2><p>打开 _config.next.yml ,搜索<code>fancybox</code>, 设置为true</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">cd next</span><br><span class="line">$ git clone https://github.com/theme-next/theme-next-fancybox3 source/lib/fancybox</span><br></pre></td></tr></table></figure>
-<h2 id="添加背景图片"><a href="#添加背景图片" class="headerlink" title="添加背景图片"></a>添加背景图片</h2><p>打开 style.styl , 添加</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line"> 	background:url(/images/background.jpg);</span><br><span class="line"> 	background-repeat: no-repeat;</span><br><span class="line">    background-attachment:fixed;</span><br><span class="line">    background-position:50% 50%;</span><br><span class="line">    background-size:cover</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h2 id="修改透明度"><a href="#修改透明度" class="headerlink" title="修改透明度"></a>修改透明度</h2><p>打开 style.styl , 添加</p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="comment">//博客内容透明化</span></span><br><span class="line"><span class="comment">//文章内容的透明度设置</span></span><br><span class="line">.main-<span class="class">inner </span>&#123; </span><br><span class="line">   <span class="comment">// margin-top: 60px;</span></span><br><span class="line">   <span class="comment">// padding: 60px 60px 60px 60px;</span></span><br><span class="line"><span class="symbol">    opacity:</span> <span class="number">0.8</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//侧边框的透明度设置</span></span><br><span class="line">.<span class="class">sidebar </span>&#123;</span><br><span class="line"><span class="symbol">  opacity:</span> <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//菜单栏的透明度设置</span></span><br><span class="line">.header-<span class="class">inner </span>&#123;</span><br><span class="line"><span class="symbol">  background:</span> rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//搜索框（local-search）的透明度设置</span></span><br><span class="line">.<span class="class">popup </span>&#123;</span><br><span class="line"><span class="symbol">  opacity:</span> <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="修改行代码样式"><a href="#修改行代码样式" class="headerlink" title="修改行代码样式"></a><p id="test">修改行代码样式</p></h2><p>打开 style.styl</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">// 代码行样式</span><br><span class="line">code&#123;</span><br><span class="line">  background: #FCDF9A;</span><br><span class="line">  color: #FF7029;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="文章内跳转"><a href="#文章内跳转" class="headerlink" title="文章内跳转"></a>文章内跳转</h2><p>语法:</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;p id=&quot;XXX&quot;&gt;应该跳转到的地方的文字&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;#XXX&quot;&gt;你的跳转按钮的文字&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-<p>样例</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;p id=&quot;test&quot;&gt;修改行代码样式&lt;/p&gt;</span><br><span class="line">&lt;a href=&quot;#test&quot;&gt;点击查看修改行代码样式&lt;/a&gt;</span><br></pre></td></tr></table></figure>
-<p><a href="#test">点击查看修改行代码样式</a></p>
-<h2 id="链接持久化"><a href="#链接持久化" class="headerlink" title="链接持久化"></a>链接持久化</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">cd blog</span><br><span class="line">$ npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
-<p>打开 _config.yml ,搜索permalink</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">permalink: :abbrlink/</span><br><span class="line">abbrlink:</span><br><span class="line">  alg: crc32  # 算法：crc16(default) and crc32</span><br><span class="line">  rep: hex    # 进制：dec(default) and hex</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
-<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><blockquote>
-<p>感谢以下文章的帮助</p>
-<p><a href="https://zhuanlan.zhihu.com/p/251383216">hexo主题安装以及next8.0主题美化</a></p>
-<p><a href="https://www.hxhowl.com/posts/e6f9a475/">blog - hexo NexT主题下配置和美化</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>hexo</category>
-        <category>next</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux多节点环境打造</title>
-    <url>/d49360d3/</url>
-    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
-<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
-<p>选择CentOS7下的x86_64</p>
-<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
-<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
-<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
-<a id="more"></a>
-<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
-<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
-<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
-<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
-<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
-<p>选择-典型</p>
-<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
-<p>选择-稍后安装操作系统</p>
-<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
-<p>选择-CentOS7 64位版本</p>
-<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
-<p>设置名称和路径</p>
-<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
-<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
-<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
-<p>自定义硬件</p>
-<p>选择刚刚下载CentOS7 ios文件</p>
-<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
-<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
-<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
-<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
-<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
-<p>点击完成，然后启动</p>
-<p>按下键盘↑方向键，回车</p>
-<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
-<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
-<p>设置root密码</p>
-<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
-<p>静静等待安装~</p>
-<p>最后创建用户名即可</p>
-<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
-<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
-<p>如何查看自己的网卡</p>
-<p>打开网络与共享中心——点击你所连接的网络——属性</p>
-<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
-<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
-<p>输入密码（密码不会显示），回车</p>
-<p>输入<code>dhclient</code></p>
-<p>输入<code>ifconfig</code></p>
-<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
-<p>ens33下的inet会有一串ip，记住</p>
-<p>然后输入</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
-<p>修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
-<p>添加</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
-<p>打开网络与共享中心</p>
-<p>点击你所连接的网络</p>
-<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
-<p>点击详细信息，即可看到所需信息</p>
-<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
-<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
-<p>输入以下命令，重启网卡</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
-<p>检验是否可以连接外网</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-<p>若有数据，即成功</p>
-<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
-<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
-<p>虚拟机——管理——克隆——创建完整克隆</p>
-<p>设置静态ip参考上文</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java基础语言</title>
     <url>/24268d51/</url>
     <content><![CDATA[<h1 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><h3 id="简单（原始）"><a href="#简单（原始）" class="headerlink" title="简单（原始）"></a>简单（原始）</h3><blockquote>
@@ -1056,6 +842,88 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux多节点环境打造</title>
+    <url>/d49360d3/</url>
+    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
+<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
+<p>选择CentOS7下的x86_64</p>
+<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
+<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
+<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
+<a id="more"></a>
+<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
+<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
+<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
+<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
+<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
+<p>选择-典型</p>
+<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
+<p>选择-稍后安装操作系统</p>
+<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
+<p>选择-CentOS7 64位版本</p>
+<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
+<p>设置名称和路径</p>
+<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
+<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
+<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
+<p>自定义硬件</p>
+<p>选择刚刚下载CentOS7 ios文件</p>
+<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
+<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
+<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
+<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
+<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
+<p>点击完成，然后启动</p>
+<p>按下键盘↑方向键，回车</p>
+<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
+<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
+<p>设置root密码</p>
+<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
+<p>静静等待安装~</p>
+<p>最后创建用户名即可</p>
+<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
+<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
+<p>如何查看自己的网卡</p>
+<p>打开网络与共享中心——点击你所连接的网络——属性</p>
+<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
+<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
+<p>输入密码（密码不会显示），回车</p>
+<p>输入<code>dhclient</code></p>
+<p>输入<code>ifconfig</code></p>
+<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
+<p>ens33下的inet会有一串ip，记住</p>
+<p>然后输入</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
+<p>修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>添加</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
+<p>打开网络与共享中心</p>
+<p>点击你所连接的网络</p>
+<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
+<p>点击详细信息，即可看到所需信息</p>
+<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
+<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
+<p>输入以下命令，重启网卡</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
+<p>检验是否可以连接外网</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>若有数据，即成功</p>
+<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
+<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
+<p>虚拟机——管理——克隆——创建完整克隆</p>
+<p>设置静态ip参考上文</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从线性变换角度理解线性代数</title>
     <url>/47d0bf4a/</url>
     <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量</p>
@@ -1070,6 +938,138 @@
       </categories>
       <tags>
         <tag>线性代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>next8.0主题配置</title>
+    <url>/4c5284d4/</url>
+    <content><![CDATA[<h1 id="next主题安装及美化"><a href="#next主题安装及美化" class="headerlink" title="next主题安装及美化"></a>next主题安装及美化</h1><h2 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h2><p><a href="https://theme-next.js.org/">next主题官方文档</a></p>
+<p>使用工具 Notepad++、Typora、Git</p>
+<blockquote>
+<p>博主一开始直接使用next 8.2.0版本（当时最新版本），由于该版本不再支持valine评论系统，所以博主安装了next 8.0.0 版本</p>
+<p>但8.2.0支持其它评论系统，读者可以在<a href="https://theme-next.js.org/docs/third-party-services/comments.html">官方文档</a>阅读查看</p>
+</blockquote>
+<a id="more"></a>
+<p>在你的博客路径下</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ cd blog</span><br></pre></td></tr></table></figure>
+<p>安装最新版next</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<p>镜像安装，速度较快（推荐）</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone https://gitlab.com/hexo-theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<p>指定安装版本text</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone --branch v8.0.0 https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<p>镜像安装，速度较快（推荐）</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ git clone --branch v8.0.0 https://gitlab.com/hexo-theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<p>然后将你博客根目录下的_config.yml打开（使用 Notepad++ 打开）</p>
+<p>搜索themes，将里面的值改为next</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
+<h2 id="text基本配置信息"><a href="#text基本配置信息" class="headerlink" title="text基本配置信息"></a>text基本配置信息</h2><blockquote>
+<p>由于next版本升级后，官方不建议直接修改next文件夹下的_config.yml</p>
+<p>因此我们将 themes/next/config.yml 复制到你的博客根目录，重命名为_config.next.yml</p>
+</blockquote>
+<p>选择Schemes</p>
+<p>打开 _config.next.yml，通过 Ctrl+F 搜索Scheme Settings，里面提供了四种模式，可以根据自己的喜好更改。</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">#scheme: MuseC</span><br><span class="line">#scheme: Mist</span><br><span class="line">scheme: Pisces</span><br><span class="line">#scheme: Gemini</span><br></pre></td></tr></table></figure>
+<h2 id="设置菜单栏"><a href="#设置菜单栏" class="headerlink" title="设置菜单栏"></a>设置菜单栏</h2><p>搜索menu，可以设置菜单显示内容，此版本next支持font awesome图标，可以去<a href="https://link.zhihu.com/?target=https%3A//fontawesome.com/">官网</a>更换其它图标。</p>
+<p>若出现页面404情况，可将||前面空格删去</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line"> home: / || fa fa-home</span><br><span class="line"> #about: /about/ || fa fa-user</span><br><span class="line"> tags: /tags/ || fa fa-tags</span><br><span class="line"> categories: /categories/ || fa fa-th</span><br><span class="line"> archives: /archives/ || fa fa-archive</span><br><span class="line"> #schedule: /schedule/ || fa fa-calendar</span><br><span class="line"> #sitemap: /sitemap.xml || fa fa-sitemap</span><br><span class="line"> #commonweal: /404/ || fa fa-heartbeat</span><br></pre></td></tr></table></figure>
+<h2 id="开启tags标签栏"><a href="#开启tags标签栏" class="headerlink" title="开启tags标签栏"></a>开启tags标签栏</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ cd blog</span><br><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
+<p>此时在你的 source/ 文件夹下会出现一个对应的tags文件夹，打开index.md（使用Typora）并编辑为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2021-02-19 20:08:14</span><br><span class="line">type: tags</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>其它菜单栏同理操作，编辑各自对应type类型即可</p>
+<h2 id="设置新建文章模板"><a href="#设置新建文章模板" class="headerlink" title="设置新建文章模板"></a>设置新建文章模板</h2><p>新建文章</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> blog</span><br><span class="line"><span class="variable">$</span> hexo new <span class="string">&quot;文章名称&quot;</span></span><br></pre></td></tr></table></figure>
+<p>进入 scaffolds 文件夹，打开 post.md 文件，根据你刚刚开启的菜单栏进行修改</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br></pre></td></tr></table></figure>
+<h2 id="设置超链接样式"><a href="#设置超链接样式" class="headerlink" title="设置超链接样式"></a>设置超链接样式</h2><p>在根目录的source里新建 _data/styles.styl 文件，然后进入_config.next.yml，搜索 custom_file_path，删去下面style前面的#</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: <span class="keyword">source</span><span class="regexp">/_data/</span>head.njk</span><br><span class="line">  #header: <span class="keyword">source</span><span class="regexp">/_data/</span>header.njk</span><br><span class="line">  #sidebar: <span class="keyword">source</span><span class="regexp">/_data/</span>sidebar.njk</span><br><span class="line">  #postMeta: <span class="keyword">source</span><span class="regexp">/_data/</span>post-meta.njk</span><br><span class="line">  #postBodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>post-body-end.njk</span><br><span class="line">  #footer: <span class="keyword">source</span><span class="regexp">/_data/</span>footer.njk</span><br><span class="line">  #bodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>body-end.njk</span><br><span class="line">  #variable: <span class="keyword">source</span><span class="regexp">/_data/</span>variables.styl</span><br><span class="line">  #mixin: <span class="keyword">source</span><span class="regexp">/_data/mi</span>xins.styl</span><br><span class="line">  style: <span class="keyword">source</span><span class="regexp">/_data/</span>styles.styl</span><br></pre></td></tr></table></figure>
+<p>然后打开刚刚新建的 styles.styl ，添加以下信息，颜色代码可在该<a href="https://htmlcolorcodes.com/zh/">网站</a>查询</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">// 修改链接样式</span><br><span class="line">// 修改文章内</span><br><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#0593d3</span>;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#E71DF7</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 修改侧栏</span><br><span class="line"><span class="selector-tag">a</span>, <span class="selector-tag">span</span><span class="selector-class">.exturl</span> &#123;</span><br><span class="line">  <span class="attribute">border-bottom</span>: none;</span><br><span class="line">  &amp;<span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#76C4F5</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="菜单侧栏设置"><a href="#菜单侧栏设置" class="headerlink" title="菜单侧栏设置"></a>菜单侧栏设置</h2><p>打开 _config.next.yml ，搜索sidebar</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">sidebar</span>:<span class="string"></span></span><br><span class="line"><span class="comment">  # Sidebar Position.</span></span><br><span class="line">  <span class="attr">position</span>: <span class="string">left</span></span><br><span class="line"><span class="comment">  #position: right</span></span><br><span class="line"></span><br><span class="line"><span class="comment">  # Manual define the sidebar width. If commented, will be default for:</span></span><br><span class="line"><span class="comment">  # Muse | Mist: 320</span></span><br><span class="line"><span class="comment">  # Pisces | Gemini: 240</span></span><br><span class="line"><span class="comment">  #width: 300</span></span><br><span class="line"></span><br><span class="line"><span class="comment">  # Sidebar Display (only for Muse | Mist), available values:</span></span><br><span class="line"><span class="comment">  #  - post    expand on posts automatically. Default.</span></span><br><span class="line"><span class="comment">  #  - always  expand for all pages automatically.</span></span><br><span class="line"><span class="comment">  #  - hide    expand only when click on the sidebar toggle icon.</span></span><br><span class="line"><span class="comment">  #  - remove  totally remove sidebar including sidebar toggle.</span></span><br><span class="line">  <span class="attr">display</span>: <span class="string">post</span></span><br><span class="line"></span><br><span class="line"><span class="comment">  # Sidebar padding in pixels.</span></span><br><span class="line">  <span class="attr">padding</span>: <span class="string">18</span></span><br><span class="line"><span class="comment">  # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).</span></span><br><span class="line">  <span class="attr">offset</span>: <span class="string">12</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h2><p>打开 _config.next.yml ，搜索Sidebar Avatar</p>
+<p>将你的头像图片命名好，我的是header.jpg，然后放入 themes/next/source/images  里</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Sidebar Avatar</span></span><br><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="comment"># Replace the default image and set the url here.</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/images/header.jpg</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be dispalyed in circle.</span></span><br><span class="line">  <span class="attr">rounded:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># If true, the avatar will be rotated with the cursor.</span></span><br><span class="line">  <span class="attr">rotated:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置代码高亮"><a href="#设置代码高亮" class="headerlink" title="设置代码高亮"></a>设置代码高亮</h2><p>进入 _config.yml ，搜索hightlight，将auto_detect改为true:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span></span><br></pre></td></tr></table></figure>
+<p>进入 _config.next.yml ，搜索 codeblock ，修改theme下的主题，可以该<a href="https://theme-next.js.org/highlight/">网站</a>查找自己喜欢的代码高亮样式</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="symbol">codeblock:</span></span><br><span class="line">  <span class="meta"># Code Highlight theme</span></span><br><span class="line">  <span class="meta"># All available themes: https:<span class="comment">//theme-next.js.org/highlight/</span></span></span><br><span class="line"><span class="symbol">  theme:</span></span><br><span class="line"><span class="symbol">    light:</span> tomorrow-night-eighties</span><br><span class="line"><span class="symbol">    dark:</span> tomorrow-night-eighties</span><br><span class="line"><span class="symbol">  prism:</span></span><br><span class="line"><span class="symbol">    light:</span> prism</span><br><span class="line"><span class="symbol">    dark:</span> prism-dark</span><br><span class="line">  <span class="meta"># Add copy button on codeblock</span></span><br><span class="line"><span class="symbol">  copy_button:</span></span><br><span class="line"><span class="symbol">    enable:</span> false</span><br><span class="line">    <span class="meta"># Available values: default | flat | mac</span></span><br><span class="line"><span class="symbol">    style:</span></span><br></pre></td></tr></table></figure>
+<h2 id="添加阅读全文按钮和修改其样式"><a href="#添加阅读全文按钮和修改其样式" class="headerlink" title="添加阅读全文按钮和修改其样式"></a>添加阅读全文按钮和修改其样式</h2><p>添加按钮</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">文章中添加<span class="comment">&lt;!--more--&gt;</span>,你想再哪儿截止就在哪儿添加</span><br></pre></td></tr></table></figure>
+<p>修改样式</p>
+<p>进入之前的 styles.styl ，添加以下代码，读者可以根据自己喜好进行修改</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">// [Read More]按钮样式</span><br><span class="line">.post-button .btn &#123;</span><br><span class="line">    color: #555 !important;</span><br><span class="line">    background-color: rgb(255, 255, 255);</span><br><span class="line">    border-radius: 3px;</span><br><span class="line">    font-size: 15px;</span><br><span class="line">    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.35);</span><br><span class="line">    border: none !important;</span><br><span class="line">    transition-property: unset;</span><br><span class="line">    padding: 0px 15px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.post-button .btn:hover &#123;</span><br><span class="line">    color: rgb(255, 255, 255) !important;</span><br><span class="line">    border-radius: 3px;</span><br><span class="line">    font-size: 15px;</span><br><span class="line">    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.35);</span><br><span class="line">    background-image: linear-gradient(90deg, #a166ab 0%, #ef4e7b 25%, #f37055 50%, #ef4e7b 75%, #a166ab 100%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改标题栏颜色"><a href="#修改标题栏颜色" class="headerlink" title="修改标题栏颜色"></a>修改标题栏颜色</h2><p>进入之前的 styles.styl ，添加以下代码，读者可以根据自己喜好进行修改</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">.site-meta &#123;</span><br><span class="line">  background: #FF8C00; //修改为自己喜欢的颜色</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加本地搜索功能"><a href="#添加本地搜索功能" class="headerlink" title="添加本地搜索功能"></a>添加本地搜索功能</h2><p>安装 <a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fflashlab%2Fhexo-generator-search">hexo-generator-searchdb</a> 插件</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>打开 _config.yml ，添加以下代码</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 搜索</span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+<p>打开 _config.next.yml ，搜索local_search </p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: true</span><br><span class="line">  # If auto, trigger search by changing input.</span><br><span class="line">  # If manual, trigger search by pressing enter key or search button.</span><br><span class="line">  trigger: auto</span><br><span class="line">  # Show top n results per article, show all results by setting to -1</span><br><span class="line">  top_n_per_article: 1</span><br><span class="line">  # Unescape html strings to the readable one.</span><br><span class="line">  unescape: false</span><br><span class="line">  # Preload the search data when the page loads.</span><br><span class="line">  preload: false</span><br></pre></td></tr></table></figure>
+<h2 id="添加个人社交链接"><a href="#添加个人社交链接" class="headerlink" title="添加个人社交链接"></a>添加个人社交链接</h2><p>打开 _config.next.yml ，搜索social</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">social:</span><br><span class="line">  GitHub: https://github.com/xxxxx || fab fa-github</span><br><span class="line">  E-Mail: mailto:xxxxxx@gmail.com || fa fa-envelope</span><br><span class="line">  QQ-Mail: mailto:xxxxxx@qq.com || fab fa-qq</span><br><span class="line">  #Weibo: https://weibo.com/yourname || fab fa-weibo</span><br><span class="line">  #Google: https://plus.google.com/yourname || fab fa-google</span><br><span class="line">  #Twitter: https://twitter.com/yourname || fab fa-twitter</span><br><span class="line">  #FB Page: https://www.facebook.com/yourname || fab fa-facebook</span><br><span class="line">  #StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow</span><br><span class="line">  #YouTube: https://youtube.com/yourname || fab fa-youtube</span><br><span class="line">  #Instagram: https://instagram.com/yourname || fab fa-instagram</span><br><span class="line">  #Skype: skype:yourname?call|chat || fab fa-skype</span><br></pre></td></tr></table></figure>
+<h2 id="友情链接添加"><a href="#友情链接添加" class="headerlink" title="友情链接添加"></a>友情链接添加</h2><p>打开 _config.next.yml ，搜索 links</p>
+<p>链接格式设置，block 一行一个链接，inline一行多个链接</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">links_settings:</span><br><span class="line">  icon: fa fa-globe</span><br><span class="line">  title: Links</span><br><span class="line">  # Available values: block | inline</span><br><span class="line">  layout: inline</span><br></pre></td></tr></table></figure>
+<p>添加友情链接</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">links:</span><br><span class="line">  #Title: http://yoursite.com</span><br><span class="line">  Bing: https://cn.bing.com/</span><br><span class="line">  Google: https://www.google.com/</span><br><span class="line">  BiliBili: https://www.bilibili.com/</span><br><span class="line">  YouTube: https://www.youtube.com/</span><br><span class="line">  知乎: https://www.zhihu.com/</span><br></pre></td></tr></table></figure>
+<h2 id="修改文章底部tag的"><a href="#修改文章底部tag的" class="headerlink" title="修改文章底部tag的"></a>修改文章底部tag的</h2><p>进入themes\next\layout_macro，打开post.njk，搜索” rel=”tag”，将后面的替换成<code>&lt;i class=&quot;fas fa-tags&quot;&gt;&lt;/i&gt;</code></p>
+<h2 id="网站logo"><a href="#网站logo" class="headerlink" title="网站logo"></a>网站logo</h2><p>从<a href="https://link.zhihu.com/?target=http%3A//www.iconfont.cn/">阿里巴巴矢量图标库</a>查找自己喜欢的的图标或者在<a href="https://www.bitbug.net/">比特虫</a>制作图标</p>
+<p>将制作好图标重新命名，然后放入image文件夹中</p>
+<p>打开_config.next.yml，搜索favicon，将刚刚重新命名的文件填入</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="symbol">favicon:</span></span><br><span class="line"><span class="symbol">  small:</span> <span class="meta-keyword">/images/</span>favicon_16x16.ico</span><br><span class="line"><span class="symbol">  medium:</span> <span class="meta-keyword">/images/</span>favicon_32x32.ico</span><br></pre></td></tr></table></figure>
+<h2 id="添加动态背景"><a href="#添加动态背景" class="headerlink" title="添加动态背景"></a>添加动态背景</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ cd themes/next</span><br><span class="line">$ git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
+<p>打开_config.next.yml ，添加以下信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># Canvas-nest</span><br><span class="line"># Dependencies: https://github.com/theme-next/theme-next-canvas-nest</span><br><span class="line">canvas_nest:</span><br><span class="line">  enable: true</span><br><span class="line">  onmobile: true # display on mobile or not</span><br><span class="line">  color: &quot;0,0,255&quot; # RGB values, use &#x27;,&#x27; to separate</span><br><span class="line">  opacity: 0.5 # the opacity of line: 0~1</span><br><span class="line">  zIndex: -1 # z-index property of the background</span><br><span class="line">  count: 99 # the number of lines</span><br></pre></td></tr></table></figure>
+<p>然后在_data文件夹下新建footer.njk，添加以下信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;script color=&quot;0,0,255&quot; opacity=&quot;0.5&quot; zIndex=&quot;-1&quot; count=&quot;99&quot; src=&quot;https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>打开_config.next.yml，搜索<code>custom_file_path</code>，删去footer前的#</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">custom_file_path:</span><br><span class="line">  #head: <span class="keyword">source</span><span class="regexp">/_data/</span>head.njk</span><br><span class="line">  #header: <span class="keyword">source</span><span class="regexp">/_data/</span>header.njk</span><br><span class="line">  #sidebar: <span class="keyword">source</span><span class="regexp">/_data/</span>sidebar.njk</span><br><span class="line">  #postMeta: <span class="keyword">source</span><span class="regexp">/_data/</span>post-meta.njk</span><br><span class="line">  #postBodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>post-body-end.njk</span><br><span class="line">  footer: <span class="keyword">source</span><span class="regexp">/_data/</span>footer.njk</span><br><span class="line">  #bodyEnd: <span class="keyword">source</span><span class="regexp">/_data/</span>body-end.njk</span><br><span class="line">  #variable: <span class="keyword">source</span><span class="regexp">/_data/</span>variables.styl</span><br><span class="line">  #mixin: <span class="keyword">source</span><span class="regexp">/_data/mi</span>xins.styl</span><br><span class="line">  style: <span class="keyword">source</span><span class="regexp">/_data/</span>styles.styl</span><br></pre></td></tr></table></figure>
+<h2 id="添加文章计数功能"><a href="#添加文章计数功能" class="headerlink" title="添加文章计数功能"></a>添加文章计数功能</h2><p>参考<a href="https://theme-next.js.org/docs/theme-settings/posts.html">官方文档</a></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-word-counter</span><br></pre></td></tr></table></figure>
+<p>打开_config.yml，添加以下信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: true # 文章字数统计</span><br><span class="line">  time: true # 文章时长统计</span><br><span class="line">  total_symbols: true # 全局字数统计</span><br><span class="line">  total_time: true # 全局时长统计</span><br><span class="line">  exclude_codeblock: false  # 排除代码字数统计</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br></pre></td></tr></table></figure>
+<p>打开_config.next.yml，搜索symbols_count_time</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true #分行显示</span><br><span class="line">  item_text_total: true #显示文本</span><br></pre></td></tr></table></figure>
+<h2 id="添加阅读进度条"><a href="#添加阅读进度条" class="headerlink" title="添加阅读进度条"></a>添加阅读进度条</h2><p>打开 _config.next.yml ，搜索reading</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># Reading progress bar</span><br><span class="line">reading_progress:</span><br><span class="line">  enable: true</span><br><span class="line">  # Available values: top | bottom</span><br><span class="line">  position: top</span><br><span class="line">  color: &quot;#FDDF96&quot;</span><br><span class="line">  height: 5px</span><br></pre></td></tr></table></figure>
+<h2 id="修改博客底部显示"><a href="#修改博客底部显示" class="headerlink" title="修改博客底部显示"></a>修改博客底部显示</h2><p>打开 _config.next.yml ，搜索 <code>footer</code></p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">footer:</span><br><span class="line">  # Specify the date when the site was setup. If not defined, current year will be used.</span><br><span class="line">  #since: 2021</span><br><span class="line"></span><br><span class="line">  # Icon between year and copyright info.</span><br><span class="line">  icon:</span><br><span class="line">    # Icon name in Font Awesome. See: https://fontawesome.com/icons</span><br><span class="line">    name: fa fa-heart</span><br><span class="line">    # If you want to animate the icon, set it to true.</span><br><span class="line">    animated: true</span><br><span class="line">    # Change the color of icon, using Hex Code.</span><br><span class="line">    color: &quot;#ff0000&quot;</span><br><span class="line"></span><br><span class="line">  # If not defined, `author` from Hexo `_config.yml` will be used.</span><br><span class="line">  copyright:</span><br><span class="line"></span><br><span class="line">  # Powered by Hexo &amp; NexT</span><br><span class="line">  powered: false</span><br></pre></td></tr></table></figure>
+<h2 id="添加网站运行时间"><a href="#添加网站运行时间" class="headerlink" title="添加网站运行时间"></a>添加网站运行时间</h2><p>打开 footer.njk ,添加以下信息</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;span&gt;本站已运行&lt;span id=&quot;showDays&quot;&gt;&lt;/span&gt;&lt;/span&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var seconds = 1000;</span><br><span class="line">  var minutes = seconds * 60;</span><br><span class="line">  var hours = minutes * 60;</span><br><span class="line">  var days = hours * 24;</span><br><span class="line">  var years = days * 365;</span><br><span class="line">  var birthDay = Date.UTC(2021,02,20,08,00,00); // 这里设置建站时间</span><br><span class="line">  setInterval(function() &#123;</span><br><span class="line">    var today = new Date();</span><br><span class="line">    var todayYear = today.getFullYear();</span><br><span class="line">    var todayMonth = today.getMonth()+1;</span><br><span class="line">    var todayDate = today.getDate();</span><br><span class="line">    var todayHour = today.getHours();</span><br><span class="line">    var todayMinute = today.getMinutes();</span><br><span class="line">    var todaySecond = today.getSeconds();</span><br><span class="line">    var now = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);</span><br><span class="line">    var diff = now - birthDay;</span><br><span class="line">    var diffYears = Math.floor(diff/years);</span><br><span class="line">    var diffDays = Math.floor((diff/days)-diffYears*365);</span><br><span class="line">    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);</span><br><span class="line">    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);</span><br><span class="line">    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);</span><br><span class="line">      document.getElementById(&#x27;showDays&#x27;).innerHTML=&quot;&quot;+diffYears+&quot;年&quot;+diffDays+&quot;天&quot;+diffHours+&quot;小时&quot;+diffMinutes+&quot;分钟&quot;+diffSeconds+&quot;秒&quot;;</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="添加文章版权声明"><a href="#添加文章版权声明" class="headerlink" title="添加文章版权声明"></a>添加文章版权声明</h2><p>打开 _config.next.yml ,搜索creative_commons</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">creative_commons:</span><br><span class="line">  license: by-nc-sa</span><br><span class="line">  sidebar: false</span><br><span class="line">  post: true</span><br><span class="line">  language:</span><br></pre></td></tr></table></figure>
+<p>打开 _config.yml ,将url设置为自己的域名</p>
+<h2 id="图片放大查看"><a href="#图片放大查看" class="headerlink" title="图片放大查看"></a>图片放大查看</h2><p>打开 _config.next.yml ,搜索<code>fancybox</code>, 设置为true</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">cd next</span><br><span class="line">$ git clone https://github.com/theme-next/theme-next-fancybox3 source/lib/fancybox</span><br></pre></td></tr></table></figure>
+<h2 id="添加背景图片"><a href="#添加背景图片" class="headerlink" title="添加背景图片"></a>添加背景图片</h2><p>打开 style.styl , 添加</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line"> 	background:url(/images/background.jpg);</span><br><span class="line"> 	background-repeat: no-repeat;</span><br><span class="line">    background-attachment:fixed;</span><br><span class="line">    background-position:50% 50%;</span><br><span class="line">    background-size:cover</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h2 id="修改透明度"><a href="#修改透明度" class="headerlink" title="修改透明度"></a>修改透明度</h2><p>打开 style.styl , 添加</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><span class="line"><span class="comment">//博客内容透明化</span></span><br><span class="line"><span class="comment">//文章内容的透明度设置</span></span><br><span class="line">.main-<span class="class">inner </span>&#123; </span><br><span class="line">   <span class="comment">// margin-top: 60px;</span></span><br><span class="line">   <span class="comment">// padding: 60px 60px 60px 60px;</span></span><br><span class="line"><span class="symbol">    opacity:</span> <span class="number">0.8</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//侧边框的透明度设置</span></span><br><span class="line">.<span class="class">sidebar </span>&#123;</span><br><span class="line"><span class="symbol">  opacity:</span> <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//菜单栏的透明度设置</span></span><br><span class="line">.header-<span class="class">inner </span>&#123;</span><br><span class="line"><span class="symbol">  background:</span> rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//搜索框（local-search）的透明度设置</span></span><br><span class="line">.<span class="class">popup </span>&#123;</span><br><span class="line"><span class="symbol">  opacity:</span> <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="修改行代码样式"><a href="#修改行代码样式" class="headerlink" title="修改行代码样式"></a><p id="test">修改行代码样式</p></h2><p>打开 style.styl</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">// 代码行样式</span><br><span class="line">code&#123;</span><br><span class="line">  background: #FCDF9A;</span><br><span class="line">  color: #FF7029;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文章内跳转"><a href="#文章内跳转" class="headerlink" title="文章内跳转"></a>文章内跳转</h2><p>语法:</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;p id=&quot;XXX&quot;&gt;应该跳转到的地方的文字&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;a href=&quot;#XXX&quot;&gt;你的跳转按钮的文字&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>样例</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;p id=&quot;test&quot;&gt;修改行代码样式&lt;/p&gt;</span><br><span class="line">&lt;a href=&quot;#test&quot;&gt;点击查看修改行代码样式&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="#test">点击查看修改行代码样式</a></p>
+<h2 id="链接持久化"><a href="#链接持久化" class="headerlink" title="链接持久化"></a>链接持久化</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">cd blog</span><br><span class="line">$ npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+<p>打开 _config.yml ,搜索permalink</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">permalink: :abbrlink/</span><br><span class="line">abbrlink:</span><br><span class="line">  alg: crc32  # 算法：crc16(default) and crc32</span><br><span class="line">  rep: hex    # 进制：dec(default) and hex</span><br><span class="line">permalink_defaults:</span><br></pre></td></tr></table></figure>
+<h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><blockquote>
+<p>感谢以下文章的帮助</p>
+<p><a href="https://zhuanlan.zhihu.com/p/251383216">hexo主题安装以及next8.0主题美化</a></p>
+<p><a href="https://www.hxhowl.com/posts/e6f9a475/">blog - hexo NexT主题下配置和美化</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>hexo</category>
+        <category>next</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>next</tag>
       </tags>
   </entry>
   <entry>
