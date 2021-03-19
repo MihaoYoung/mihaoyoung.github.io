@@ -130,13 +130,6 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/%E5%90%8E%E7%AB%AF/</loc>
-    <lastmod>2021-03-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://mihaoyoung.github.io/tags/%E5%BC%82%E5%B8%B8/</loc>
     <lastmod>2021-03-19</lastmod>
     <changefreq>daily</changefreq>
@@ -144,14 +137,7 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/MySQL/</loc>
-    <lastmod>2021-03-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://mihaoyoung.github.io/tags/LeeCode/</loc>
+    <loc>https://mihaoyoung.github.io/tags/%E5%90%8E%E7%AB%AF/</loc>
     <lastmod>2021-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -166,6 +152,20 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/tags/next/</loc>
+    <lastmod>2021-03-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/MySQL/</loc>
+    <lastmod>2021-03-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/LeeCode/</loc>
     <lastmod>2021-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -209,14 +209,21 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/MySQL/</loc>
+    <loc>https://mihaoyoung.github.io/categories/hexo/</loc>
     <lastmod>2021-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/hexo/</loc>
+    <loc>https://mihaoyoung.github.io/categories/hexo/next/</loc>
+    <lastmod>2021-03-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/categories/MySQL/</loc>
     <lastmod>2021-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -231,13 +238,6 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2021-03-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://mihaoyoung.github.io/categories/hexo/next/</loc>
     <lastmod>2021-03-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
