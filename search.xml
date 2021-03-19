@@ -1022,23 +1022,6 @@
       </tags>
   </entry>
   <entry>
-    <title>从线性变换角度理解线性代数</title>
-    <url>/47d0bf4a/</url>
-    <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-1\\\\
-2
-\end{bmatrix}
-=1\hat i+2\hat j</script>]]></content>
-      <categories>
-        <category>线性代数</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>next8.0主题配置</title>
     <url>/4c5284d4/</url>
     <content><![CDATA[<h1 id="next主题安装及美化"><a href="#next主题安装及美化" class="headerlink" title="next主题安装及美化"></a>next主题安装及美化</h1><h2 id="主题安装"><a href="#主题安装" class="headerlink" title="主题安装"></a>主题安装</h2><p><a href="https://theme-next.js.org/">next主题官方文档</a></p>
@@ -1452,6 +1435,23 @@ J(\theta)=\frac{1}{m}(-y^Tlog(h)-(1-y)^Tlog(1-h))</script><p>得到$min_\theta J
       </categories>
       <tags>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从线性变换角度理解线性代数</title>
+    <url>/47d0bf4a/</url>
+    <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+1\\\\
+2
+\end{bmatrix}
+=1\hat i+2\hat j</script>]]></content>
+      <categories>
+        <category>线性代数</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
       </tags>
   </entry>
   <entry>
