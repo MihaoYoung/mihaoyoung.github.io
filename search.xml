@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CentOS7磁盘扩展</title>
+    <url>/823759cb/</url>
+    <content><![CDATA[<h1 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h1><p>硬盘——扩展</p>
+<p>假如有快照，先删除</p>
+<p><img src="/823759cb/image-20210222120000691.png" style="zoom:80%;"></p>
+<a id="more"></a>
+<h1 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h1><h2 id="对新增的硬盘分区"><a href="#对新增的硬盘分区" class="headerlink" title="对新增的硬盘分区"></a>对新增的硬盘分区</h2><p>对原有的硬盘sda进行扩展</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sda</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">命令(输入 m 获取帮助)：（步骤）[root@localhost mihao]# fdisk /dev/sda</span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：p	（查看分区）</span><br><span class="line"></span><br><span class="line">磁盘 /dev/sda：42.9 GB, 42949672960 字节，83886080 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x000b9dd0</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：n （新建分区）</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (2 primary, 0 extended, 2 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p （选择主分区）</span><br><span class="line">分区号 (3,4，默认 3)：3	（选区号）</span><br><span class="line">起始 扇区 (41943040-83886079，默认为 41943040)：	enter</span><br><span class="line">将使用默认值 41943040</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (41943040-83886079，默认为 83886079)：enter</span><br><span class="line">将使用默认值 83886079</span><br><span class="line">分区 3 已设置为 Linux 类型，大小设为 20 GiB</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：t （修改分区）</span><br><span class="line">分区号 (1-3，默认 3)：3	（刚刚新建的3分区）</span><br><span class="line">Hex 代码(输入 L 列出所有代码)：8e	（对应sda2 id）</span><br><span class="line">已将分区“Linux”的类型更改为“Linux LVM”</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w （保存）</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">正在同步磁盘。</span><br><span class="line">[root@localhost mihao]# partprobe （上面提示）</span><br><span class="line">[root@localhost mihao]# reboot （重启）</span><br></pre></td></tr></table></figure>
+<h2 id="对新增的硬盘格式化"><a href="#对新增的硬盘格式化" class="headerlink" title="对新增的硬盘格式化"></a>对新增的硬盘格式化</h2><p><code>df-Th</code>查看文件系统</p>
+<p>xfs系统使用<code>mkfs.xfs</code>命令，对硬盘进行格式化</p>
+<h2 id="添加新LVM到已有LVM组"><a href="#添加新LVM到已有LVM组" class="headerlink" title="添加新LVM到已有LVM组"></a>添加新LVM到已有LVM组</h2><p><code>lvm</code>进入lvm管理</p>
+<p>初始化分区</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; pvcreate /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>查看卷组Volumegroup名称</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgdisplay</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VG Name        <strong>centos</strong></p>
+</blockquote>
+<p>将初始化过的分区加入centos</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgextend centos /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>查看逻辑卷Logical volume情况</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; lvdisplay</span><br></pre></td></tr></table></figure>
+<p>文件系统扩容</p>
+<p>退出lvm，扩展LV</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvextend /dev/centos/root /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>运行命令</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xfs_growfs /dev/centos/root</span><br></pre></td></tr></table></figure>
+<h2 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h2><p>查看磁盘，是否拓展成功</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java-static探讨</title>
     <url>/6de462c1/</url>
     <content><![CDATA[<h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><h2 id="非static函数工作原理"><a href="#非static函数工作原理" class="headerlink" title="非static函数工作原理"></a>非static函数工作原理</h2><blockquote>
@@ -49,199 +88,6 @@
 <p><a href="https://www.cnblogs.com/Alex--Yang/p/3386863.html">Java-静态类</a></p>
 <p><a href="https://blog.csdn.net/winfredzen/article/details/78458233">Java 静态类、静态方法和静态变量</a></p>
 <p><a href="https://www.cnblogs.com/kissazi2/p/3971065.html">java中的Static class</a></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CentOS7磁盘扩展</title>
-    <url>/823759cb/</url>
-    <content><![CDATA[<h1 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h1><p>硬盘——扩展</p>
-<p>假如有快照，先删除</p>
-<p><img src="/823759cb/image-20210222120000691.png" style="zoom:80%;"></p>
-<a id="more"></a>
-<h1 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h1><h2 id="对新增的硬盘分区"><a href="#对新增的硬盘分区" class="headerlink" title="对新增的硬盘分区"></a>对新增的硬盘分区</h2><p>对原有的硬盘sda进行扩展</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sda</span><br></pre></td></tr></table></figure>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">命令(输入 m 获取帮助)：（步骤）[root@localhost mihao]# fdisk /dev/sda</span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：p	（查看分区）</span><br><span class="line"></span><br><span class="line">磁盘 /dev/sda：42.9 GB, 42949672960 字节，83886080 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x000b9dd0</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：n （新建分区）</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (2 primary, 0 extended, 2 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p （选择主分区）</span><br><span class="line">分区号 (3,4，默认 3)：3	（选区号）</span><br><span class="line">起始 扇区 (41943040-83886079，默认为 41943040)：	enter</span><br><span class="line">将使用默认值 41943040</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (41943040-83886079，默认为 83886079)：enter</span><br><span class="line">将使用默认值 83886079</span><br><span class="line">分区 3 已设置为 Linux 类型，大小设为 20 GiB</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：t （修改分区）</span><br><span class="line">分区号 (1-3，默认 3)：3	（刚刚新建的3分区）</span><br><span class="line">Hex 代码(输入 L 列出所有代码)：8e	（对应sda2 id）</span><br><span class="line">已将分区“Linux”的类型更改为“Linux LVM”</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w （保存）</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">正在同步磁盘。</span><br><span class="line">[root@localhost mihao]# partprobe （上面提示）</span><br><span class="line">[root@localhost mihao]# reboot （重启）</span><br></pre></td></tr></table></figure>
-<h2 id="对新增的硬盘格式化"><a href="#对新增的硬盘格式化" class="headerlink" title="对新增的硬盘格式化"></a>对新增的硬盘格式化</h2><p><code>df-Th</code>查看文件系统</p>
-<p>xfs系统使用<code>mkfs.xfs</code>命令，对硬盘进行格式化</p>
-<h2 id="添加新LVM到已有LVM组"><a href="#添加新LVM到已有LVM组" class="headerlink" title="添加新LVM到已有LVM组"></a>添加新LVM到已有LVM组</h2><p><code>lvm</code>进入lvm管理</p>
-<p>初始化分区</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; pvcreate /dev/sda3</span><br></pre></td></tr></table></figure>
-<p>查看卷组Volumegroup名称</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgdisplay</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VG Name        <strong>centos</strong></p>
-</blockquote>
-<p>将初始化过的分区加入centos</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgextend centos /dev/sda3</span><br></pre></td></tr></table></figure>
-<p>查看逻辑卷Logical volume情况</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; lvdisplay</span><br></pre></td></tr></table></figure>
-<p>文件系统扩容</p>
-<p>退出lvm，扩展LV</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvextend /dev/centos/root /dev/sda3</span><br></pre></td></tr></table></figure>
-<p>运行命令</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xfs_growfs /dev/centos/root</span><br></pre></td></tr></table></figure>
-<h2 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h2><p>查看磁盘，是否拓展成功</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java-异常</title>
-    <url>/c2b6c13e/</url>
-    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>Java的基本理念是“结构不佳的代码不能运行”</strong></p>
-<p>使用异常，可以降低错误处理代码的复杂度</p>
-<blockquote>
-<ul>
-<li>不必在方法调用处进行检查，异常机制会捕捉该错误</li>
-<li>只需在一个地方（异常处理程序）中处理错误，节省代码</li>
-</ul>
-</blockquote>
-<p><img src="/c2b6c13e/1080.webp" alt></p>
-<h1 id="基本异常"><a href="#基本异常" class="headerlink" title="基本异常"></a>基本异常</h1><p><strong>抛出异常</strong>：从当前环境中跳出，把问题提交给上一级环境</p>
-<p>问题指的是，当前方法或作用域被阻止而无法继续执行，即<strong>异常情形</strong></p>
-<blockquote>
-<p>抛出异常后，将使用<code>new</code>在堆上<strong>创建异常对象</strong>,然后当前路径不会再继续执行，并且从当前环境中<strong>弹出异常对象的引用</strong>，此时，<strong>异常处理机制</strong>接管程序，并在<a href="#ycclcx"><strong>异常处理程序</strong></a>继续执行程序</p>
-<p>异常对象的<strong>引用</strong>将传给<code>throw</code>，可以<strong>简单地</strong>把异常处理看成是一种<strong>不同的返回机制</strong>，因此，利用抛出异常的方式可以<strong>从当前作用域退出</strong></p>
-<p>返回的“地点”是<strong>异常处理程序</strong>，可能跨越方法调用栈的许多层次</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String t = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (t == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">// 抛出异常</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>异常允许我们<strong>强制程序停止运行</strong>，并告诉我们出现的问题，或者<strong>强制程序处理问题</strong>，并返回到稳定状态</p>
-<h2 id="异常参数"><a href="#异常参数" class="headerlink" title="异常参数"></a>异常参数</h2><p>标准异常类有<strong>两个</strong>构造器，分别是<strong>默认构造器</strong>，<strong>接受字符串作为参数</strong>的构造器</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">&quot;t = null&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h1><h2 id="try块"><a href="#try块" class="headerlink" title="try块"></a>try块</h2><p>如果在方法内部或方法内部调用其他方法抛出异常，这个方法将在抛出异常的过程中结束，因此，为了不让方法结束，我们使用<strong>try块</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// 可能产生异常的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="异常处理程序"><a href="#异常处理程序" class="headerlink" title="异常处理程序"></a><p id="ycclcx">异常处理程序</p></h2><p>抛出异常的处理“地点”，紧跟<strong>try块</strong>之后，用关键字<code>catch</code>表示</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Type1 id1)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Type2 id2)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只有异常类型匹配的第一个catch语句才会被执行</p>
-<h1 id="创建自定义异常"><a href="#创建自定义异常" class="headerlink" title="创建自定义异常"></a>创建自定义异常</h1><p>必须从已有的异常类继承</p>
-<p>产生默认构造器</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exception1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> MyException</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Throw MyException&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        exception1 e1 = <span class="keyword">new</span> exception1();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            e1.f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (MyException e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Throw MyException</span><br><span class="line">捕获异常</span><br></pre></td></tr></table></figure>
-<p>自定义字符串作参数的构造器</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exception1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> MyException</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Throw MyException from f()&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> <span class="keyword">throws</span> MyException</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Throw MyException from g()&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">&quot;g() 产生异常&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        exception1 e1 = <span class="keyword">new</span> exception1();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            e1.f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (MyException e)&#123;</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            e1.g();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (MyException e)&#123;</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Throw MyException from f()</span><br><span class="line">MyException</span><br><span class="line">	at exception1.f(exception1.java:15)</span><br><span class="line">	at exception1.main(exception1.java:24)</span><br><span class="line">Throw MyException from g()</span><br><span class="line">MyException: g() 产生异常</span><br><span class="line">	at exception1.g(exception1.java:19)</span><br><span class="line">	at exception1.main(exception1.java:29)</span><br></pre></td></tr></table></figure>
-<p><code>e.printStackTrace()</code>在<code>Throwable</code>类中声明，该方法打印<strong>从方法调用处直到异常抛出处</strong>的方法调用序列</p>
-<h1 id="异常说明"><a href="#异常说明" class="headerlink" title="异常说明"></a>异常说明</h1><p><code>throws</code>后面接所有可能产生的异常类型</p>
-<h1 id="捕获所有异常"><a href="#捕获所有异常" class="headerlink" title="捕获所有异常"></a>捕获所有异常</h1><p>通过捕获异常类型的基类<code>Exception</code>，且放在处理程序列表的<strong>末尾</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取详细信息</span></span><br><span class="line"><span class="function">String <span class="title">getMessage</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 获取用本地语言表示的详细信息</span></span></span><br><span class="line"><span class="function">String <span class="title">getLocalizedMessage</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回堆Throwable的简单描述</span></span></span><br><span class="line"><span class="function">String <span class="title">toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 打印Throwable和Throwable的调用栈轨迹</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printStackTrace</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">&quot;MyException简单信息&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常&quot;</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;getMessage():  &quot;</span>+e.getMessage());</span><br><span class="line">            System.out.println(<span class="string">&quot;getLocalizedMessage():  &quot;</span>+e.getLocalizedMessage());</span><br><span class="line">            System.out.println(<span class="string">&quot;toString():  &quot;</span>+e.toString());</span><br><span class="line">            System.out.println(<span class="string">&quot;printStackTrace():&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">捕获异常</span><br><span class="line">getMessage():  MyException简单信息</span><br><span class="line">getLocalizedMessage():  MyException简单信息</span><br><span class="line">toString():  MyException: MyException简单信息</span><br><span class="line">printStackTrace():</span><br><span class="line">MyException: MyException简单信息</span><br><span class="line">	at exception1.main(exception1.java:33)</span><br></pre></td></tr></table></figure>
-<h2 id="栈轨迹"><a href="#栈轨迹" class="headerlink" title="栈轨迹"></a>栈轨迹</h2><p><code>getStackTrace()</code>返回一个由栈轨迹中的元素所构成的数组，其中每一个元素都表示栈中的一帧</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exception2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">for</span>(StackTraceElement ste : e.getStackTrace())</span><br><span class="line">                System.out.println(ste.getMethodName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span></span>&#123;</span><br><span class="line">        f();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">h</span><span class="params">()</span></span>&#123;</span><br><span class="line">        g();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        f();</span><br><span class="line">        System.out.println(<span class="string">&quot;--------------------&quot;</span>);</span><br><span class="line">        g();</span><br><span class="line">        System.out.println(<span class="string">&quot;--------------------&quot;</span>);</span><br><span class="line">        h();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">f</span><br><span class="line">main</span><br><span class="line">--------------------</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">main</span><br><span class="line">--------------------</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">main</span><br></pre></td></tr></table></figure>
-<h2 id="重新抛出异常"><a href="#重新抛出异常" class="headerlink" title="重新抛出异常"></a>重新抛出异常</h2><p>重抛异常会将异常抛给<strong>上一级</strong>环境，同try块的后续catch语句将不会被执行。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    <span class="keyword">throw</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>异常对象的所有信息都被<strong>保存</strong>，因此，上一级环境所捕获的异常包含这个异常对象的<strong>所有信息</strong></p>
-<p>对于重新抛出的异常对象，<code>printStackTrace()</code>显示的仍是<strong>原来异常抛出点</strong>的调用栈信息。</p>
-<p>因此使用<code>fillInStackTrace()</code>更新信息，该方法返回一个<code>Throwable</code>对象，它是通过把当前调用信息填入原来的异常对象而建立的</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">rethrowing</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;exception from f()&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;thrown from f()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;g(), e.printStackTrace()&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">h</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;h(), e.printStackTrace()&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">            <span class="keyword">throw</span> (Exception)e.fillInStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            g();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;mian: printStackTrace()&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            h();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;main: printStackTrace&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">exception from f()</span><br><span class="line">g(), e.printStackTrace()</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.f(rethrowing.java:5)</span><br><span class="line">	at rethrowing.g(rethrowing.java:9)</span><br><span class="line">	at rethrowing.main(rethrowing.java:28)</span><br><span class="line">mian: printStackTrace()</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.f(rethrowing.java:5)</span><br><span class="line">	at rethrowing.g(rethrowing.java:9)</span><br><span class="line">	at rethrowing.main(rethrowing.java:28)</span><br><span class="line">	</span><br><span class="line">//有更新</span><br><span class="line">exception from f()</span><br><span class="line">h(), e.printStackTrace()</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.f(rethrowing.java:5)</span><br><span class="line">	at rethrowing.h(rethrowing.java:18)</span><br><span class="line">	at rethrowing.main(rethrowing.java:34)</span><br><span class="line">main: printStackTrace</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.h(rethrowing.java:22)</span><br><span class="line">	at rethrowing.main(rethrowing.java:34)</span><br></pre></td></tr></table></figure>
-<h2 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h2><p>异常链：在捕获一个异常后抛出另一个异常，并且把原始异常的信息保存下来</p>
-<p>构造器接受<code>cause</code>对象作为参数，适用于<code>Error</code>,<code>Exception</code>,<code>RuntimeException</code>.</p>
-<p>其它类型的异常类，使用<code>initCause()</code>方法</p>
-<h1 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h1><p><code>Error</code>表示编译时的系统错误</p>
-<p><code>Exception</code>是可以抛出的基本类型</p>
-<p><img src="/c2b6c13e/1080.webp" alt></p>
-<p>不接受检查的异常，如<code>RuntimeException</code>类，这种异常会被<strong>自动捕获</strong></p>
-<p><img src="/c2b6c13e/1080.webp" alt></p>
-<h1 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h1><p>无论异常是否被抛出，<code>finally</code>始终被执行</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>即使异常没有当前异常处理程序捕获，异常处理机制也会在跳到更高一层的异常处理程序之前，执行<code>finally</code>语句</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">// 该层没有异常处理程序</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception();	<span class="comment">// 会跳到上一层异常处理程序</span></span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line"><span class="comment">// 该异常处理程序执行之前，上方的finally语句会被执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>finally</code>即使在<code>return</code>之后，依然会被执行</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    <span class="comment">// 会被执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h1><p>基本原则：每一次构造新对象，都应包含在其<strong>try-finally</strong>语句块中，并且每一个对象构造之后跟随一个<strong>try-finally</strong>语句块一确保成功清理对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	Person p = <span class="keyword">new</span> Person;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">		</span><br><span class="line">    &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">        <span class="comment">//清理对象，假设dispose()已在Person类实现</span></span><br><span class="line">        p.dispose();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果，p对象构造失败，将进入<strong>外部</strong>catch语句，因此，dispose()方法<strong>不会调用</strong>。</p>
-<p>如果构造成功，为了保证对象能够被清理，在<strong>构造之后立即创建一个try块</strong></p>
-<p>在这种方法中，finally只有在p对象构造成功才会执行</p>
-<h1 id="异常匹配"><a href="#异常匹配" class="headerlink" title="异常匹配"></a>异常匹配</h1><p>派生类的对象也可以匹配基类的处理程序</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception1</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception2</span> <span class="keyword">extends</span> <span class="title">Exception1</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception2();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception1 e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常Exception1&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>《Java编程思想》</p>
-<p><a href="https://codegym.cc/groups/posts/28-exceptions-checked-unchecked-and-custom">Java的异常</a></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>异常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 类的初始化顺序</title>
-    <url>/2af416/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>静态变量，静态代码块&gt;主函数main&gt;变量，构造代码块&gt;构造方法</strong></p>
-</blockquote>
-<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><blockquote>
-<ul>
-<li>只有创建对象，构造函数才会执行</li>
-<li>只运行一次</li>
-<li>给对象进行初始化</li>
-</ul>
-</blockquote>
-<h1 id="构造代码块"><a href="#构造代码块" class="headerlink" title="构造代码块"></a>构造代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>创建对象时执行，且<strong>优先于构造函数</strong></li>
-<li>无法自行调用</li>
-<li>给<strong>对象</strong>经行统一初始化</li>
-</ul>
-</blockquote>
-<h1 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>随着类的加载而执行，且<strong>只执行一次</strong>，<strong>优先于主函数</strong></li>
-<li>给<strong>类</strong>进行初始化</li>
-<li>块中变量为<strong>局部变量</strong></li>
-<li>一个类可以有<strong>多个</strong>静态代码块</li>
-</ul>
-</blockquote>
-<h2 id="类的加载时机"><a href="#类的加载时机" class="headerlink" title="类的加载时机"></a>类的加载时机</h2><blockquote>
-<ul>
-<li>new 创建该类对象时</li>
-<li>使用java.lang.reflext进行反射调用时</li>
-<li>无事先加载该类，而加载该类的子类时</li>
-<li>虚拟机启动，初始化main函数所在的类</li>
-</ul>
-</blockquote>
-<h1 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        test1 b = <span class="keyword">new</span> test1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str1 = <span class="string">&quot;静态变量&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span>  String str2 = <span class="string">&quot;变量&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        System.out.println(str2);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        <span class="comment">// System.out.println(str2);</span></span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        <span class="comment">//test1 b = new test1();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">静态变量</span><br><span class="line">---------------</span><br><span class="line">构造代码块</span><br><span class="line">静态变量</span><br><span class="line">变量</span><br><span class="line">---------------</span><br><span class="line">构造函数</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
-<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>执行顺序</p>
-<blockquote>
-<ul>
-<li>执行父类静态代码块，初始化父类静态成员变量</li>
-<li>执行子类静态代码块，初始化子类静态成员变量</li>
-<li>执行父类构造代码块，父类构造函数，父类普通成员变量</li>
-<li>执行子类构造代码块，子类构造函数，子类普通成员变量</li>
-</ul>
-</blockquote>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://zhuanlan.zhihu.com/p/122554857">知乎-Java初始化顺序</a></p>
-<p><a href="https://blog.csdn.net/z69183787/article/details/25366627?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&amp;dist_request_id=1328593.10670.16147488454022055&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control">CSDN-Java初始化顺序</a></p>
 ]]></content>
       <categories>
         <category>后端</category>
@@ -649,6 +495,242 @@
       </tags>
   </entry>
   <entry>
+    <title>Java-异常</title>
+    <url>/c2b6c13e/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>Java的基本理念是“结构不佳的代码不能运行”</strong></p>
+<p>使用异常，可以降低错误处理代码的复杂度</p>
+<blockquote>
+<ul>
+<li>不必在方法调用处进行检查，异常机制会捕捉该错误</li>
+<li>只需在一个地方（异常处理程序）中处理错误，节省代码</li>
+</ul>
+</blockquote>
+<p><img src="/c2b6c13e/1080.webp" alt></p>
+<h1 id="基本异常"><a href="#基本异常" class="headerlink" title="基本异常"></a>基本异常</h1><p><strong>抛出异常</strong>：从当前环境中跳出，把问题提交给上一级环境</p>
+<p>问题指的是，当前方法或作用域被阻止而无法继续执行，即<strong>异常情形</strong></p>
+<blockquote>
+<p>抛出异常后，将使用<code>new</code>在堆上<strong>创建异常对象</strong>,然后当前路径不会再继续执行，并且从当前环境中<strong>弹出异常对象的引用</strong>，此时，<strong>异常处理机制</strong>接管程序，并在<a href="#ycclcx"><strong>异常处理程序</strong></a>继续执行程序</p>
+<p>异常对象的<strong>引用</strong>将传给<code>throw</code>，可以<strong>简单地</strong>把异常处理看成是一种<strong>不同的返回机制</strong>，因此，利用抛出异常的方式可以<strong>从当前作用域退出</strong></p>
+<p>返回的“地点”是<strong>异常处理程序</strong>，可能跨越方法调用栈的许多层次</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String t = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (t == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">// 抛出异常</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>异常允许我们<strong>强制程序停止运行</strong>，并告诉我们出现的问题，或者<strong>强制程序处理问题</strong>，并返回到稳定状态</p>
+<h2 id="异常参数"><a href="#异常参数" class="headerlink" title="异常参数"></a>异常参数</h2><p>标准异常类有<strong>两个</strong>构造器，分别是<strong>默认构造器</strong>，<strong>接受字符串作为参数</strong>的构造器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">&quot;t = null&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h1><h2 id="try块"><a href="#try块" class="headerlink" title="try块"></a>try块</h2><p>如果在方法内部或方法内部调用其他方法抛出异常，这个方法将在抛出异常的过程中结束，因此，为了不让方法结束，我们使用<strong>try块</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// 可能产生异常的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异常处理程序"><a href="#异常处理程序" class="headerlink" title="异常处理程序"></a><p id="ycclcx">异常处理程序</p></h2><p>抛出异常的处理“地点”，紧跟<strong>try块</strong>之后，用关键字<code>catch</code>表示</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Type1 id1)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Type2 id2)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只有异常类型匹配的第一个catch语句才会被执行</p>
+<h1 id="创建自定义异常"><a href="#创建自定义异常" class="headerlink" title="创建自定义异常"></a>创建自定义异常</h1><p>必须从已有的异常类继承</p>
+<p>产生默认构造器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exception1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> MyException</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Throw MyException&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        exception1 e1 = <span class="keyword">new</span> exception1();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            e1.f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (MyException e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Throw MyException</span><br><span class="line">捕获异常</span><br></pre></td></tr></table></figure>
+<p>自定义字符串作参数的构造器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exception1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> MyException</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Throw MyException from f()&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> <span class="keyword">throws</span> MyException</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Throw MyException from g()&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">&quot;g() 产生异常&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        exception1 e1 = <span class="keyword">new</span> exception1();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            e1.f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (MyException e)&#123;</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            e1.g();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (MyException e)&#123;</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Throw MyException from f()</span><br><span class="line">MyException</span><br><span class="line">	at exception1.f(exception1.java:15)</span><br><span class="line">	at exception1.main(exception1.java:24)</span><br><span class="line">Throw MyException from g()</span><br><span class="line">MyException: g() 产生异常</span><br><span class="line">	at exception1.g(exception1.java:19)</span><br><span class="line">	at exception1.main(exception1.java:29)</span><br></pre></td></tr></table></figure>
+<p><code>e.printStackTrace()</code>在<code>Throwable</code>类中声明，该方法打印<strong>从方法调用处直到异常抛出处</strong>的方法调用序列</p>
+<h1 id="异常说明"><a href="#异常说明" class="headerlink" title="异常说明"></a>异常说明</h1><p><code>throws</code>后面接所有可能产生的异常类型</p>
+<h1 id="捕获所有异常"><a href="#捕获所有异常" class="headerlink" title="捕获所有异常"></a>捕获所有异常</h1><p>通过捕获异常类型的基类<code>Exception</code>，且放在处理程序列表的<strong>末尾</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取详细信息</span></span><br><span class="line"><span class="function">String <span class="title">getMessage</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 获取用本地语言表示的详细信息</span></span></span><br><span class="line"><span class="function">String <span class="title">getLocalizedMessage</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 返回堆Throwable的简单描述</span></span></span><br><span class="line"><span class="function">String <span class="title">toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 打印Throwable和Throwable的调用栈轨迹</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printStackTrace</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">&quot;MyException简单信息&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常&quot;</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;getMessage():  &quot;</span>+e.getMessage());</span><br><span class="line">            System.out.println(<span class="string">&quot;getLocalizedMessage():  &quot;</span>+e.getLocalizedMessage());</span><br><span class="line">            System.out.println(<span class="string">&quot;toString():  &quot;</span>+e.toString());</span><br><span class="line">            System.out.println(<span class="string">&quot;printStackTrace():&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">捕获异常</span><br><span class="line">getMessage():  MyException简单信息</span><br><span class="line">getLocalizedMessage():  MyException简单信息</span><br><span class="line">toString():  MyException: MyException简单信息</span><br><span class="line">printStackTrace():</span><br><span class="line">MyException: MyException简单信息</span><br><span class="line">	at exception1.main(exception1.java:33)</span><br></pre></td></tr></table></figure>
+<h2 id="栈轨迹"><a href="#栈轨迹" class="headerlink" title="栈轨迹"></a>栈轨迹</h2><p><code>getStackTrace()</code>返回一个由栈轨迹中的元素所构成的数组，其中每一个元素都表示栈中的一帧</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exception2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">for</span>(StackTraceElement ste : e.getStackTrace())</span><br><span class="line">                System.out.println(ste.getMethodName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span></span>&#123;</span><br><span class="line">        f();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">h</span><span class="params">()</span></span>&#123;</span><br><span class="line">        g();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        f();</span><br><span class="line">        System.out.println(<span class="string">&quot;--------------------&quot;</span>);</span><br><span class="line">        g();</span><br><span class="line">        System.out.println(<span class="string">&quot;--------------------&quot;</span>);</span><br><span class="line">        h();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">f</span><br><span class="line">main</span><br><span class="line">--------------------</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">main</span><br><span class="line">--------------------</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">main</span><br></pre></td></tr></table></figure>
+<h2 id="重新抛出异常"><a href="#重新抛出异常" class="headerlink" title="重新抛出异常"></a>重新抛出异常</h2><p>重抛异常会将异常抛给<strong>上一级</strong>环境，同try块的后续catch语句将不会被执行。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    <span class="keyword">throw</span> e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>异常对象的所有信息都被<strong>保存</strong>，因此，上一级环境所捕获的异常包含这个异常对象的<strong>所有信息</strong></p>
+<p>对于重新抛出的异常对象，<code>printStackTrace()</code>显示的仍是<strong>原来异常抛出点</strong>的调用栈信息。</p>
+<p>因此使用<code>fillInStackTrace()</code>更新信息，该方法返回一个<code>Throwable</code>对象，它是通过把当前调用信息填入原来的异常对象而建立的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">rethrowing</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;exception from f()&quot;</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;thrown from f()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">g</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;g(), e.printStackTrace()&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">h</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            f();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;h(), e.printStackTrace()&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">            <span class="keyword">throw</span> (Exception)e.fillInStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            g();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;mian: printStackTrace()&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            h();</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;main: printStackTrace&quot;</span>);</span><br><span class="line">            e.printStackTrace(System.out);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">exception from f()</span><br><span class="line">g(), e.printStackTrace()</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.f(rethrowing.java:5)</span><br><span class="line">	at rethrowing.g(rethrowing.java:9)</span><br><span class="line">	at rethrowing.main(rethrowing.java:28)</span><br><span class="line">mian: printStackTrace()</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.f(rethrowing.java:5)</span><br><span class="line">	at rethrowing.g(rethrowing.java:9)</span><br><span class="line">	at rethrowing.main(rethrowing.java:28)</span><br><span class="line">	</span><br><span class="line">//有更新</span><br><span class="line">exception from f()</span><br><span class="line">h(), e.printStackTrace()</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.f(rethrowing.java:5)</span><br><span class="line">	at rethrowing.h(rethrowing.java:18)</span><br><span class="line">	at rethrowing.main(rethrowing.java:34)</span><br><span class="line">main: printStackTrace</span><br><span class="line">java.lang.Exception: thrown from f()</span><br><span class="line">	at rethrowing.h(rethrowing.java:22)</span><br><span class="line">	at rethrowing.main(rethrowing.java:34)</span><br></pre></td></tr></table></figure>
+<h2 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h2><p>异常链：在捕获一个异常后抛出另一个异常，并且把原始异常的信息保存下来</p>
+<p>构造器接受<code>cause</code>对象作为参数，适用于<code>Error</code>,<code>Exception</code>,<code>RuntimeException</code>.</p>
+<p>其它类型的异常类，使用<code>initCause()</code>方法</p>
+<h1 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h1><p><code>Error</code>表示编译时的系统错误</p>
+<p><code>Exception</code>是可以抛出的基本类型</p>
+<p><img src="/c2b6c13e/1080.webp" alt></p>
+<p>不接受检查的异常，如<code>RuntimeException</code>类，这种异常会被<strong>自动捕获</strong></p>
+<p><img src="/c2b6c13e/1080.webp" alt></p>
+<h1 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h1><p>无论异常是否被抛出，<code>finally</code>始终被执行</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>即使异常没有当前异常处理程序捕获，异常处理机制也会在跳到更高一层的异常处理程序之前，执行<code>finally</code>语句</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">// 该层没有异常处理程序</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception();	<span class="comment">// 会跳到上一层异常处理程序</span></span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line"><span class="comment">// 该异常处理程序执行之前，上方的finally语句会被执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>finally</code>即使在<code>return</code>之后，依然会被执行</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    <span class="comment">// 会被执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h1><p>基本原则：每一次构造新对象，都应包含在其<strong>try-finally</strong>语句块中，并且每一个对象构造之后跟随一个<strong>try-finally</strong>语句块一确保成功清理对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	Person p = <span class="keyword">new</span> Person;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">		</span><br><span class="line">    &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">        <span class="comment">//清理对象，假设dispose()已在Person类实现</span></span><br><span class="line">        p.dispose();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果，p对象构造失败，将进入<strong>外部</strong>catch语句，因此，dispose()方法<strong>不会调用</strong>。</p>
+<p>如果构造成功，为了保证对象能够被清理，在<strong>构造之后立即创建一个try块</strong></p>
+<p>在这种方法中，finally只有在p对象构造成功才会执行</p>
+<h1 id="异常匹配"><a href="#异常匹配" class="headerlink" title="异常匹配"></a>异常匹配</h1><p>派生类的对象也可以匹配基类的处理程序</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception1</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exception2</span> <span class="keyword">extends</span> <span class="title">Exception1</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception2();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception1 e)&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;捕获异常Exception1&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>《Java编程思想》</p>
+<p><a href="https://codegym.cc/groups/posts/28-exceptions-checked-unchecked-and-custom">Java的异常</a></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>异常</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 类的初始化顺序</title>
+    <url>/2af416/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>静态变量，静态代码块&gt;主函数main&gt;变量，构造代码块&gt;构造方法</strong></p>
+</blockquote>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><blockquote>
+<ul>
+<li>只有创建对象，构造函数才会执行</li>
+<li>只运行一次</li>
+<li>给对象进行初始化</li>
+</ul>
+</blockquote>
+<h1 id="构造代码块"><a href="#构造代码块" class="headerlink" title="构造代码块"></a>构造代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>创建对象时执行，且<strong>优先于构造函数</strong></li>
+<li>无法自行调用</li>
+<li>给<strong>对象</strong>经行统一初始化</li>
+</ul>
+</blockquote>
+<h1 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>随着类的加载而执行，且<strong>只执行一次</strong>，<strong>优先于主函数</strong></li>
+<li>给<strong>类</strong>进行初始化</li>
+<li>块中变量为<strong>局部变量</strong></li>
+<li>一个类可以有<strong>多个</strong>静态代码块</li>
+</ul>
+</blockquote>
+<h2 id="类的加载时机"><a href="#类的加载时机" class="headerlink" title="类的加载时机"></a>类的加载时机</h2><blockquote>
+<ul>
+<li>new 创建该类对象时</li>
+<li>使用java.lang.reflext进行反射调用时</li>
+<li>无事先加载该类，而加载该类的子类时</li>
+<li>虚拟机启动，初始化main函数所在的类</li>
+</ul>
+</blockquote>
+<h1 id="测试案例"><a href="#测试案例" class="headerlink" title="测试案例"></a>测试案例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        test1 b = <span class="keyword">new</span> test1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br><span class="line">构造代码块</span><br><span class="line">构造函数</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String str1 = <span class="string">&quot;静态变量&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span>  String str2 = <span class="string">&quot;变量&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造函数&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;构造代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        System.out.println(str2);</span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;静态代码块&quot;</span>);</span><br><span class="line">        System.out.println(str1);</span><br><span class="line">        <span class="comment">// System.out.println(str2);</span></span><br><span class="line">        System.out.println(<span class="string">&quot;---------------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        test1 a = <span class="keyword">new</span> test1();</span><br><span class="line">        <span class="comment">//test1 b = new test1();</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">静态代码块</span><br><span class="line">静态变量</span><br><span class="line">---------------</span><br><span class="line">构造代码块</span><br><span class="line">静态变量</span><br><span class="line">变量</span><br><span class="line">---------------</span><br><span class="line">构造函数</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>执行顺序</p>
+<blockquote>
+<ul>
+<li>执行父类静态代码块，初始化父类静态成员变量</li>
+<li>执行子类静态代码块，初始化子类静态成员变量</li>
+<li>执行父类构造代码块，父类构造函数，父类普通成员变量</li>
+<li>执行子类构造代码块，子类构造函数，子类普通成员变量</li>
+</ul>
+</blockquote>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://zhuanlan.zhihu.com/p/122554857">知乎-Java初始化顺序</a></p>
+<p><a href="https://blog.csdn.net/z69183787/article/details/25366627?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&amp;dist_request_id=1328593.10670.16147488454022055&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control">CSDN-Java初始化顺序</a></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux多节点环境打造</title>
+    <url>/d49360d3/</url>
+    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
+<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
+<p>选择CentOS7下的x86_64</p>
+<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
+<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
+<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
+<a id="more"></a>
+<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
+<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
+<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
+<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
+<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
+<p>选择-典型</p>
+<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
+<p>选择-稍后安装操作系统</p>
+<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
+<p>选择-CentOS7 64位版本</p>
+<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
+<p>设置名称和路径</p>
+<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
+<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
+<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
+<p>自定义硬件</p>
+<p>选择刚刚下载CentOS7 ios文件</p>
+<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
+<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
+<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
+<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
+<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
+<p>点击完成，然后启动</p>
+<p>按下键盘↑方向键，回车</p>
+<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
+<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
+<p>设置root密码</p>
+<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
+<p>静静等待安装~</p>
+<p>最后创建用户名即可</p>
+<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
+<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
+<p>如何查看自己的网卡</p>
+<p>打开网络与共享中心——点击你所连接的网络——属性</p>
+<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
+<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
+<p>输入密码（密码不会显示），回车</p>
+<p>输入<code>dhclient</code></p>
+<p>输入<code>ifconfig</code></p>
+<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
+<p>ens33下的inet会有一串ip，记住</p>
+<p>然后输入</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
+<p>修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>添加</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
+<p>打开网络与共享中心</p>
+<p>点击你所连接的网络</p>
+<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
+<p>点击详细信息，即可看到所需信息</p>
+<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
+<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
+<p>输入以下命令，重启网卡</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
+<p>检验是否可以连接外网</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>若有数据，即成功</p>
+<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
+<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
+<p>虚拟机——管理——克隆——创建完整克隆</p>
+<p>设置静态ip参考上文</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java基础语言</title>
     <url>/24268d51/</url>
     <content><![CDATA[<h1 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><h3 id="简单（原始）"><a href="#简单（原始）" class="headerlink" title="简单（原始）"></a>简单（原始）</h3><blockquote>
@@ -842,85 +924,101 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux多节点环境打造</title>
-    <url>/d49360d3/</url>
-    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
-<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
-<p>选择CentOS7下的x86_64</p>
-<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
-<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
-<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
-<a id="more"></a>
-<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
-<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
-<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
-<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
-<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
-<p>选择-典型</p>
-<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
-<p>选择-稍后安装操作系统</p>
-<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
-<p>选择-CentOS7 64位版本</p>
-<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
-<p>设置名称和路径</p>
-<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
-<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
-<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
-<p>自定义硬件</p>
-<p>选择刚刚下载CentOS7 ios文件</p>
-<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
-<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
-<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
-<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
-<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
-<p>点击完成，然后启动</p>
-<p>按下键盘↑方向键，回车</p>
-<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
-<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
-<p>设置root密码</p>
-<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
-<p>静静等待安装~</p>
-<p>最后创建用户名即可</p>
-<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
-<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
-<p>如何查看自己的网卡</p>
-<p>打开网络与共享中心——点击你所连接的网络——属性</p>
-<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
-<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
-<p>输入密码（密码不会显示），回车</p>
-<p>输入<code>dhclient</code></p>
-<p>输入<code>ifconfig</code></p>
-<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
-<p>ens33下的inet会有一串ip，记住</p>
-<p>然后输入</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
-<p>修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
-<p>添加</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
-<p>打开网络与共享中心</p>
-<p>点击你所连接的网络</p>
-<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
-<p>点击详细信息，即可看到所需信息</p>
-<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
-<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
-<p>输入以下命令，重启网卡</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
-<p>检验是否可以连接外网</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-<p>若有数据，即成功</p>
-<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
-<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
-<p>虚拟机——管理——克隆——创建完整克隆</p>
-<p>设置静态ip参考上文</p>
+    <title>MySQL学习</title>
+    <url>/c6fb831a/</url>
+    <content><![CDATA[<h1 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h1><h2 id="查找第N高数据"><a href="#查找第N高数据" class="headerlink" title="查找第N高数据"></a>查找第N高数据</h2><p><a href="https://leetcode-cn.com/problems/second-highest-salary/">176.第二高的薪水</a></p>
+<blockquote>
+<p>思路一</p>
+<p>先找到第一高的</p>
+<p>再以最高的作为条件选择第二高的</p>
+</blockquote>
+<p>使用<code>distinct</code>进行去重</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select max(distinct Salary ) as &quot;SecondHighestSalary&quot;</span><br><span class="line">from Employee</span><br><span class="line">where Salary &lt; (select max(distinct Salary)</span><br><span class="line">                from Employee);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>思路二</p>
+<p>使用<code>limit</code>,<code>offset</code></p>
+<p>降序返回第二条记录</p>
+<p>使用<code>ifnull()</code>判断是否为null</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select ifnull(</span><br><span class="line">(select distinct Salary</span><br><span class="line">from Employee</span><br><span class="line">order by Salary desc</span><br><span class="line">limit 1 offset 1),</span><br><span class="line">null) as SecondHighestSalary;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode-cn.com/problems/nth-highest-salary/">177.第N高的薪水</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE M INT;</span><br><span class="line">    SET M &#x3D;N-1;</span><br><span class="line">     RETURN (</span><br><span class="line">      # Write your MySQL query statement below.</span><br><span class="line">      select ifnull(</span><br><span class="line">          (select distinct Salary</span><br><span class="line">          from Employee</span><br><span class="line">          order by Salary desc</span><br><span class="line">          limit M,1 )</span><br><span class="line">          ,null</span><br><span class="line">      ) as getNthHighestSalary     </span><br><span class="line">  );</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<h2 id="查找连续出现N次的内容"><a href="#查找连续出现N次的内容" class="headerlink" title="查找连续出现N次的内容"></a>查找连续出现N次的内容</h2><p><a href="https://leetcode-cn.com/problems/consecutive-numbers/">180.连续出现的数字</a></p>
+<blockquote>
+<p>思路一</p>
+<p>自链接</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select distinct a.num as ConsecutiveNums</span><br><span class="line">from Logs as a,</span><br><span class="line">    Logs as b,</span><br><span class="line">    Logs as c</span><br><span class="line">where a.Id &#x3D; b.Id-1</span><br><span class="line">    and b.Id &#x3D; c.Id-1</span><br><span class="line">    and a.num &#x3D; b.num</span><br><span class="line">    and b.num &#x3D; c.num;</span><br></pre></td></tr></table></figure>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排名问题"><a href="#排名问题" class="headerlink" title="排名问题"></a>排名问题</h2><p><a href="https://leetcode-cn.com/problems/rank-scores/">178.分数排名</a></p>
+<blockquote>
+<p>使用窗口函数，<code>dense_rank()</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Write your MySQL query statement below</span><br><span class="line">select Score,</span><br><span class="line">        dense_rank() over(order by Score desc) as &#39;Rank&#39;</span><br><span class="line">from Scores;</span><br></pre></td></tr></table></figure>
+<h1 id="语法函数总结"><a href="#语法函数总结" class="headerlink" title="语法函数总结"></a>语法函数总结</h1><h2 id="limit"><a href="#limit" class="headerlink" title="limit"></a><code>limit</code></h2><p><code>limit n</code>表示返回查询结果中前n条数据</p>
+<p><code>limit n,m</code>表示从第n+1条数据开始，取m条数据</p>
+<h2 id="offset"><a href="#offset" class="headerlink" title="offset"></a><code>offset</code></h2><p><code>offset n</code>表示跳过n条数据</p>
+<h2 id="ifnull"><a href="#ifnull" class="headerlink" title="ifnull()"></a><code>ifnull()</code></h2><p><code>ifnull(a,b)</code></p>
+<blockquote>
+<p>如果a不为空，则返回a</p>
+<p>否则，返回b</p>
+</blockquote>
+<h2 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h2><p>解决<strong>排名问题</strong>，<strong>topN问题</strong></p>
+<blockquote>
+<p><code>rank()</code>，并列会占用下一名次的位置，如1，1，1，4</p>
+<p><code>dense_rank()</code>，并列不占用下一名次的位置，如1，1，1，2</p>
+<p><code>row_number()</code>，不考虑并列</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>成绩</th>
+<th>rank</th>
+<th>dense_rank</th>
+<th>row_number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>98</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>98</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>98</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>85</td>
+<td>4</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>83</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>MySQL</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>MySQL</tag>
+        <tag>LeeCode</tag>
       </tags>
   </entry>
   <entry>
@@ -1053,104 +1151,6 @@
       <tags>
         <tag>hexo</tag>
         <tag>next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL学习</title>
-    <url>/c6fb831a/</url>
-    <content><![CDATA[<h1 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h1><h2 id="查找第N高数据"><a href="#查找第N高数据" class="headerlink" title="查找第N高数据"></a>查找第N高数据</h2><p><a href="https://leetcode-cn.com/problems/second-highest-salary/">176.第二高的薪水</a></p>
-<blockquote>
-<p>思路一</p>
-<p>先找到第一高的</p>
-<p>再以最高的作为条件选择第二高的</p>
-</blockquote>
-<p>使用<code>distinct</code>进行去重</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select max(distinct Salary ) as &quot;SecondHighestSalary&quot;</span><br><span class="line">from Employee</span><br><span class="line">where Salary &lt; (select max(distinct Salary)</span><br><span class="line">                from Employee);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>思路二</p>
-<p>使用<code>limit</code>,<code>offset</code></p>
-<p>降序返回第二条记录</p>
-<p>使用<code>ifnull()</code>判断是否为null</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select ifnull(</span><br><span class="line">(select distinct Salary</span><br><span class="line">from Employee</span><br><span class="line">order by Salary desc</span><br><span class="line">limit 1 offset 1),</span><br><span class="line">null) as SecondHighestSalary;</span><br></pre></td></tr></table></figure>
-<p><a href="https://leetcode-cn.com/problems/nth-highest-salary/">177.第N高的薪水</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE M INT;</span><br><span class="line">    SET M &#x3D;N-1;</span><br><span class="line">     RETURN (</span><br><span class="line">      # Write your MySQL query statement below.</span><br><span class="line">      select ifnull(</span><br><span class="line">          (select distinct Salary</span><br><span class="line">          from Employee</span><br><span class="line">          order by Salary desc</span><br><span class="line">          limit M,1 )</span><br><span class="line">          ,null</span><br><span class="line">      ) as getNthHighestSalary     </span><br><span class="line">  );</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
-<h2 id="查找连续出现N次的内容"><a href="#查找连续出现N次的内容" class="headerlink" title="查找连续出现N次的内容"></a>查找连续出现N次的内容</h2><p><a href="https://leetcode-cn.com/problems/consecutive-numbers/">180.连续出现的数字</a></p>
-<blockquote>
-<p>思路一</p>
-<p>自链接</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select distinct a.num as ConsecutiveNums</span><br><span class="line">from Logs as a,</span><br><span class="line">    Logs as b,</span><br><span class="line">    Logs as c</span><br><span class="line">where a.Id &#x3D; b.Id-1</span><br><span class="line">    and b.Id &#x3D; c.Id-1</span><br><span class="line">    and a.num &#x3D; b.num</span><br><span class="line">    and b.num &#x3D; c.num;</span><br></pre></td></tr></table></figure>
-<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排名问题"><a href="#排名问题" class="headerlink" title="排名问题"></a>排名问题</h2><p><a href="https://leetcode-cn.com/problems/rank-scores/">178.分数排名</a></p>
-<blockquote>
-<p>使用窗口函数，<code>dense_rank()</code></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Write your MySQL query statement below</span><br><span class="line">select Score,</span><br><span class="line">        dense_rank() over(order by Score desc) as &#39;Rank&#39;</span><br><span class="line">from Scores;</span><br></pre></td></tr></table></figure>
-<h1 id="语法函数总结"><a href="#语法函数总结" class="headerlink" title="语法函数总结"></a>语法函数总结</h1><h2 id="limit"><a href="#limit" class="headerlink" title="limit"></a><code>limit</code></h2><p><code>limit n</code>表示返回查询结果中前n条数据</p>
-<p><code>limit n,m</code>表示从第n+1条数据开始，取m条数据</p>
-<h2 id="offset"><a href="#offset" class="headerlink" title="offset"></a><code>offset</code></h2><p><code>offset n</code>表示跳过n条数据</p>
-<h2 id="ifnull"><a href="#ifnull" class="headerlink" title="ifnull()"></a><code>ifnull()</code></h2><p><code>ifnull(a,b)</code></p>
-<blockquote>
-<p>如果a不为空，则返回a</p>
-<p>否则，返回b</p>
-</blockquote>
-<h2 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h2><p>解决<strong>排名问题</strong>，<strong>topN问题</strong></p>
-<blockquote>
-<p><code>rank()</code>，并列会占用下一名次的位置，如1，1，1，4</p>
-<p><code>dense_rank()</code>，并列不占用下一名次的位置，如1，1，1，2</p>
-<p><code>row_number()</code>，不考虑并列</p>
-</blockquote>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>成绩</th>
-<th>rank</th>
-<th>dense_rank</th>
-<th>row_number</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>98</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>98</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-</tr>
-<tr>
-<td>98</td>
-<td>1</td>
-<td>1</td>
-<td>3</td>
-</tr>
-<tr>
-<td>85</td>
-<td>4</td>
-<td>2</td>
-<td>4</td>
-</tr>
-<tr>
-<td>83</td>
-<td>5</td>
-<td>3</td>
-<td>5</td>
-</tr>
-</tbody>
-</table>
-</div>
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>LeeCode</tag>
       </tags>
   </entry>
   <entry>
