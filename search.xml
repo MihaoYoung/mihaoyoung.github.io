@@ -1435,4 +1435,102 @@ J(\theta)=\frac{1}{m}(-y^Tlog(h)-(1-y)^Tlog(1-h))</script><p>得到$min_\theta J
         <tag>机器学习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MySQL学习</title>
+    <url>/c6fb831a/</url>
+    <content><![CDATA[<h1 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h1><h2 id="查找第N高数据"><a href="#查找第N高数据" class="headerlink" title="查找第N高数据"></a>查找第N高数据</h2><p><a href="https://leetcode-cn.com/problems/second-highest-salary/">176.第二高的薪水</a></p>
+<blockquote>
+<p>思路一</p>
+<p>先找到第一高的</p>
+<p>再以最高的作为条件选择第二高的</p>
+</blockquote>
+<p>使用<code>distinct</code>进行去重</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select max(distinct Salary ) as &quot;SecondHighestSalary&quot;</span><br><span class="line">from Employee</span><br><span class="line">where Salary &lt; (select max(distinct Salary)</span><br><span class="line">                from Employee);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>思路二</p>
+<p>使用<code>limit</code>,<code>offset</code></p>
+<p>降序返回第二条记录</p>
+<p>使用<code>ifnull()</code>判断是否为null</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select ifnull(</span><br><span class="line">(select distinct Salary</span><br><span class="line">from Employee</span><br><span class="line">order by Salary desc</span><br><span class="line">limit 1 offset 1),</span><br><span class="line">null) as SecondHighestSalary;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode-cn.com/problems/nth-highest-salary/">177.第N高的薪水</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE M INT;</span><br><span class="line">    SET M &#x3D;N-1;</span><br><span class="line">     RETURN (</span><br><span class="line">      # Write your MySQL query statement below.</span><br><span class="line">      select ifnull(</span><br><span class="line">          (select distinct Salary</span><br><span class="line">          from Employee</span><br><span class="line">          order by Salary desc</span><br><span class="line">          limit M,1 )</span><br><span class="line">          ,null</span><br><span class="line">      ) as getNthHighestSalary     </span><br><span class="line">  );</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<h2 id="查找连续出现N次的内容"><a href="#查找连续出现N次的内容" class="headerlink" title="查找连续出现N次的内容"></a>查找连续出现N次的内容</h2><p><a href="https://leetcode-cn.com/problems/consecutive-numbers/">180.连续出现的数字</a></p>
+<blockquote>
+<p>思路一</p>
+<p>自链接</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select distinct a.num as ConsecutiveNums</span><br><span class="line">from Logs as a,</span><br><span class="line">    Logs as b,</span><br><span class="line">    Logs as c</span><br><span class="line">where a.Id &#x3D; b.Id-1</span><br><span class="line">    and b.Id &#x3D; c.Id-1</span><br><span class="line">    and a.num &#x3D; b.num</span><br><span class="line">    and b.num &#x3D; c.num;</span><br></pre></td></tr></table></figure>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排名问题"><a href="#排名问题" class="headerlink" title="排名问题"></a>排名问题</h2><p><a href="https://leetcode-cn.com/problems/rank-scores/">178.分数排名</a></p>
+<blockquote>
+<p>使用窗口函数，<code>dense_rank()</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Write your MySQL query statement below</span><br><span class="line">select Score,</span><br><span class="line">        dense_rank() over(order by Score desc) as &#39;Rank&#39;</span><br><span class="line">from Scores;</span><br></pre></td></tr></table></figure>
+<h1 id="语法函数总结"><a href="#语法函数总结" class="headerlink" title="语法函数总结"></a>语法函数总结</h1><h2 id="limit"><a href="#limit" class="headerlink" title="limit"></a><code>limit</code></h2><p><code>limit n</code>表示返回查询结果中前n条数据</p>
+<p><code>limit n,m</code>表示从第n+1条数据开始，取m条数据</p>
+<h2 id="offset"><a href="#offset" class="headerlink" title="offset"></a><code>offset</code></h2><p><code>offset n</code>表示跳过n条数据</p>
+<h2 id="ifnull"><a href="#ifnull" class="headerlink" title="ifnull()"></a><code>ifnull()</code></h2><p><code>ifnull(a,b)</code></p>
+<blockquote>
+<p>如果a不为空，则返回a</p>
+<p>否则，返回b</p>
+</blockquote>
+<h2 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h2><p>解决<strong>排名问题</strong>，<strong>topN问题</strong></p>
+<blockquote>
+<p><code>rank()</code>，并列会占用下一名次的位置，如1，1，1，4</p>
+<p><code>dense_rank()</code>，并列不占用下一名次的位置，如1，1，1，2</p>
+<p><code>row_number()</code>，不考虑并列</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>成绩</th>
+<th>rank</th>
+<th>dense_rank</th>
+<th>row_number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>98</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>98</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>98</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>85</td>
+<td>4</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>83</td>
+<td>5</td>
+<td>3</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>LeeCode</tag>
+      </tags>
+  </entry>
 </search>
