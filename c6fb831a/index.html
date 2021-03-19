@@ -35,12 +35,14 @@
 <meta property="og:site_name" content="养羊小站">
 <meta property="og:description" content="写LeeCode的数据库题目的笔记">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/2f5ff13e22b0494e19d327562d970016bbaa88569c0590fa86f9c7dde947bc71-6.jpg">
 <meta property="article:published_time" content="2021-03-18T15:09:45.000Z">
-<meta property="article:modified_time" content="2021-03-19T02:21:05.618Z">
+<meta property="article:modified_time" content="2021-03-19T16:17:28.835Z">
 <meta property="article:author" content="Mihao">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="LeeCode">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/2f5ff13e22b0494e19d327562d970016bbaa88569c0590fa86f9c7dde947bc71-6.jpg">
 
 
 <link rel="canonical" href="https://mihaoyoung.github.io/c6fb831a/">
@@ -226,7 +228,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E7%AC%ACN%E9%AB%98%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">查找第N高数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E8%BF%9E%E7%BB%AD%E5%87%BA%E7%8E%B0N%E6%AC%A1%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">1.2.</span> <span class="nav-text">查找连续出现N次的内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%90%8D%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">排名问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">语法函数总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#limit"><span class="nav-number">3.1.</span> <span class="nav-text">limit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#offset"><span class="nav-number">3.2.</span> <span class="nav-text">offset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ifnull"><span class="nav-number">3.3.</span> <span class="nav-text">ifnull()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">窗口函数</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E7%AC%ACN%E9%AB%98%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.</span> <span class="nav-text">查找第N高数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E8%BF%9E%E7%BB%AD%E5%87%BA%E7%8E%B0N%E6%AC%A1%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">1.2.</span> <span class="nav-text">查找连续出现N次的内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">查找重复数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E4%B8%8D%E5%9C%A8%E8%A1%A8%E9%87%8C%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.</span> <span class="nav-text">查找不在表里的数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%90%8D%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">排名问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">语法函数总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#limit"><span class="nav-number">3.1.</span> <span class="nav-text">limit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#offset"><span class="nav-number">3.2.</span> <span class="nav-text">offset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ifnull"><span class="nav-number">3.3.</span> <span class="nav-text">ifnull()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">窗口函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E8%81%94%E7%BB%93"><span class="nav-number">3.5.</span> <span class="nav-text">多表联结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E9%A1%BA%E5%BA%8F"><span class="nav-number">3.6.</span> <span class="nav-text">优先顺序</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -359,7 +361,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 10:21:05" itemprop="dateModified" datetime="2021-03-19T10:21:05+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-20 00:17:28" itemprop="dateModified" datetime="2021-03-20T00:17:28+08:00">2021-03-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -388,14 +390,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>1.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -427,9 +429,26 @@
 <h2 id="查找连续出现N次的内容"><a href="#查找连续出现N次的内容" class="headerlink" title="查找连续出现N次的内容"></a>查找连续出现N次的内容</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/consecutive-numbers/">180.连续出现的数字</a></p>
 <blockquote>
 <p>思路一</p>
-<p>自链接</p>
+<p>自链接（不适用于次数较高）</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select distinct a.num as ConsecutiveNums</span><br><span class="line">from Logs as a,</span><br><span class="line">    Logs as b,</span><br><span class="line">    Logs as c</span><br><span class="line">where a.Id &#x3D; b.Id-1</span><br><span class="line">    and b.Id &#x3D; c.Id-1</span><br><span class="line">    and a.num &#x3D; b.num</span><br><span class="line">    and b.num &#x3D; c.num;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>利用分组排序</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/consecutive-numbers/solution/sql-server-jie-fa-by-neilsons/">参考</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select distinct num  as ConsecutiveNums from</span><br><span class="line">(select num,COUNT(1) as Scount from</span><br><span class="line">(select id,num,</span><br><span class="line">    row_number() over (order by id) -</span><br><span class="line">    row_number() over (partition by num order by id) as flag</span><br><span class="line">from Logs) as sub</span><br><span class="line">GROUP by num,flag HAVING COUNT(1)&gt;&#x3D;3) as Result;</span><br></pre></td></tr></table></figure>
+<h2 id="查找重复数据"><a href="#查找重复数据" class="headerlink" title="查找重复数据"></a>查找重复数据</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/duplicate-emails/">182.查找重复的电子邮箱</a></p>
+<blockquote>
+<p><code>group</code>分组</p>
+<p><code>count</code>计数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select Email </span><br><span class="line">from Person</span><br><span class="line">GROUP by Email</span><br><span class="line">HAVING COUNT(1)&gt;1;</span><br></pre></td></tr></table></figure>
+<h2 id="查找不在表里的数据"><a href="#查找不在表里的数据" class="headerlink" title="查找不在表里的数据"></a>查找不在表里的数据</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/customers-who-never-order/">183.从不订购的客户</a></p>
+<blockquote>
+<p>多表联结</p>
+<p><code>where</code>筛选</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select a.Name as Customers</span><br><span class="line">from Customers as a left join Orders as b </span><br><span class="line">    on a.Id &#x3D; b.CustomerId</span><br><span class="line">    where b.CustomerId is null;</span><br></pre></td></tr></table></figure>
 <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排名问题"><a href="#排名问题" class="headerlink" title="排名问题"></a>排名问题</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/rank-scores/">178.分数排名</a></p>
 <blockquote>
 <p>使用窗口函数，<code>dense_rank()</code></p>
@@ -493,6 +512,9 @@
 </tbody>
 </table>
 </div>
+<h2 id="多表联结"><a href="#多表联结" class="headerlink" title="多表联结"></a>多表联结</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/2f5ff13e22b0494e19d327562d970016bbaa88569c0590fa86f9c7dde947bc71-6.jpg" alt></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/customers-who-never-order/solution/tu-jie-sqlmian-shi-ti-cha-zhao-bu-zai-biao-li-de-s/">感谢</a></p>
+<h2 id="优先顺序"><a href="#优先顺序" class="headerlink" title="优先顺序"></a>优先顺序</h2><p><code>where</code>&gt;<code>group by</code>&gt;<code>having</code>&gt;<code>order by</code></p>
 
     </div>
 
@@ -590,7 +612,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">37k</span>
+    <span title="站点总字数">38k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

@@ -1078,9 +1078,26 @@
 <h2 id="查找连续出现N次的内容"><a href="#查找连续出现N次的内容" class="headerlink" title="查找连续出现N次的内容"></a>查找连续出现N次的内容</h2><p><a href="https://leetcode-cn.com/problems/consecutive-numbers/">180.连续出现的数字</a></p>
 <blockquote>
 <p>思路一</p>
-<p>自链接</p>
+<p>自链接（不适用于次数较高）</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select distinct a.num as ConsecutiveNums</span><br><span class="line">from Logs as a,</span><br><span class="line">    Logs as b,</span><br><span class="line">    Logs as c</span><br><span class="line">where a.Id &#x3D; b.Id-1</span><br><span class="line">    and b.Id &#x3D; c.Id-1</span><br><span class="line">    and a.num &#x3D; b.num</span><br><span class="line">    and b.num &#x3D; c.num;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>利用分组排序</p>
+<p><a href="https://leetcode-cn.com/problems/consecutive-numbers/solution/sql-server-jie-fa-by-neilsons/">参考</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select distinct num  as ConsecutiveNums from</span><br><span class="line">(select num,COUNT(1) as Scount from</span><br><span class="line">(select id,num,</span><br><span class="line">    row_number() over (order by id) -</span><br><span class="line">    row_number() over (partition by num order by id) as flag</span><br><span class="line">from Logs) as sub</span><br><span class="line">GROUP by num,flag HAVING COUNT(1)&gt;&#x3D;3) as Result;</span><br></pre></td></tr></table></figure>
+<h2 id="查找重复数据"><a href="#查找重复数据" class="headerlink" title="查找重复数据"></a>查找重复数据</h2><p><a href="https://leetcode-cn.com/problems/duplicate-emails/">182.查找重复的电子邮箱</a></p>
+<blockquote>
+<p><code>group</code>分组</p>
+<p><code>count</code>计数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select Email </span><br><span class="line">from Person</span><br><span class="line">GROUP by Email</span><br><span class="line">HAVING COUNT(1)&gt;1;</span><br></pre></td></tr></table></figure>
+<h2 id="查找不在表里的数据"><a href="#查找不在表里的数据" class="headerlink" title="查找不在表里的数据"></a>查找不在表里的数据</h2><p><a href="https://leetcode-cn.com/problems/customers-who-never-order/">183.从不订购的客户</a></p>
+<blockquote>
+<p>多表联结</p>
+<p><code>where</code>筛选</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select a.Name as Customers</span><br><span class="line">from Customers as a left join Orders as b </span><br><span class="line">    on a.Id &#x3D; b.CustomerId</span><br><span class="line">    where b.CustomerId is null;</span><br></pre></td></tr></table></figure>
 <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排名问题"><a href="#排名问题" class="headerlink" title="排名问题"></a>排名问题</h2><p><a href="https://leetcode-cn.com/problems/rank-scores/">178.分数排名</a></p>
 <blockquote>
 <p>使用窗口函数，<code>dense_rank()</code></p>
@@ -1144,6 +1161,9 @@
 </tbody>
 </table>
 </div>
+<h2 id="多表联结"><a href="#多表联结" class="headerlink" title="多表联结"></a>多表联结</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/2f5ff13e22b0494e19d327562d970016bbaa88569c0590fa86f9c7dde947bc71-6.jpg" alt></p>
+<p><a href="https://leetcode-cn.com/problems/customers-who-never-order/solution/tu-jie-sqlmian-shi-ti-cha-zhao-bu-zai-biao-li-de-s/">感谢</a></p>
+<h2 id="优先顺序"><a href="#优先顺序" class="headerlink" title="优先顺序"></a>优先顺序</h2><p><code>where</code>&gt;<code>group by</code>&gt;<code>having</code>&gt;<code>order by</code></p>
 ]]></content>
       <categories>
         <category>MySQL</category>
