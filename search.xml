@@ -1,45 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CentOS7磁盘扩展</title>
-    <url>/823759cb/</url>
-    <content><![CDATA[<h1 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h1><p>硬盘——扩展</p>
-<p>假如有快照，先删除</p>
-<p><img src="/823759cb/image-20210222120000691.png" style="zoom:80%;"></p>
-<a id="more"></a>
-<h1 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h1><h2 id="对新增的硬盘分区"><a href="#对新增的硬盘分区" class="headerlink" title="对新增的硬盘分区"></a>对新增的硬盘分区</h2><p>对原有的硬盘sda进行扩展</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sda</span><br></pre></td></tr></table></figure>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">命令(输入 m 获取帮助)：（步骤）[root@localhost mihao]# fdisk /dev/sda</span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：p	（查看分区）</span><br><span class="line"></span><br><span class="line">磁盘 /dev/sda：42.9 GB, 42949672960 字节，83886080 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x000b9dd0</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：n （新建分区）</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (2 primary, 0 extended, 2 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p （选择主分区）</span><br><span class="line">分区号 (3,4，默认 3)：3	（选区号）</span><br><span class="line">起始 扇区 (41943040-83886079，默认为 41943040)：	enter</span><br><span class="line">将使用默认值 41943040</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (41943040-83886079，默认为 83886079)：enter</span><br><span class="line">将使用默认值 83886079</span><br><span class="line">分区 3 已设置为 Linux 类型，大小设为 20 GiB</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：t （修改分区）</span><br><span class="line">分区号 (1-3，默认 3)：3	（刚刚新建的3分区）</span><br><span class="line">Hex 代码(输入 L 列出所有代码)：8e	（对应sda2 id）</span><br><span class="line">已将分区“Linux”的类型更改为“Linux LVM”</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w （保存）</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">正在同步磁盘。</span><br><span class="line">[root@localhost mihao]# partprobe （上面提示）</span><br><span class="line">[root@localhost mihao]# reboot （重启）</span><br></pre></td></tr></table></figure>
-<h2 id="对新增的硬盘格式化"><a href="#对新增的硬盘格式化" class="headerlink" title="对新增的硬盘格式化"></a>对新增的硬盘格式化</h2><p><code>df-Th</code>查看文件系统</p>
-<p>xfs系统使用<code>mkfs.xfs</code>命令，对硬盘进行格式化</p>
-<h2 id="添加新LVM到已有LVM组"><a href="#添加新LVM到已有LVM组" class="headerlink" title="添加新LVM到已有LVM组"></a>添加新LVM到已有LVM组</h2><p><code>lvm</code>进入lvm管理</p>
-<p>初始化分区</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; pvcreate /dev/sda3</span><br></pre></td></tr></table></figure>
-<p>查看卷组Volumegroup名称</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgdisplay</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>VG Name        <strong>centos</strong></p>
-</blockquote>
-<p>将初始化过的分区加入centos</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgextend centos /dev/sda3</span><br></pre></td></tr></table></figure>
-<p>查看逻辑卷Logical volume情况</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; lvdisplay</span><br></pre></td></tr></table></figure>
-<p>文件系统扩容</p>
-<p>退出lvm，扩展LV</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvextend /dev/centos/root /dev/sda3</span><br></pre></td></tr></table></figure>
-<p>运行命令</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xfs_growfs /dev/centos/root</span><br></pre></td></tr></table></figure>
-<h2 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h2><p>查看磁盘，是否拓展成功</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java-static探讨</title>
     <url>/6de462c1/</url>
     <content><![CDATA[<h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><h2 id="非static函数工作原理"><a href="#非static函数工作原理" class="headerlink" title="非static函数工作原理"></a>非static函数工作原理</h2><blockquote>
@@ -95,6 +56,45 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7磁盘扩展</title>
+    <url>/823759cb/</url>
+    <content><![CDATA[<h1 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h1><p>硬盘——扩展</p>
+<p>假如有快照，先删除</p>
+<p><img src="/823759cb/image-20210222120000691.png" style="zoom:80%;"></p>
+<a id="more"></a>
+<h1 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h1><h2 id="对新增的硬盘分区"><a href="#对新增的硬盘分区" class="headerlink" title="对新增的硬盘分区"></a>对新增的硬盘分区</h2><p>对原有的硬盘sda进行扩展</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sda</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">命令(输入 m 获取帮助)：（步骤）[root@localhost mihao]# fdisk /dev/sda</span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：p	（查看分区）</span><br><span class="line"></span><br><span class="line">磁盘 /dev/sda：42.9 GB, 42949672960 字节，83886080 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x000b9dd0</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048     2099199     1048576   83  Linux</span><br><span class="line">/dev/sda2         2099200    41943039    19921920   8e  Linux LVM</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：n （新建分区）</span><br><span class="line">Partition type:</span><br><span class="line">   p   primary (2 primary, 0 extended, 2 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): p （选择主分区）</span><br><span class="line">分区号 (3,4，默认 3)：3	（选区号）</span><br><span class="line">起始 扇区 (41943040-83886079，默认为 41943040)：	enter</span><br><span class="line">将使用默认值 41943040</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (41943040-83886079，默认为 83886079)：enter</span><br><span class="line">将使用默认值 83886079</span><br><span class="line">分区 3 已设置为 Linux 类型，大小设为 20 GiB</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：t （修改分区）</span><br><span class="line">分区号 (1-3，默认 3)：3	（刚刚新建的3分区）</span><br><span class="line">Hex 代码(输入 L 列出所有代码)：8e	（对应sda2 id）</span><br><span class="line">已将分区“Linux”的类型更改为“Linux LVM”</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w （保存）</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">正在同步磁盘。</span><br><span class="line">[root@localhost mihao]# partprobe （上面提示）</span><br><span class="line">[root@localhost mihao]# reboot （重启）</span><br></pre></td></tr></table></figure>
+<h2 id="对新增的硬盘格式化"><a href="#对新增的硬盘格式化" class="headerlink" title="对新增的硬盘格式化"></a>对新增的硬盘格式化</h2><p><code>df-Th</code>查看文件系统</p>
+<p>xfs系统使用<code>mkfs.xfs</code>命令，对硬盘进行格式化</p>
+<h2 id="添加新LVM到已有LVM组"><a href="#添加新LVM到已有LVM组" class="headerlink" title="添加新LVM到已有LVM组"></a>添加新LVM到已有LVM组</h2><p><code>lvm</code>进入lvm管理</p>
+<p>初始化分区</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; pvcreate /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>查看卷组Volumegroup名称</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgdisplay</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>VG Name        <strong>centos</strong></p>
+</blockquote>
+<p>将初始化过的分区加入centos</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; vgextend centos /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>查看逻辑卷Logical volume情况</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvm&gt; lvdisplay</span><br></pre></td></tr></table></figure>
+<p>文件系统扩容</p>
+<p>退出lvm，扩展LV</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">lvextend /dev/centos/root /dev/sda3</span><br></pre></td></tr></table></figure>
+<p>运行命令</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">xfs_growfs /dev/centos/root</span><br></pre></td></tr></table></figure>
+<h2 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h2><p>查看磁盘，是否拓展成功</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
