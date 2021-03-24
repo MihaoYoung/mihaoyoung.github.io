@@ -1098,12 +1098,37 @@
 <p><code>where</code>筛选</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select a.Name as Customers</span><br><span class="line">from Customers as a left join Orders as b </span><br><span class="line">    on a.Id &#x3D; b.CustomerId</span><br><span class="line">    where b.CustomerId is null;</span><br></pre></td></tr></table></figure>
+<h2 id="分组比较"><a href="#分组比较" class="headerlink" title="分组比较"></a>分组比较</h2><p><a href="https://leetcode-cn.com/problems/department-highest-salary/">184.部门工资最高的员工</a></p>
+<blockquote>
+<p>多表联结</p>
+<p>分组</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select b.Name as Department,a.Name as Employee,a.Salary </span><br><span class="line">from Employee as a join Department as b</span><br><span class="line">    on a.DepartmentId &#x3D; b.id</span><br><span class="line">where(</span><br><span class="line">    (a.DepartmentId,a.Salary) in</span><br><span class="line">    (select a.DepartmentId, max(Salary) from Employee as a</span><br><span class="line">        group by a.DepartmentId)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="删除重复数据"><a href="#删除重复数据" class="headerlink" title="删除重复数据"></a>删除重复数据</h2><p><a href="https://leetcode-cn.com/problems/delete-duplicate-emails/">196.删除重复的电子邮箱</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">delete p1 </span><br><span class="line">from Person p1,</span><br><span class="line">    Person p2</span><br><span class="line">where </span><br><span class="line">    p1.Email&#x3D;p2.Email and p1.Id &gt; p2.Id;</span><br></pre></td></tr></table></figure>
 <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h2 id="排名问题"><a href="#排名问题" class="headerlink" title="排名问题"></a>排名问题</h2><p><a href="https://leetcode-cn.com/problems/rank-scores/">178.分数排名</a></p>
 <blockquote>
 <p>使用窗口函数，<code>dense_rank()</code></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Write your MySQL query statement below</span><br><span class="line">select Score,</span><br><span class="line">        dense_rank() over(order by Score desc) as &#39;Rank&#39;</span><br><span class="line">from Scores;</span><br></pre></td></tr></table></figure>
-<h1 id="语法函数总结"><a href="#语法函数总结" class="headerlink" title="语法函数总结"></a>语法函数总结</h1><h2 id="limit"><a href="#limit" class="headerlink" title="limit"></a><code>limit</code></h2><p><code>limit n</code>表示返回查询结果中前n条数据</p>
+<h2 id="TOPN"><a href="#TOPN" class="headerlink" title="TOPN"></a>TOPN</h2><p><a href="https://leetcode-cn.com/problems/department-top-three-salaries/">185.部门工资前三高的所有员工</a></p>
+<blockquote>
+<p>排序</p>
+<p>多表联结</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select b.Name as Department,a.Name as Employee,a.Salary</span><br><span class="line">from Employee as a join Department as b </span><br><span class="line">    on a.DepartmentId &#x3D; b.Id</span><br><span class="line">where(</span><br><span class="line">    (a.DepartmentId,a.Salary) in</span><br><span class="line">    (select DepartmentId,Salary from</span><br><span class="line">        (select a.DepartmentId,a.Salary,</span><br><span class="line">            dense_rank() over(partition by a.DepartmentId order by a.Salary desc) as ranking</span><br><span class="line">        from Employee as a </span><br><span class="line">        ) as c</span><br><span class="line">        where ranking &lt;&#x3D;3</span><br><span class="line">    ) </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h1 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h1><h2 id="比较日期"><a href="#比较日期" class="headerlink" title="比较日期"></a>比较日期</h2><p><a href="https://leetcode-cn.com/problems/rising-temperature/">197.上升的温度</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select w1.id </span><br><span class="line">from Weather as w1 cross join Weather as w2 </span><br><span class="line">    on datediff(w1.recordDate,w2.recordDate) &#x3D; 1</span><br><span class="line">where w1.Temperature &gt; w2.Temperature;</span><br></pre></td></tr></table></figure>
+<h1 id="语法函数总结"><a href="#语法函数总结" class="headerlink" title="语法函数总结"></a>语法函数总结</h1><h2 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h2><p><code>datediff</code></p>
+<blockquote>
+<p><code>datediff(日期1, 日期2)</code><br>得到的结果是日期1与日期2相差的天数。<br>如果日期1比日期2大，结果为正；如果日期1比日期2小，结果为负。</p>
+</blockquote>
+<p><code>timestampdiff</code></p>
+<blockquote>
+<p><code>timestampdiff(时间类型, 日期1, 日期2)</code><br>这个函数和上面<code>diffdate</code>的正、负号规则刚好相反。<br>日期1大于日期2，结果为负，日期1小于日期2，结果为正。</p>
+<p>在“时间类型”的参数位置，通过添加“day”, “hour”, “second”等关键词，来规定计算天数差、小时数差、还是分钟数差。</p>
+</blockquote>
+<h2 id="limit"><a href="#limit" class="headerlink" title="limit"></a><code>limit</code></h2><p><code>limit n</code>表示返回查询结果中前n条数据</p>
 <p><code>limit n,m</code>表示从第n+1条数据开始，取m条数据</p>
 <h2 id="offset"><a href="#offset" class="headerlink" title="offset"></a><code>offset</code></h2><p><code>offset n</code>表示跳过n条数据</p>
 <h2 id="ifnull"><a href="#ifnull" class="headerlink" title="ifnull()"></a><code>ifnull()</code></h2><p><code>ifnull(a,b)</code></p>
@@ -1164,13 +1189,17 @@
 <h2 id="多表联结"><a href="#多表联结" class="headerlink" title="多表联结"></a>多表联结</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/2f5ff13e22b0494e19d327562d970016bbaa88569c0590fa86f9c7dde947bc71-6.jpg" alt></p>
 <p><a href="https://leetcode-cn.com/problems/customers-who-never-order/solution/tu-jie-sqlmian-shi-ti-cha-zhao-bu-zai-biao-li-de-s/">感谢</a></p>
 <h2 id="优先顺序"><a href="#优先顺序" class="headerlink" title="优先顺序"></a>优先顺序</h2><p><code>where</code>&gt;<code>group by</code>&gt;<code>having</code>&gt;<code>order by</code></p>
+<h1 id="各种模板"><a href="#各种模板" class="headerlink" title="各种模板"></a>各种模板</h1><h2 id="TopN"><a href="#TopN" class="headerlink" title="TopN"></a>TopN</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># topN问题 sql模板</span><br><span class="line">select *</span><br><span class="line">from (</span><br><span class="line">   select *, </span><br><span class="line">          row_number() over (partition by 要分组的列名</span><br><span class="line">                       order by 要排序的列名 desc) as 排名</span><br><span class="line">   from 表名) as a</span><br><span class="line">where 排名 &lt;&#x3D; N;</span><br></pre></td></tr></table></figure>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p>该笔记参考了LeeCode许多优秀大佬的题解</p>
+<p>在此由衷感谢</p>
+<p><a href="https://leetcode-cn.com/u/houzidata/">猴子数据分析</a></p>
 ]]></content>
       <categories>
         <category>MySQL</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
-        <tag>LeeCode</tag>
+        <tag>LeetCode</tag>
       </tags>
   </entry>
   <entry>
@@ -1466,7 +1495,59 @@ J(\theta)=\frac{1}{m}(-y^Tlog(h)-(1-y)^Tlog(1-h))</script><p>得到$min_\theta J
 \theta_j:=\theta_j-\alpha\frac {\partial}{\partial{\theta_j}}J(\theta)\\\\
 \theta_j:=\theta_j-\alpha\frac {1}{m}\sum_{i=1}^{m}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}</script><p>向量化</p>
 <script type="math/tex; mode=display">
-\theta:=\theta-\frac{\alpha}{m}X^T(g(X\theta)-\overrightarrow{y})</script>]]></content>
+\theta:=\theta-\frac{\alpha}{m}X^T(g(X\theta)-\overrightarrow{y})</script><h1 id="过度拟合-Overfitting"><a href="#过度拟合-Overfitting" class="headerlink" title="过度拟合 Overfitting"></a>过度拟合 Overfitting</h1><p>由于设置过多特征变量，<strong>hypothesis</strong>几乎适应所有的训练样本，但该<strong>hypothesis</strong>并不能进行很好的预测。</p>
+<p>因为这个复杂的函数创建了许多与数据没有关联的曲线</p>
+<p>解决方法</p>
+<blockquote>
+<p>减少特征变量</p>
+<p>正规化Regularization</p>
+</blockquote>
+<h2 id="Regularization-Cost-Function"><a href="#Regularization-Cost-Function" class="headerlink" title="Regularization Cost Function"></a>Regularization Cost Function</h2><script type="math/tex; mode=display">
+min_\theta\frac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2+\lambda\sum_{j=1}^{n}\theta_j^2</script><h2 id="Regularized-Linear-Regression"><a href="#Regularized-Linear-Regression" class="headerlink" title="Regularized Linear Regression"></a>Regularized Linear Regression</h2><p><strong>Gradient Descent</strong></p>
+<p>多次迭代</p>
+<script type="math/tex; mode=display">
+\theta_0:=\theta_0-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x_0^{(i)}\\\\
+\theta_j:=\theta_j-\alpha[(\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)})+\frac{\lambda}{m}\theta_j]</script><p><strong>正规方程</strong></p>
+<script type="math/tex; mode=display">
+\theta=(X^TX+\lambda L)^{-1}X^Ty\\\\
+L=
+\begin{bmatrix}
+0&0&\cdots&0\\\\
+0&1&\cdots&0\\\\
+\vdots&\vdots&\ddots&\vdots\\\\
+0&0&\cdots&1
+\end{bmatrix}
+\in R^{n+1}</script><h2 id="Regularized-Logistic-Regression"><a href="#Regularized-Logistic-Regression" class="headerlink" title="Regularized Logistic Regression"></a>Regularized Logistic Regression</h2><script type="math/tex; mode=display">
+J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-logh_\theta(x^{(i)}))]+\frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2</script><h1 id="神经网络-Neural-Network"><a href="#神经网络-Neural-Network" class="headerlink" title="神经网络 Neural Network"></a>神经网络 Neural Network</h1><p>In our model, our dendrites are like the input features $x_1\cdots x_n$, and the output is the result of our hypothesis function. </p>
+<p>In this model our $x_0$ input node is sometimes called the “bias unit.” It is always equal to 1.</p>
+<p>In neural networks, we use the same logistic function as in classification, $\frac{1}{1 + e^{-\theta^Tx}}$, yet we sometimes call it a sigmoid (logistic) <strong>activation</strong> function. In this situation, our “theta” parameters are sometimes called “weights”.</p>
+<p>Our input nodes (layer 1), also known as the “input layer”, go into another node (layer 2), which finally outputs the hypothesis function, known as the “output layer”.</p>
+<p>We can have <strong>intermediate layers</strong> of nodes between the input and output layers called the <strong>“hidden layers.”</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210324100709079.png" alt></p>
+<p>This is saying that we compute our activation nodes by using a 3×4 matrix of parameters. We apply each row of the parameters to our inputs to obtain the value for one activation node. Our hypothesis output is the logistic function applied to the sum of the values of our activation nodes, which have been multiplied by yet another parameter matrix$ \Theta^{(2)} $containing the weights for our second layer of nodes.</p>
+<p>Each layer gets its own matrix of weights, $\Theta^{(j)}$.</p>
+<p>The dimensions of these matrices of weights is determined as follows:</p>
+<p>If network has $s_j$ units in layer $j$ and $s_{j+1}$ units in layer $j+1$, then $\Theta^{(j)}$ will be of dimension $s_{j+1} \times (s_j + 1)$.</p>
+<p>The +1 comes from the addition in$ \Theta^{(j)}$ of the “bias nodes,”$ x_0 $and$ \Theta_0^{(j)}$. In other words the output nodes will not include the bias nodes while the inputs will. The following image summarizes our model representation: </p>
+<p><img src="/91a709bb/image-20210324101135246.png" alt></p>
+<p>Example: If layer 1 has 2 input nodes and layer 2 has 4 activation nodes. Dimension of $\Theta^{(1)}$ is going to be 4×3 where $s_j$ =2 and $s_{j+1} = 4$, so $s_{j+1} \times (s_j + 1) = 4 \times 3$</p>
+<h2 id="向量化"><a href="#向量化" class="headerlink" title="向量化"></a>向量化</h2><p>an example of a neural network</p>
+<script type="math/tex; mode=display">
+\begin{align*} a_1^{(2)} = g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3) \newline a_2^{(2)} = g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3) \newline a_3^{(2)} = g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3) \newline h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)}a_0^{(2)} + \Theta_{11}^{(2)}a_1^{(2)} + \Theta_{12}^{(2)}a_2^{(2)} + \Theta_{13}^{(2)}a_3^{(2)}) \newline \end{align*}</script><p>define a new variable $z_k^{(j)}$that encompasses the parameters inside our g function.</p>
+<script type="math/tex; mode=display">
+\begin{align*}a_1^{(2)} = g(z_1^{(2)}) \newline a_2^{(2)} = g(z_2^{(2)}) \newline a_3^{(2)} = g(z_3^{(2)}) \newline \end{align*}</script><p>In other words, for layer j=2 and node k, the variable z will be:</p>
+<p>The vector representation of x and $z^{j}$ is:</p>
+<script type="math/tex; mode=display">
+\begin{align*}x = \begin{bmatrix}x_0 \newline x_1 \newline\cdots \newline x_n\end{bmatrix} &z^{(j)} = \begin{bmatrix}z_1^{(j)} \newline z_2^{(j)} \newline\cdots \newline z_n^{(j)}\end{bmatrix}\end{align*}</script><p>Setting $x = a^{(1)}$, we can rewrite the equation as:</p>
+<p>We are multiplying our matrix $\Theta^{(j-1)}$ with dimensions $s_j\times (n+1)$(where $s_j$ is the number of our activation nodes) by our vector $a^{(j-1)}$ with height (n+1). This gives us our vector $z^{(j)}$ with height $s_j$. Now we can get a vector of our activation nodes for layer j as follows:</p>
+<p>$a^{(j)} = g(z^{(j)})$</p>
+<p>Where our function g can be applied element-wise to our vector $z^{(j)}$.</p>
+<p>We can then add a bias unit (equal to 1) to layer j after we have computed $a^{(j)}$. This will be element $a_0^{(j)}$ and will be equal to 1. To compute our final hypothesis, let’s first compute another z vector:</p>
+<p>$z^{(j+1)} = \Theta^{(j)}a^{(j)}$</p>
+<p>We get this final z vector by multiplying the next theta matrix after $\Theta^{(j-1)}$with the values of all the activation nodes we just got. This last theta matrix $\Theta^{(j)}$ will have only <strong>one row</strong> which is multiplied by one column $a^{(j)}$ so that our result is a single number. We then get our final result with:</p>
+<p>$h_\Theta(x) = a^{(j+1)} = g(z^{(j+1)})$</p>
+<p>Notice that in this <strong>last step</strong>, between layer j and layer j+1, we are doing <strong>exactly the same thing</strong> as we did in logistic regression. Adding all these intermediate layers in neural networks allows us to more elegantly produce interesting and more complex non-linear hypotheses.</p>
+]]></content>
       <categories>
         <category>机器学习</category>
       </categories>
