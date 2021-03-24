@@ -1634,4 +1634,17 @@ J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-log
         <tag>机器学习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>哈希</title>
+    <url>/2e3b1176/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1.两数之和"></a><a href="https://leetcode-cn.com/problems/two-sum/">1.两数之和</a></h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="comment">// 暴力破解</span></span><br><span class="line">        <span class="comment">/*int len = nums.length;</span></span><br><span class="line"><span class="comment">        for(int i=0;i&lt;len-1;i++)&#123;</span></span><br><span class="line"><span class="comment">            for(int j=i+1;j&lt;len;j++)&#123;</span></span><br><span class="line"><span class="comment">                if(nums[i]+nums[j]==target)&#123;</span></span><br><span class="line"><span class="comment">                    ans[0]=i;</span></span><br><span class="line"><span class="comment">                    ans[1]=j;</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">            &#125;</span></span><br><span class="line"><span class="comment">        &#125;*/</span></span><br><span class="line">        Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(target-nums[i]))&#123;</span><br><span class="line">                ans[<span class="number">0</span>] = map.get(target-nums[i]);</span><br><span class="line">                ans[<span class="number">1</span>] = i;</span><br><span class="line">                <span class="keyword">return</span> ans;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                map.put(nums[i],i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="语法总结"><a href="#语法总结" class="headerlink" title="语法总结"></a>语法总结</h1>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>哈希</tag>
+      </tags>
+  </entry>
 </search>

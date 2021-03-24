@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://mihaoyoung.github.io/2e3b1176/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://mihaoyoung.github.io/91a709bb/</loc>
     
     <lastmod>2021-03-24</lastmod>
@@ -185,6 +192,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/%E5%93%88%E5%B8%8C/</loc>
+    <lastmod>2021-03-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -238,6 +252,13 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2021-03-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/categories/LeetCode/</loc>
     <lastmod>2021-03-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
