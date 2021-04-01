@@ -1647,4 +1647,20 @@ J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-log
         <tag>哈希</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Springboot:MyBatis-plus学习</title>
+    <url>/a9385db7/</url>
+    <content><![CDATA[<h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h2 id="项目启动失败"><a href="#项目启动失败" class="headerlink" title="项目启动失败"></a>项目启动失败</h2><p>成功使用代码生成器，创建代码后，项目无法启动</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210401231655943.png" alt></p>
+<p><strong>解决方案</strong></p>
+<p>在启动类前加上注解，<code>@MapperScan(basePackages = &#123;&quot;com.xxx.xxx&quot;&#125;)</code></p>
+]]></content>
+      <categories>
+        <category>Sringboot</category>
+      </categories>
+      <tags>
+        <tag>Sringboot</tag>
+        <tag>MyBatis</tag>
+      </tags>
+  </entry>
 </search>
