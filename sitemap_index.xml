@@ -179,20 +179,6 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/hexo/</loc>
-    <lastmod>2021-04-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://mihaoyoung.github.io/tags/next/</loc>
-    <lastmod>2021-04-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://mihaoyoung.github.io/tags/Sringboot/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
@@ -207,14 +193,21 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
+    <loc>https://mihaoyoung.github.io/tags/hexo/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://mihaoyoung.github.io/tags/next/</loc>
+    <lastmod>2021-04-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -229,6 +222,13 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/tags/%E6%95%B0%E7%BB%84/</loc>
+    <lastmod>2021-04-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -265,13 +265,6 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/hexo/</loc>
-    <lastmod>2021-04-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://mihaoyoung.github.io/categories/Sringboot/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
@@ -279,14 +272,14 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
+    <loc>https://mihaoyoung.github.io/categories/hexo/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://mihaoyoung.github.io/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -301,6 +294,13 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/categories/hexo/next/</loc>
+    <lastmod>2021-04-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

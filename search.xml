@@ -40,6 +40,64 @@
       </tags>
   </entry>
   <entry>
+    <title>Java-static探讨</title>
+    <url>/6de462c1/</url>
+    <content><![CDATA[<h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><h2 id="非static函数工作原理"><a href="#非static函数工作原理" class="headerlink" title="非static函数工作原理"></a>非static函数工作原理</h2><blockquote>
+<p>使用&lt;对象&gt;.&lt;方法名称&gt; 调用函数</p>
+<p>实际上是在调用类对应函数，并将该对象作为第一个参数进行传递。在函数内，该对象称为<code>this</code>。函数中的所有操作都是针对此对象及其数据执行的。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//表面代码</span></span><br><span class="line">Cat cat = <span class="keyword">new</span> Cat();</span><br><span class="line">String name = cat.getName();</span><br><span class="line">cat.setAge(<span class="number">17</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//实际运行代码</span></span><br><span class="line">Cat cat = <span class="keyword">new</span> Cat();</span><br><span class="line">String name = Cat.getName(cat);</span><br><span class="line">Cat.setAge(cat, <span class="number">17</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="static函数工作原理"><a href="#static函数工作原理" class="headerlink" title="static函数工作原理"></a>static函数工作原理</h2><blockquote>
+<p>使用&lt;类名&gt;.&lt;方法名称&gt; 调用函数</p>
+<p>不会传递任何对象，即<code>this</code>为<code>null</code></p>
+<p>因此，<strong>static 函数无法访问非 static 变量和函数</strong> </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//表面代码</span></span><br><span class="line">Cat cat1 = <span class="keyword">new</span> Cat();</span><br><span class="line">Cat cat2 = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="keyword">int</span> catCount = Cat.getAllCatsCount();</span><br><span class="line"></span><br><span class="line"><span class="comment">//实际运行代码</span></span><br><span class="line">Cat cat1 = <span class="keyword">new</span> Cat();</span><br><span class="line">Cat cat2 = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="keyword">int</span> catCount = Cat.getAllCatsCount(<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<p>优点</p>
+<blockquote>
+<ul>
+<li>不必传递对象引用，就可以使用 <code>static</code>  方法和变量</li>
+<li>可能需先调用一个一个方法，才能创建对象<ul>
+<li>如<code>main()</code>设置为static，因此在任意对象创建</li>
+<li>之前，在将类加载到内存后立即调用它</li>
+</ul>
+</li>
+<li>可能需要只有一个变量副本，如，<code>System.out</code></li>
+</ul>
+</blockquote>
+<h2 id="static内部类"><a href="#static内部类" class="headerlink" title="static内部类"></a>static内部类</h2><blockquote>
+<ul>
+<li>对嵌套类使用static，即static不能用于最外层的类。</li>
+<li>只能访问外部类静态的成员变量和方法<ul>
+<li>但普通内部类可以访问任意外部类的成员变量和方法</li>
+</ul>
+</li>
+<li>可以声明普通成员变量和方法<ul>
+<li>但普通内部类不能声明static成员变量和方法</li>
+</ul>
+</li>
+<li>外部类的静态方法只能访问静态内部类</li>
+<li>可以直接初始化<ul>
+<li>普通内部类必须先新建外部类实例</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 下面程序演示如何在java中创建静态内部类和非静态内部类 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> String msg = <span class="string">&quot;GeeksForGeeks&quot;</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 静态内部类</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">NestedStaticClass</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 静态内部类只能访问外部类的静态成员</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         <span class="comment">// 试着将msg改成非静态的，这将导致编译错误 </span></span><br><span class="line">         System.out.println(<span class="string">&quot;Message from nested static class: &quot;</span> + msg); </span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 非静态内部类</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 不管是静态方法还是非静态方法都可以在非静态内部类中访问</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;Message from non-static nested class: &quot;</span>+ msg);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 怎么创建静态内部类和非静态内部类的实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 创建静态内部类的实例</span></span><br><span class="line">       OuterClass.NestedStaticClass printer = <span class="keyword">new</span> OuterClass.NestedStaticClass();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 创建静态内部类的非静态方法</span></span><br><span class="line">       printer.printMessage();   </span><br><span class="line"></span><br><span class="line">       <span class="comment">// 为了创建非静态内部类，我们需要外部类的实例</span></span><br><span class="line">       OuterClass outer = <span class="keyword">new</span> OuterClass();        </span><br><span class="line">       OuterClass.InnerClass inner  = outer.<span class="function">new <span class="title">InnerClass</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 调用非静态内部类的非静态方法</span></span><br><span class="line">       inner.display();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 我们也可以结合以上步骤，一步创建的内部类实例</span></span><br><span class="line">       OuterClass.InnerClass innerObject = <span class="keyword">new</span> OuterClass().<span class="function">new <span class="title">InnerClass</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 同样我们现在可以调用内部类方法</span></span><br><span class="line">       innerObject.display();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://codegym.cc/quests/lectures/zh.questsyntax.level06.lecture06">static 变量和方法</a></p>
+<p><a href="https://www.cnblogs.com/Alex--Yang/p/3386863.html">Java-静态类</a></p>
+<p><a href="https://blog.csdn.net/winfredzen/article/details/78458233">Java 静态类、静态方法和静态变量</a></p>
+<p><a href="https://www.cnblogs.com/kissazi2/p/3971065.html">java中的Static class</a></p>
+]]></content>
+      <categories>
+        <category>后端</category>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java-异常</title>
     <url>/c2b6c13e/</url>
     <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p><strong>Java的基本理念是“结构不佳的代码不能运行”</strong></p>
@@ -127,64 +185,6 @@
       <tags>
         <tag>Java</tag>
         <tag>异常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java-static探讨</title>
-    <url>/6de462c1/</url>
-    <content><![CDATA[<h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><h2 id="非static函数工作原理"><a href="#非static函数工作原理" class="headerlink" title="非static函数工作原理"></a>非static函数工作原理</h2><blockquote>
-<p>使用&lt;对象&gt;.&lt;方法名称&gt; 调用函数</p>
-<p>实际上是在调用类对应函数，并将该对象作为第一个参数进行传递。在函数内，该对象称为<code>this</code>。函数中的所有操作都是针对此对象及其数据执行的。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//表面代码</span></span><br><span class="line">Cat cat = <span class="keyword">new</span> Cat();</span><br><span class="line">String name = cat.getName();</span><br><span class="line">cat.setAge(<span class="number">17</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//实际运行代码</span></span><br><span class="line">Cat cat = <span class="keyword">new</span> Cat();</span><br><span class="line">String name = Cat.getName(cat);</span><br><span class="line">Cat.setAge(cat, <span class="number">17</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="static函数工作原理"><a href="#static函数工作原理" class="headerlink" title="static函数工作原理"></a>static函数工作原理</h2><blockquote>
-<p>使用&lt;类名&gt;.&lt;方法名称&gt; 调用函数</p>
-<p>不会传递任何对象，即<code>this</code>为<code>null</code></p>
-<p>因此，<strong>static 函数无法访问非 static 变量和函数</strong> </p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//表面代码</span></span><br><span class="line">Cat cat1 = <span class="keyword">new</span> Cat();</span><br><span class="line">Cat cat2 = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="keyword">int</span> catCount = Cat.getAllCatsCount();</span><br><span class="line"></span><br><span class="line"><span class="comment">//实际运行代码</span></span><br><span class="line">Cat cat1 = <span class="keyword">new</span> Cat();</span><br><span class="line">Cat cat2 = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="keyword">int</span> catCount = Cat.getAllCatsCount(<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
-<p>优点</p>
-<blockquote>
-<ul>
-<li>不必传递对象引用，就可以使用 <code>static</code>  方法和变量</li>
-<li>可能需先调用一个一个方法，才能创建对象<ul>
-<li>如<code>main()</code>设置为static，因此在任意对象创建</li>
-<li>之前，在将类加载到内存后立即调用它</li>
-</ul>
-</li>
-<li>可能需要只有一个变量副本，如，<code>System.out</code></li>
-</ul>
-</blockquote>
-<h2 id="static内部类"><a href="#static内部类" class="headerlink" title="static内部类"></a>static内部类</h2><blockquote>
-<ul>
-<li>对嵌套类使用static，即static不能用于最外层的类。</li>
-<li>只能访问外部类静态的成员变量和方法<ul>
-<li>但普通内部类可以访问任意外部类的成员变量和方法</li>
-</ul>
-</li>
-<li>可以声明普通成员变量和方法<ul>
-<li>但普通内部类不能声明static成员变量和方法</li>
-</ul>
-</li>
-<li>外部类的静态方法只能访问静态内部类</li>
-<li>可以直接初始化<ul>
-<li>普通内部类必须先新建外部类实例</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 下面程序演示如何在java中创建静态内部类和非静态内部类 */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> String msg = <span class="string">&quot;GeeksForGeeks&quot;</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 静态内部类</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">NestedStaticClass</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 静态内部类只能访问外部类的静态成员</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">         <span class="comment">// 试着将msg改成非静态的，这将导致编译错误 </span></span><br><span class="line">         System.out.println(<span class="string">&quot;Message from nested static class: &quot;</span> + msg); </span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 非静态内部类</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 不管是静态方法还是非静态方法都可以在非静态内部类中访问</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>&#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;Message from non-static nested class: &quot;</span>+ msg);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 怎么创建静态内部类和非静态内部类的实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 创建静态内部类的实例</span></span><br><span class="line">       OuterClass.NestedStaticClass printer = <span class="keyword">new</span> OuterClass.NestedStaticClass();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 创建静态内部类的非静态方法</span></span><br><span class="line">       printer.printMessage();   </span><br><span class="line"></span><br><span class="line">       <span class="comment">// 为了创建非静态内部类，我们需要外部类的实例</span></span><br><span class="line">       OuterClass outer = <span class="keyword">new</span> OuterClass();        </span><br><span class="line">       OuterClass.InnerClass inner  = outer.<span class="function">new <span class="title">InnerClass</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 调用非静态内部类的非静态方法</span></span><br><span class="line">       inner.display();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 我们也可以结合以上步骤，一步创建的内部类实例</span></span><br><span class="line">       OuterClass.InnerClass innerObject = <span class="keyword">new</span> OuterClass().<span class="function">new <span class="title">InnerClass</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 同样我们现在可以调用内部类方法</span></span><br><span class="line">       innerObject.display();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://codegym.cc/quests/lectures/zh.questsyntax.level06.lecture06">static 变量和方法</a></p>
-<p><a href="https://www.cnblogs.com/Alex--Yang/p/3386863.html">Java-静态类</a></p>
-<p><a href="https://blog.csdn.net/winfredzen/article/details/78458233">Java 静态类、静态方法和静态变量</a></p>
-<p><a href="https://www.cnblogs.com/kissazi2/p/3971065.html">java中的Static class</a></p>
-]]></content>
-      <categories>
-        <category>后端</category>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -842,6 +842,88 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux多节点环境打造</title>
+    <url>/d49360d3/</url>
+    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
+<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
+<p>选择CentOS7下的x86_64</p>
+<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
+<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
+<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
+<a id="more"></a>
+<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
+<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
+<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
+<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
+<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
+<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
+<p>选择-典型</p>
+<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
+<p>选择-稍后安装操作系统</p>
+<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
+<p>选择-CentOS7 64位版本</p>
+<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
+<p>设置名称和路径</p>
+<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
+<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
+<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
+<p>自定义硬件</p>
+<p>选择刚刚下载CentOS7 ios文件</p>
+<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
+<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
+<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
+<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
+<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
+<p>点击完成，然后启动</p>
+<p>按下键盘↑方向键，回车</p>
+<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
+<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
+<p>设置root密码</p>
+<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
+<p>静静等待安装~</p>
+<p>最后创建用户名即可</p>
+<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
+<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
+<p>如何查看自己的网卡</p>
+<p>打开网络与共享中心——点击你所连接的网络——属性</p>
+<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
+<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
+<p>输入密码（密码不会显示），回车</p>
+<p>输入<code>dhclient</code></p>
+<p>输入<code>ifconfig</code></p>
+<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
+<p>ens33下的inet会有一串ip，记住</p>
+<p>然后输入</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
+<p>修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>添加</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
+<p>打开网络与共享中心</p>
+<p>点击你所连接的网络</p>
+<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
+<p>点击详细信息，即可看到所需信息</p>
+<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
+<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
+<p>输入以下命令，重启网卡</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
+<p>检验是否可以连接外网</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>若有数据，即成功</p>
+<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
+<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
+<p>虚拟机——管理——克隆——创建完整克隆</p>
+<p>设置静态ip参考上文</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL学习</title>
     <url>/c6fb831a/</url>
     <content><![CDATA[<h1 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h1><h2 id="查找第N高数据"><a href="#查找第N高数据" class="headerlink" title="查找第N高数据"></a>查找第N高数据</h2><p><a href="https://leetcode-cn.com/problems/second-highest-salary/">176.第二高的薪水</a></p>
@@ -989,85 +1071,44 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux多节点环境打造</title>
-    <url>/d49360d3/</url>
-    <content><![CDATA[<h1 id="基本准备"><a href="#基本准备" class="headerlink" title="基本准备"></a>基本准备</h1><h2 id="软件资源准备"><a href="#软件资源准备" class="headerlink" title="软件资源准备"></a>软件资源准备</h2><h3 id="Linux-CentOS7"><a href="#Linux-CentOS7" class="headerlink" title="Linux CentOS7"></a>Linux CentOS7</h3><p>进入<a href="https://www.centos.org/">CentOS官网</a>，点击CentOS Linux</p>
-<p><img src="/d49360d3/image-20210221150445096.png" style="zoom:50%;"></p>
-<p>选择CentOS7下的x86_64</p>
-<p><img src="/d49360d3/image-20210221151338404.png" style="zoom:50%;"></p>
-<p>选择合适镜像链接下载CentOS-7-x86_64-DVD-2009.iso </p>
-<p>也可以点击<a href="http://mirrors.huaweicloud.com/centos/7.9.2009/isos/x86_64/">安装链接</a>直接安装</p>
-<a id="more"></a>
-<h3 id="VMware-Workstation-Pro（虚拟机软件）"><a href="#VMware-Workstation-Pro（虚拟机软件）" class="headerlink" title="VMware Workstation Pro（虚拟机软件）"></a>VMware Workstation Pro（虚拟机软件）</h3><p>此软件适用于window和Linux操作系统</p>
-<p>点击<a href="https://www.vmware.com/products/workstation-pro/workstation-pro-evaluation.html">下载链接</a>选择合适的版本下载</p>
-<p>若使用mac操作系统，请下载<a href="https://www.vmware.com/products/fusion/fusion-evaluation.html">VMware fusion</a></p>
-<h3 id="Xshell（SSH终端）"><a href="#Xshell（SSH终端）" class="headerlink" title="Xshell（SSH终端）"></a>Xshell（SSH终端）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h3 id="Xftp（SFTP文件传输工具）"><a href="#Xftp（SFTP文件传输工具）" class="headerlink" title="Xftp（SFTP文件传输工具）"></a>Xftp（SFTP文件传输工具）</h3><p>在该<a href="https://www.netsarang.com/zh/free-for-home-school/">网站</a>提交邮箱即可获得免费版下载地址</p>
-<h2 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h2><p>打开VMware，点击创建新的虚拟机</p>
-<p><img src="/d49360d3/image-20210221162508578.png" style="zoom:50%;"></p>
-<p>选择-典型</p>
-<p><img src="/d49360d3/image-20210221162708548.png" alt="image-20210221162708548" style="zoom:50%;"></p>
-<p>选择-稍后安装操作系统</p>
-<p><img src="/d49360d3/image-20210221162749238.png" alt="image-20210221162749238" style="zoom:50%;"></p>
-<p>选择-CentOS7 64位版本</p>
-<p><img src="/d49360d3/image-20210221162901609.png" alt="image-20210221162901609" style="zoom:50%;"></p>
-<p>设置名称和路径</p>
-<p><img src="/d49360d3/image-20210221163030778.png" alt="image-20210221163030778" style="zoom:50%;"></p>
-<p>分配磁盘大小，实际占用的是刚刚我们选择路径的磁盘空间</p>
-<p><img src="/d49360d3/image-20210221163144702.png" alt="image-20210221163144702" style="zoom:50%;"></p>
-<p>自定义硬件</p>
-<p>选择刚刚下载CentOS7 ios文件</p>
-<p><img src="/d49360d3/image-20210221163526501.png" alt="image-20210221163526501" style="zoom:50%;"></p>
-<p>设置处理器内核数量，博主笔记本为8核处理器，因此设置2核</p>
-<p><img src="/d49360d3/image-20210221163738134.png" alt="image-20210221163738134" style="zoom:50%;"></p>
-<p>设置内存，博主笔记本为8g内存（打算以后再升级），设置2g内存</p>
-<p><img src="/d49360d3/image-20210221163847605.png" alt="image-20210221163847605" style="zoom:50%;"></p>
-<p>点击完成，然后启动</p>
-<p>按下键盘↑方向键，回车</p>
-<p><img src="/d49360d3/image-20210221201145200.png" alt="image-20210221201145200" style="zoom:50%;"></p>
-<p>然后选择语言（选中文），点击继续，选择自己安装的软件，点击安装</p>
-<p>设置root密码</p>
-<p><img src="/d49360d3/image-20210221202349911.png" alt="image-20210221202349911" style="zoom:50%;"></p>
-<p>静静等待安装~</p>
-<p>最后创建用户名即可</p>
-<h1 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h1><h2 id="虚拟机设置"><a href="#虚拟机设置" class="headerlink" title="虚拟机设置"></a>虚拟机设置</h2><p>点击虚拟机——设置——网络适配器——桥接模式</p>
-<p>点击编辑——虚拟网络编辑器——VMnet0设置桥接模式且选择对应网卡</p>
-<p>如何查看自己的网卡</p>
-<p>打开网络与共享中心——点击你所连接的网络——属性</p>
-<p><img src="/d49360d3/image-20210221213438143.png" alt="image-20210221213438143" style="zoom:50%;"></p>
-<h2 id="Linux设置"><a href="#Linux设置" class="headerlink" title="Linux设置"></a>Linux设置</h2><p>打开控制台，输入<code>su root</code>,进入管理员模式</p>
-<p>输入密码（密码不会显示），回车</p>
-<p>输入<code>dhclient</code></p>
-<p>输入<code>ifconfig</code></p>
-<p><img src="/d49360d3/image-20210221205753363.png" alt="image-20210221205753363" style="zoom:100%;"></p>
-<p>ens33下的inet会有一串ip，记住</p>
-<p>然后输入</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
-<p>修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BROOTPROTO&#x3D;static</span><br><span class="line">ONBOOT&#x3D;yes</span><br></pre></td></tr></table></figure>
-<p>添加</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">IPADDR</span>=刚刚生成的ip</span><br><span class="line"><span class="attr">NETMASK</span>=子网掩码</span><br><span class="line"><span class="attr">GATEWAY</span>=默认网关</span><br><span class="line"><span class="attr">DNS1</span>=DNS</span><br></pre></td></tr></table></figure>
-<p>打开网络与共享中心</p>
-<p>点击你所连接的网络</p>
-<p><img src="/d49360d3/image-20210221210909932.png" alt="image-20210221210909932" style="zoom:50%;"></p>
-<p>点击详细信息，即可看到所需信息</p>
-<p><img src="/d49360d3/image-20210221211130883.png" alt="image-20210221211130883" style="zoom:80%;"></p>
-<p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
-<p>输入以下命令，重启网卡</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">systemctl restart network.service</span><br></pre></td></tr></table></figure>
-<p>检验是否可以连接外网</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-<p>若有数据，即成功</p>
-<p><img src="/d49360d3/image-20210221212843755.png" alt="image-20210221212843755" style="zoom:75%;"></p>
-<h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
-<p>虚拟机——管理——克隆——创建完整克隆</p>
-<p>设置静态ip参考上文</p>
+    <title>Springboot:MyBatis-plus学习</title>
+    <url>/a9385db7/</url>
+    <content><![CDATA[<p>这是博主在初学使用MyBatis-plus时遇到的一些问题和经验</p>
+<h1 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h1><p>博主使用idea来创建springboot项目</p>
+<p>创建时所勾选的配置</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210403002251625.png" alt></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210403002311874.png" alt></p>
+<p>博主使用MySQL数据库</p>
+<p><img src="/a9385db7/image-20210403002412963.png" alt></p>
+<p>导入依赖</p>
+<p>进入<a href="https://baomidou.com/guide/">MyBatis-plus官网</a>查询所需要的依赖</p>
+<p><strong>当我们配置环境时，应养成首先查询官网手册</strong>的好习惯，之后在查找相关技术博客解决遇到的问题。</p>
+<p>在pom.xml添加以下代码</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>博主就是一开始没加这个,然后后面使用代码生成工具虽然没问题,但没法使用所生成的代码文件,找了很多技术大佬博客,也是没解决问题</p>
+<p>所以,养成习惯,<strong>官方文档必看!!!</strong></p>
+<h1 id="使用代码生成工具"><a href="#使用代码生成工具" class="headerlink" title="使用代码生成工具"></a>使用代码生成工具</h1><p>在pom.xml加入以下依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- mybatis plus 代码生成器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-generator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.freemarker<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>freemarker<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.47<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>配置数据库环境</p>
+<p>修改application.yml文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://你的数据库地址/数据库名?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">用户名</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">密码</span></span><br><span class="line">  <span class="attr">jackson:</span></span><br><span class="line">    <span class="attr">date-format:</span> <span class="string">yyyy-MM-dd</span> <span class="string">HH:mm:ss</span></span><br><span class="line">    <span class="attr">time-zone:</span> <span class="string">GMT+8</span></span><br><span class="line">    <span class="attr">serialization:</span></span><br><span class="line">      <span class="attr">write-dates-as-timestamps:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">map-underscore-to-camel-case:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">auto-mapping-behavior:</span> <span class="string">full</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath*:mapper/**/*Mapper.xml</span></span><br><span class="line">  <span class="attr">global-config:</span></span><br><span class="line">    <span class="comment"># 逻辑删除配置</span></span><br><span class="line">    <span class="attr">db-config:</span></span><br><span class="line">      <span class="comment"># 删除前</span></span><br><span class="line">      <span class="attr">logic-not-delete-value:</span> <span class="number">1</span></span><br><span class="line">      <span class="comment"># 删除后</span></span><br><span class="line">      <span class="attr">logic-delete-value:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>在com.xxx.xxx下创建代码生成工具类</p>
+<p>同样在<a href="https://baomidou.com/guide/">MyBatis-plus官网</a>有该代码的样例模板,读者可以参考按照需要修改</p>
+<p>记得,数据源配置和刚刚的application.yml配置一致</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.markhub;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.toolkit.StringPool;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.toolkit.StringUtils;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.AutoGenerator;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.InjectionConfig;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.config.*;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.config.po.TableInfo;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GeneratorCode</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 读取控制台内容</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">scanner</span><span class="params">(String tip)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        StringBuilder help = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        help.append(<span class="string">&quot;请输入&quot;</span> + tip + <span class="string">&quot;：&quot;</span>);</span><br><span class="line">        System.out.println(help.toString());</span><br><span class="line">        <span class="keyword">if</span> (scanner.hasNext()) &#123;</span><br><span class="line">            String ipt = scanner.next();</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotEmpty(ipt)) &#123;</span><br><span class="line">                <span class="keyword">return</span> ipt;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MybatisPlusException(<span class="string">&quot;请输入正确的&quot;</span> + tip + <span class="string">&quot;！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 代码生成器</span></span><br><span class="line">        AutoGenerator mpg = <span class="keyword">new</span> AutoGenerator();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 全局配置</span></span><br><span class="line">        GlobalConfig gc = <span class="keyword">new</span> GlobalConfig();</span><br><span class="line">        String projectPath = System.getProperty(<span class="string">&quot;user.dir&quot;</span>);</span><br><span class="line">        gc.setOutputDir(projectPath + <span class="string">&quot;/src/main/java&quot;</span>);</span><br><span class="line">        gc.setAuthor(<span class="string">&quot;Mihao&quot;</span>);</span><br><span class="line">        gc.setOpen(<span class="keyword">false</span>);</span><br><span class="line">        <span class="comment">// gc.setSwagger2(true); 实体属性 Swagger2 注解</span></span><br><span class="line">        mpg.setGlobalConfig(gc);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 数据源配置</span></span><br><span class="line">        DataSourceConfig dsc = <span class="keyword">new</span> DataSourceConfig();</span><br><span class="line">        dsc.setUrl(<span class="string">&quot;jdbc:mysql://localhost:3306/vueblog?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&quot;</span>);</span><br><span class="line">        <span class="comment">// dsc.setSchemaName(&quot;public&quot;);</span></span><br><span class="line">        dsc.setDriverName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">        dsc.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        dsc.setPassword(<span class="string">&quot;709011730&quot;</span>);</span><br><span class="line">        mpg.setDataSource(dsc);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 包配置</span></span><br><span class="line">        PackageConfig pc = <span class="keyword">new</span> PackageConfig();</span><br><span class="line">        pc.setModuleName(<span class="keyword">null</span>);</span><br><span class="line">        pc.setParent(<span class="string">&quot;com.markhub&quot;</span>);</span><br><span class="line">        mpg.setPackageInfo(pc);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义配置</span></span><br><span class="line">        InjectionConfig cfg = <span class="keyword">new</span> InjectionConfig() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">// to do nothing</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果模板引擎是 freemarker</span></span><br><span class="line">        String templatePath = <span class="string">&quot;/templates/mapper.xml.ftl&quot;</span>;</span><br><span class="line">        <span class="comment">// 如果模板引擎是 velocity</span></span><br><span class="line">        <span class="comment">// String templatePath = &quot;/templates/mapper.xml.vm&quot;;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义输出配置</span></span><br><span class="line">        List&lt;FileOutConfig&gt; focList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 自定义配置会被优先输出</span></span><br><span class="line">        focList.add(<span class="keyword">new</span> FileOutConfig(templatePath) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">outputFile</span><span class="params">(TableInfo tableInfo)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！</span></span><br><span class="line">                <span class="keyword">return</span> projectPath + <span class="string">&quot;/src/main/resources/mapper/&quot;</span> + pc.getModuleName()</span><br><span class="line">                        + <span class="string">&quot;/&quot;</span> + tableInfo.getEntityName() + <span class="string">&quot;Mapper&quot;</span> + StringPool.DOT_XML;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        cfg.setFileCreate(new IFileCreate() &#123;</span></span><br><span class="line"><span class="comment">            @Override</span></span><br><span class="line"><span class="comment">            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) &#123;</span></span><br><span class="line"><span class="comment">                // 判断自定义文件夹是否需要创建</span></span><br><span class="line"><span class="comment">                checkDir(&quot;调用默认方法创建的目录，自定义目录用&quot;);</span></span><br><span class="line"><span class="comment">                if (fileType == FileType.MAPPER) &#123;</span></span><br><span class="line"><span class="comment">                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false</span></span><br><span class="line"><span class="comment">                    return !new File(filePath).exists();</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">                // 允许生成模板文件</span></span><br><span class="line"><span class="comment">                return true;</span></span><br><span class="line"><span class="comment">            &#125;</span></span><br><span class="line"><span class="comment">        &#125;);</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        cfg.setFileOutConfigList(focList);</span><br><span class="line">        mpg.setCfg(cfg);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 配置模板</span></span><br><span class="line">        TemplateConfig templateConfig = <span class="keyword">new</span> TemplateConfig();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 配置自定义输出模板</span></span><br><span class="line">        <span class="comment">//指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别</span></span><br><span class="line">        <span class="comment">// templateConfig.setEntity(&quot;templates/entity2.java&quot;);</span></span><br><span class="line">        <span class="comment">// templateConfig.setService();</span></span><br><span class="line">        <span class="comment">// templateConfig.setController();</span></span><br><span class="line"></span><br><span class="line">        templateConfig.setXml(<span class="keyword">null</span>);</span><br><span class="line">        mpg.setTemplate(templateConfig);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 策略配置</span></span><br><span class="line">        StrategyConfig strategy = <span class="keyword">new</span> StrategyConfig();</span><br><span class="line">        strategy.setNaming(NamingStrategy.underline_to_camel);</span><br><span class="line">        strategy.setColumnNaming(NamingStrategy.underline_to_camel);</span><br><span class="line">        <span class="comment">//strategy.setSuperEntityClass(&quot;你自己的父类实体,没有就不用设置!&quot;);</span></span><br><span class="line">        strategy.setEntityLombokModel(<span class="keyword">true</span>);</span><br><span class="line">        strategy.setRestControllerStyle(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">// 公共父类</span></span><br><span class="line">        <span class="comment">//strategy.setSuperControllerClass(&quot;你自己的父类控制器,没有就不用设置!&quot;);</span></span><br><span class="line">        <span class="comment">// 写于父类中的公共字段</span></span><br><span class="line">        <span class="comment">//strategy.setSuperEntityColumns(&quot;id&quot;);</span></span><br><span class="line">        strategy.setInclude(scanner(<span class="string">&quot;表名，多个英文逗号分割&quot;</span>).split(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        strategy.setControllerMappingHyphenStyle(<span class="keyword">true</span>);</span><br><span class="line">        strategy.setTablePrefix(<span class="string">&quot;m_&quot;</span>);</span><br><span class="line">        mpg.setStrategy(strategy);</span><br><span class="line">        mpg.setTemplateEngine(<span class="keyword">new</span> FreemarkerTemplateEngine());</span><br><span class="line">        mpg.execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="分页插件"><a href="#分页插件" class="headerlink" title="分页插件"></a>分页插件</h1><h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h2 id="项目启动失败"><a href="#项目启动失败" class="headerlink" title="项目启动失败"></a>项目启动失败</h2><p>成功使用代码生成器，创建代码后，项目无法启动</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210401231655943.png" alt></p>
+<p><strong>解决方案</strong></p>
+<p>在Mapper里的文件加上注解，<code>@Mapper</code></p>
+<h1 id="持续更新ing"><a href="#持续更新ing" class="headerlink" title="持续更新ing"></a>持续更新ing</h1><h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://www.cnblogs.com/liuyj-top/p/12976396.html">Springboot整合MybatisPlus（超详细）完整教程~</a></p>
+<p><a href="https://baomidou.com/guide/">MyBatis-plus官网</a></p>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>Sringboot</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>Sringboot</tag>
+        <tag>MyBatis</tag>
       </tags>
   </entry>
   <entry>
@@ -1203,47 +1244,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Springboot:MyBatis-plus学习</title>
-    <url>/a9385db7/</url>
-    <content><![CDATA[<p>这是博主在初学使用MyBatis-plus时遇到的一些问题和经验</p>
-<h1 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h1><p>博主使用idea来创建springboot项目</p>
-<p>创建时所勾选的配置</p>
-<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210403002251625.png" alt></p>
-<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210403002311874.png" alt></p>
-<p>博主使用MySQL数据库</p>
-<p><img src="/a9385db7/image-20210403002412963.png" alt></p>
-<p>导入依赖</p>
-<p>进入<a href="https://baomidou.com/guide/">MyBatis-plus官网</a>查询所需要的依赖</p>
-<p><strong>当我们配置环境时，应养成首先查询官网手册</strong>的好习惯，之后在查找相关技术博客解决遇到的问题。</p>
-<p>在pom.xml添加以下代码</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>博主就是一开始没加这个,然后后面使用代码生成工具虽然没问题,但没法使用所生成的代码文件,找了很多技术大佬博客,也是没解决问题</p>
-<p>所以,养成习惯,<strong>官方文档必看!!!</strong></p>
-<h1 id="使用代码生成工具"><a href="#使用代码生成工具" class="headerlink" title="使用代码生成工具"></a>使用代码生成工具</h1><p>在pom.xml加入以下依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- mybatis plus 代码生成器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-generator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.freemarker<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>freemarker<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.47<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>配置数据库环境</p>
-<p>修改application.yml文件</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://你的数据库地址/数据库名?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">用户名</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">密码</span></span><br><span class="line">  <span class="attr">jackson:</span></span><br><span class="line">    <span class="attr">date-format:</span> <span class="string">yyyy-MM-dd</span> <span class="string">HH:mm:ss</span></span><br><span class="line">    <span class="attr">time-zone:</span> <span class="string">GMT+8</span></span><br><span class="line">    <span class="attr">serialization:</span></span><br><span class="line">      <span class="attr">write-dates-as-timestamps:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">map-underscore-to-camel-case:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">auto-mapping-behavior:</span> <span class="string">full</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath*:mapper/**/*Mapper.xml</span></span><br><span class="line">  <span class="attr">global-config:</span></span><br><span class="line">    <span class="comment"># 逻辑删除配置</span></span><br><span class="line">    <span class="attr">db-config:</span></span><br><span class="line">      <span class="comment"># 删除前</span></span><br><span class="line">      <span class="attr">logic-not-delete-value:</span> <span class="number">1</span></span><br><span class="line">      <span class="comment"># 删除后</span></span><br><span class="line">      <span class="attr">logic-delete-value:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>在com.xxx.xxx下创建代码生成工具类</p>
-<p>同样在<a href="https://baomidou.com/guide/">MyBatis-plus官网</a>有该代码的样例模板,读者可以参考按照需要修改</p>
-<p>记得,数据源配置和刚刚的application.yml配置一致</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.markhub;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.toolkit.StringPool;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.core.toolkit.StringUtils;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.AutoGenerator;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.InjectionConfig;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.config.*;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.config.po.TableInfo;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;</span><br><span class="line"><span class="keyword">import</span> com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GeneratorCode</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * 读取控制台内容</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">scanner</span><span class="params">(String tip)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        StringBuilder help = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        help.append(<span class="string">&quot;请输入&quot;</span> + tip + <span class="string">&quot;：&quot;</span>);</span><br><span class="line">        System.out.println(help.toString());</span><br><span class="line">        <span class="keyword">if</span> (scanner.hasNext()) &#123;</span><br><span class="line">            String ipt = scanner.next();</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotEmpty(ipt)) &#123;</span><br><span class="line">                <span class="keyword">return</span> ipt;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> MybatisPlusException(<span class="string">&quot;请输入正确的&quot;</span> + tip + <span class="string">&quot;！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 代码生成器</span></span><br><span class="line">        AutoGenerator mpg = <span class="keyword">new</span> AutoGenerator();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 全局配置</span></span><br><span class="line">        GlobalConfig gc = <span class="keyword">new</span> GlobalConfig();</span><br><span class="line">        String projectPath = System.getProperty(<span class="string">&quot;user.dir&quot;</span>);</span><br><span class="line">        gc.setOutputDir(projectPath + <span class="string">&quot;/src/main/java&quot;</span>);</span><br><span class="line">        gc.setAuthor(<span class="string">&quot;Mihao&quot;</span>);</span><br><span class="line">        gc.setOpen(<span class="keyword">false</span>);</span><br><span class="line">        <span class="comment">// gc.setSwagger2(true); 实体属性 Swagger2 注解</span></span><br><span class="line">        mpg.setGlobalConfig(gc);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 数据源配置</span></span><br><span class="line">        DataSourceConfig dsc = <span class="keyword">new</span> DataSourceConfig();</span><br><span class="line">        dsc.setUrl(<span class="string">&quot;jdbc:mysql://localhost:3306/vueblog?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&quot;</span>);</span><br><span class="line">        <span class="comment">// dsc.setSchemaName(&quot;public&quot;);</span></span><br><span class="line">        dsc.setDriverName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">        dsc.setUsername(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">        dsc.setPassword(<span class="string">&quot;709011730&quot;</span>);</span><br><span class="line">        mpg.setDataSource(dsc);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 包配置</span></span><br><span class="line">        PackageConfig pc = <span class="keyword">new</span> PackageConfig();</span><br><span class="line">        pc.setModuleName(<span class="keyword">null</span>);</span><br><span class="line">        pc.setParent(<span class="string">&quot;com.markhub&quot;</span>);</span><br><span class="line">        mpg.setPackageInfo(pc);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义配置</span></span><br><span class="line">        InjectionConfig cfg = <span class="keyword">new</span> InjectionConfig() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">// to do nothing</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果模板引擎是 freemarker</span></span><br><span class="line">        String templatePath = <span class="string">&quot;/templates/mapper.xml.ftl&quot;</span>;</span><br><span class="line">        <span class="comment">// 如果模板引擎是 velocity</span></span><br><span class="line">        <span class="comment">// String templatePath = &quot;/templates/mapper.xml.vm&quot;;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义输出配置</span></span><br><span class="line">        List&lt;FileOutConfig&gt; focList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 自定义配置会被优先输出</span></span><br><span class="line">        focList.add(<span class="keyword">new</span> FileOutConfig(templatePath) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">outputFile</span><span class="params">(TableInfo tableInfo)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！</span></span><br><span class="line">                <span class="keyword">return</span> projectPath + <span class="string">&quot;/src/main/resources/mapper/&quot;</span> + pc.getModuleName()</span><br><span class="line">                        + <span class="string">&quot;/&quot;</span> + tableInfo.getEntityName() + <span class="string">&quot;Mapper&quot;</span> + StringPool.DOT_XML;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        cfg.setFileCreate(new IFileCreate() &#123;</span></span><br><span class="line"><span class="comment">            @Override</span></span><br><span class="line"><span class="comment">            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) &#123;</span></span><br><span class="line"><span class="comment">                // 判断自定义文件夹是否需要创建</span></span><br><span class="line"><span class="comment">                checkDir(&quot;调用默认方法创建的目录，自定义目录用&quot;);</span></span><br><span class="line"><span class="comment">                if (fileType == FileType.MAPPER) &#123;</span></span><br><span class="line"><span class="comment">                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false</span></span><br><span class="line"><span class="comment">                    return !new File(filePath).exists();</span></span><br><span class="line"><span class="comment">                &#125;</span></span><br><span class="line"><span class="comment">                // 允许生成模板文件</span></span><br><span class="line"><span class="comment">                return true;</span></span><br><span class="line"><span class="comment">            &#125;</span></span><br><span class="line"><span class="comment">        &#125;);</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        cfg.setFileOutConfigList(focList);</span><br><span class="line">        mpg.setCfg(cfg);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 配置模板</span></span><br><span class="line">        TemplateConfig templateConfig = <span class="keyword">new</span> TemplateConfig();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 配置自定义输出模板</span></span><br><span class="line">        <span class="comment">//指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别</span></span><br><span class="line">        <span class="comment">// templateConfig.setEntity(&quot;templates/entity2.java&quot;);</span></span><br><span class="line">        <span class="comment">// templateConfig.setService();</span></span><br><span class="line">        <span class="comment">// templateConfig.setController();</span></span><br><span class="line"></span><br><span class="line">        templateConfig.setXml(<span class="keyword">null</span>);</span><br><span class="line">        mpg.setTemplate(templateConfig);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 策略配置</span></span><br><span class="line">        StrategyConfig strategy = <span class="keyword">new</span> StrategyConfig();</span><br><span class="line">        strategy.setNaming(NamingStrategy.underline_to_camel);</span><br><span class="line">        strategy.setColumnNaming(NamingStrategy.underline_to_camel);</span><br><span class="line">        <span class="comment">//strategy.setSuperEntityClass(&quot;你自己的父类实体,没有就不用设置!&quot;);</span></span><br><span class="line">        strategy.setEntityLombokModel(<span class="keyword">true</span>);</span><br><span class="line">        strategy.setRestControllerStyle(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">// 公共父类</span></span><br><span class="line">        <span class="comment">//strategy.setSuperControllerClass(&quot;你自己的父类控制器,没有就不用设置!&quot;);</span></span><br><span class="line">        <span class="comment">// 写于父类中的公共字段</span></span><br><span class="line">        <span class="comment">//strategy.setSuperEntityColumns(&quot;id&quot;);</span></span><br><span class="line">        strategy.setInclude(scanner(<span class="string">&quot;表名，多个英文逗号分割&quot;</span>).split(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        strategy.setControllerMappingHyphenStyle(<span class="keyword">true</span>);</span><br><span class="line">        strategy.setTablePrefix(<span class="string">&quot;m_&quot;</span>);</span><br><span class="line">        mpg.setStrategy(strategy);</span><br><span class="line">        mpg.setTemplateEngine(<span class="keyword">new</span> FreemarkerTemplateEngine());</span><br><span class="line">        mpg.execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="分页插件"><a href="#分页插件" class="headerlink" title="分页插件"></a>分页插件</h1><h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h2 id="项目启动失败"><a href="#项目启动失败" class="headerlink" title="项目启动失败"></a>项目启动失败</h2><p>成功使用代码生成器，创建代码后，项目无法启动</p>
-<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210401231655943.png" alt></p>
-<p><strong>解决方案</strong></p>
-<p>在Mapper里的文件加上注解，<code>@Mapper</code></p>
-<h1 id="持续更新ing"><a href="#持续更新ing" class="headerlink" title="持续更新ing"></a>持续更新ing</h1><h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://www.cnblogs.com/liuyj-top/p/12976396.html">Springboot整合MybatisPlus（超详细）完整教程~</a></p>
-<p><a href="https://baomidou.com/guide/">MyBatis-plus官网</a></p>
-]]></content>
-      <categories>
-        <category>Sringboot</category>
-      </categories>
-      <tags>
-        <tag>Sringboot</tag>
-        <tag>MyBatis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>从线性变换角度理解线性代数</title>
     <url>/47d0bf4a/</url>
     <content><![CDATA[<h1 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h1><p>在计算机学科中，以<strong>有序列表</strong>表示一个向量</p>
@@ -1258,85 +1258,6 @@
       </categories>
       <tags>
         <tag>线性代数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>监督学习与无监督学习</title>
-    <url>/72510051/</url>
-    <content><![CDATA[<h1 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h1><blockquote>
-<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong>，</p>
-<p>即，<strong>在知道输入和输出的情况下训练出一个模型，将输入映射到输出</strong></p>
-</blockquote>
-<p>流程</p>
-<ul>
-<li>选择一个适合目标任务的数学模型</li>
-<li>先把一部分已知的“问题和答案”（训练集）给机器去学习</li>
-<li>机器总结出了自己的“方法论”</li>
-<li>人类把”新的问题”（测试集）给机器，让他去解答</li>
-</ul>
-<p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
-<blockquote>
-<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
-<p>例，市场价格预测，降水量预测等问题</p>
-<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
-<p>例，植物品种、客户年龄和偏好的预测问题</p>
-</blockquote>
-<h1 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h1><blockquote>
-<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>（不确定的），且不用关注变量（输入数据）的影响</p>
-<p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
-<p>没有基于预测结果的反馈</p>
-<p>例，设想我们有一批照片其中包含着不同颜色的几何形状。在这里计算机面对的是没有任何标记的图片，它并不知道几何形状的颜色和外形，它看到的只是一张张照片而已。但通过将数据输入到非监督学习的模型中去，算法可以尝试着理解图中的内容，通过相关性和特征将图中的相似的物体聚为一类。在<strong>理想的情况</strong>下它可以将不同形状不同颜色的几何形状聚集到不同的类别中去，特征提取和标签都是<strong>机器自己完成</strong>的。</p>
-</blockquote>
-<p>使用场景</p>
-<ul>
-<li>发现异常，通过无监督学习，快速将数据分类，虽然不知道这些分类的意义，但可以快速排出正常的数据，更有针对性的对异常数据进行深入分析</li>
-<li>用户细分，如广告平台对用户按性别，年龄，位置，行为等维度进行用户细分，使广告投放更有针对性</li>
-<li>推荐系统，如淘宝根据我们的浏览行为推荐相关商品。无监督学习通过聚类得到购物行为相似的用户，然后将这类用户的商品推荐给我们</li>
-</ul>
-<blockquote>
-<p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
-<p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
-<p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
-<p>Non-clustering</p>
-<p>降维</p>
-</blockquote>
-<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>监督学习</th>
-<th>无监督学习</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
-<td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
-</tr>
-<tr>
-<td>数据<strong>有标签</strong></td>
-<td>数据<strong>没有标签</strong></td>
-</tr>
-<tr>
-<td>目标明确，可以衡量效果</td>
-<td>几乎无法评估效果</td>
-</tr>
-<tr>
-<td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
-<td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://easyai.tech/blog/supervised-reinforcement-unsupervised-learning/">机器学习三兄弟概念大揭秘：「监督学习」「非监督学习」「强化学习」</a></p>
-<p><a href="https://easyai.tech/ai-definition/unsupervised-learning/">无监督学习 – Unsupervised learning | UL</a></p>
-<p><a href="https://easyai.tech/ai-definition/supervised-learning/">监督学习 – Supervised learning</a></p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -1710,6 +1631,85 @@ J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-log
 <p>We get this final z vector by multiplying the next theta matrix after $\Theta^{(j-1)}$with the values of all the activation nodes we just got. This last theta matrix $\Theta^{(j)}$ will have only <strong>one row</strong> which is multiplied by one column $a^{(j)}$ so that our result is a single number. We then get our final result with:</p>
 <p>$h_\Theta(x) = a^{(j+1)} = g(z^{(j+1)})$</p>
 <p>Notice that in this <strong>last step</strong>, between layer j and layer j+1, we are doing <strong>exactly the same thing</strong> as we did in logistic regression. Adding all these intermediate layers in neural networks allows us to more elegantly produce interesting and more complex non-linear hypotheses.</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>监督学习与无监督学习</title>
+    <url>/72510051/</url>
+    <content><![CDATA[<h1 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h1><blockquote>
+<p>得到一个数据集，知道<strong>正确</strong>的输出数据，并且认为输入和输出数据之间<strong>存在某种关系</strong>，</p>
+<p>即，<strong>在知道输入和输出的情况下训练出一个模型，将输入映射到输出</strong></p>
+</blockquote>
+<p>流程</p>
+<ul>
+<li>选择一个适合目标任务的数学模型</li>
+<li>先把一部分已知的“问题和答案”（训练集）给机器去学习</li>
+<li>机器总结出了自己的“方法论”</li>
+<li>人类把”新的问题”（测试集）给机器，让他去解答</li>
+</ul>
+<p>监督学习分为两大问题，”<strong>regression</strong>“和”<strong>classification</strong>“</p>
+<blockquote>
+<p>回归问题，利用<strong>连续</strong>的输出数据来预测结果，得到的是一个<strong>实际值</strong>，而不是分类结果，我们需要某个<strong>函数</strong>来建立输入与输出之间的映射</p>
+<p>例，市场价格预测，降水量预测等问题</p>
+<p>分类问题，利用<strong>离散</strong>的输出数据来预测结果，因此，通过输入变量预测出这一样本所属的<strong>类别</strong>，以<strong>不同的类别</strong>来建立输入与输出之间的映射</p>
+<p>例，植物品种、客户年龄和偏好的预测问题</p>
+</blockquote>
+<h1 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h1><blockquote>
+<p>得到一个数据集，<strong>不知道</strong>其正确的结果（输出数据）/标签/属性，或者说<strong>所有的数据都是一样的</strong>（没有区别），但可以找到数据中<strong>存在某种结构</strong>（不确定的），且不用关注变量（输入数据）的影响</p>
+<p>通过研究<strong>变量之间的联系</strong>来推测出该结构</p>
+<p>没有基于预测结果的反馈</p>
+<p>例，设想我们有一批照片其中包含着不同颜色的几何形状。在这里计算机面对的是没有任何标记的图片，它并不知道几何形状的颜色和外形，它看到的只是一张张照片而已。但通过将数据输入到非监督学习的模型中去，算法可以尝试着理解图中的内容，通过相关性和特征将图中的相似的物体聚为一类。在<strong>理想的情况</strong>下它可以将不同形状不同颜色的几何形状聚集到不同的类别中去，特征提取和标签都是<strong>机器自己完成</strong>的。</p>
+</blockquote>
+<p>使用场景</p>
+<ul>
+<li>发现异常，通过无监督学习，快速将数据分类，虽然不知道这些分类的意义，但可以快速排出正常的数据，更有针对性的对异常数据进行深入分析</li>
+<li>用户细分，如广告平台对用户按性别，年龄，位置，行为等维度进行用户细分，使广告投放更有针对性</li>
+<li>推荐系统，如淘宝根据我们的浏览行为推荐相关商品。无监督学习通过聚类得到购物行为相似的用户，然后将这类用户的商品推荐给我们</li>
+</ul>
+<blockquote>
+<p>Clustering（聚类算法），自动分类的方法，但不知道聚类后的几个分类分别代表什么</p>
+<p>例如收集1,000,000个不同的基因，并找到一种方法，如不同变量（例如寿命，位置，角色等）之间的联系，将这些基因自动分组为在某种程度上相似或相关的组，即<strong>存在的某种结构</strong>。</p>
+<p>我们只告知这个方法，有一堆（未知）数据，然后自动找到这些数据中的类型，并根据所找到类型对数据进行分类。也就是说，对于数据样本，我们没有给方法一个正确的答案，这便是无监督学习。</p>
+<p>Non-clustering</p>
+<p>降维</p>
+</blockquote>
+<h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>监督学习</th>
+<th>无监督学习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>目的明确</strong>的训练方式，知道会得到什么结果</td>
+<td><strong>没有明确</strong>的训练方式，无法提前知道结果是什么</td>
+</tr>
+<tr>
+<td>数据<strong>有标签</strong></td>
+<td>数据<strong>没有标签</strong></td>
+</tr>
+<tr>
+<td>目标明确，可以衡量效果</td>
+<td>几乎无法评估效果</td>
+</tr>
+<tr>
+<td>一种训练方式/学习方式，有明确的目标，很清楚自己想要什么结果</td>
+<td>本质上是一个统计手段，在没有标签的数据里发现潜在的结构</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://easyai.tech/blog/supervised-reinforcement-unsupervised-learning/">机器学习三兄弟概念大揭秘：「监督学习」「非监督学习」「强化学习」</a></p>
+<p><a href="https://easyai.tech/ai-definition/unsupervised-learning/">无监督学习 – Unsupervised learning | UL</a></p>
+<p><a href="https://easyai.tech/ai-definition/supervised-learning/">监督学习 – Supervised learning</a></p>
 ]]></content>
       <categories>
         <category>机器学习</category>
