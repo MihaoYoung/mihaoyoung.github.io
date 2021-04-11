@@ -1721,7 +1721,16 @@ J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-log
   <entry>
     <title>二分法</title>
     <url>/649c2087/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p><strong>掌握算法思想</strong></p>
+<p>将<code>mid</code>放在左边区间，区间分成 <code>[left..mid]</code> 与 <code>[mid + 1..right]</code>，此时分别设置 <code>right = mid</code> 与 <code>left = mid + 1</code>；</p>
+<p>并且把 循环可以继续的条件 写成 <code>while (left &lt; right)</code>。在上面把待搜索区间分成两个部分的情况下，退出循环以后一定会有 <code>left == right</code> 成立，因此在退出循环以后，不需要考虑到底返回 <code>left</code> 还是返回 <code>right</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">	<span class="comment">// 为了防止 left + right 整形溢出，写成这样</span></span><br><span class="line">	<span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">if</span> (nums[mid] &lt; target) &#123;</span><br><span class="line">		<span class="comment">// 下一轮搜索区间：[mid + 1..right]</span></span><br><span class="line">		left = mid + <span class="number">1</span>;</span><br><span class="line"> 	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// 下一轮搜索区间：[left..mid]</span></span><br><span class="line">		right = mid;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在写 if 语句的时候，通常把容易想到的，不容易出错的逻辑写在 if 的里面，这样就把复杂的、容易出错的情况放在了 else 的部分，这样编写代码不容易出错。</p>
+<p>如果我们要找的元素的性质比较复杂：例如需要满足「条件 1」并且「条件 2」。我们在编写 if 语句的时候，就可以把其中一个条件取反，就可以达到缩减搜索区间的目的。</p>
+</blockquote>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/">题解参考liweiwei1419</a></p>
+]]></content>
       <categories>
         <category>算法</category>
       </categories>
