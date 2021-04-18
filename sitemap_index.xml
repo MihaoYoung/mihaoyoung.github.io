@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://mihaoyoung.github.io/7cf03a4e/</loc>
+    
+    <lastmod>2021-04-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://mihaoyoung.github.io/437097cd/</loc>
     
     <lastmod>2021-04-18</lastmod>
@@ -278,6 +285,13 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/tags/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</loc>
+    <lastmod>2021-04-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/CNN/</loc>
     <lastmod>2021-04-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

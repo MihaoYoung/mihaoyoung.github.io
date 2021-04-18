@@ -1781,4 +1781,17 @@ J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-log
         <tag>机器学习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>卷积神经网络-CNN</title>
+    <url>/7cf03a4e/</url>
+    <content><![CDATA[<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://easyai.tech/ai-definition/cnn/">卷积神经网络 – CNN</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>CNN</tag>
+      </tags>
+  </entry>
 </search>
