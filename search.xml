@@ -1741,4 +1741,44 @@ J(\theta)=-\frac{1}{m}[\sum_{i=1}^my^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})(1-log
         <tag>二分法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>softmax函数</title>
+    <url>/bbca9587/</url>
+    <content><![CDATA[<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://zhuanlan.zhihu.com/p/25723112">详解softmax函数以及相关求导过程</a></p>
+<p><a href="https://blog.csdn.net/bitcarmanlee/article/details/82320853">小白都能看懂的softmax详解</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>损失函数</title>
+    <url>/4863b368/</url>
+    <content><![CDATA[<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://www.jiqizhixin.com/graph/technologies/4c38563a-2d9b-439e-bfb4-21d209eeff3e">机器之心——损失函数</a></p>
+<p><a href="https://www.cnblogs.com/guoyaohua/p/9217206.html">一文读懂机器学习常用损失函数（Loss Function）</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>损失函数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>反向传播算法</title>
+    <url>/437097cd/</url>
+    <content><![CDATA[<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a href="https://www.cnblogs.com/charlotte77/p/5629865.html">一文弄懂神经网络中的反向传播法——BackPropagation</a></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
 </search>
