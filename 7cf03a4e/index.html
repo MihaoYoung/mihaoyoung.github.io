@@ -35,12 +35,25 @@
 <meta property="og:site_name" content="养羊小站">
 <meta property="og:description" content="CNN的学习笔记">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/2019-06-19-juanji.gif">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/1889079d809eff1324d9027b4adcc86d.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210503111228027.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/a5e9421fba6f1faf53b6340fb2802308.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/b8f88552197525cfa9261fe44739a18e.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-df0a51f10a46347704274ee6ddbb614a_720w.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-68a6efb63fbbb0b83ebded0d6268d0fe_720w.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-683c8d63e22eef01a271a08016006d17_720w.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/23c9a459bc8e29114063656584d6c3c2.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-f9af9fde70d5d3b7db5562956c6cc213_720w.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-bdc0421a13e06122b6d13fb84cdf5e9f_720w.png">
+<meta property="og:image" content="https://mihaoyoung.github.io/7cf03a4e/v2-e58c86e2a784a341afe648607ab2f1a7_720w.png">
 <meta property="article:published_time" content="2021-04-18T10:55:01.000Z">
-<meta property="article:modified_time" content="2021-04-18T14:05:33.625Z">
+<meta property="article:modified_time" content="2021-05-13T11:13:35.500Z">
 <meta property="article:author" content="Mihao">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="CNN">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/2019-06-19-juanji.gif">
 
 
 <link rel="canonical" href="https://mihaoyoung.github.io/7cf03a4e/">
@@ -226,7 +239,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%84%9F%E8%B0%A2"><span class="nav-number">1.</span> <span class="nav-text">感谢</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CNN%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">CNN原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.1.</span> <span class="nav-text">局部连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E6%9D%83%E9%87%8D"><span class="nav-number">1.2.</span> <span class="nav-text">共享权重</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E5%B1%82"><span class="nav-number">2.1.</span> <span class="nav-text">输入层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB%E5%B1%82"><span class="nav-number">2.3.</span> <span class="nav-text">非线性激活层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%A0%E5%8C%96Pooling"><span class="nav-number">2.4.</span> <span class="nav-text">池化Pooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="nav-number">2.5.</span> <span class="nav-text">全连接层</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%84%9F%E8%B0%A2"><span class="nav-number">3.</span> <span class="nav-text">感谢</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -351,10 +364,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-04-18 18:55:01 / 修改时间：22:05:33" itemprop="dateCreated datePublished" datetime="2021-04-18T18:55:01+08:00">2021-04-18</time>
+      <time title="创建时间：2021-04-18 18:55:01" itemprop="dateCreated datePublished" datetime="2021-04-18T18:55:01+08:00">2021-04-18</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-13 19:13:35" itemprop="dateModified" datetime="2021-05-13T19:13:35+08:00">2021-05-13</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -382,7 +401,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>12</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -401,7 +420,78 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/cnn/">卷积神经网络 – CNN</a></p>
+        <h1 id="CNN原理"><a href="#CNN原理" class="headerlink" title="CNN原理"></a>CNN原理</h1><h2 id="局部连接"><a href="#局部连接" class="headerlink" title="局部连接"></a>局部连接</h2><p>对于一张图片，保留其原本的图形结构，通过<strong>局部扫描</strong>的方式，每次对图像的一个区域进行计算，进而得到一个权重，最终得到一个小矩阵。</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/2019-06-19-juanji.gif" alt="卷积层运算过程"></p>
+<p>用来提取局部信息的小矩阵被称为过滤器Filter或卷积核Kernel</p>
+<h2 id="共享权重"><a href="#共享权重" class="headerlink" title="共享权重"></a>共享权重</h2><p>每一次对整张图片的扫描，使用一个Kernel，该Kernel由设定的step大小来遍历图片矩阵的所有位置，进而得到一个权重矩阵(Feature Map)。</p>
+<p>即在一次卷积计算中，所有的每一个权重值都是有一个Kernel计算来的，这就是共享权重。</p>
+<p>通过不同的Kernel，可以提取不同的特征信息。</p>
+<h1 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h1><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/1889079d809eff1324d9027b4adcc86d.png" alt="基本结构"></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210503111228027.png" alt="基本结构" style="zoom: 67%;"></p>
+<h2 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h2><p>对原始图像进行预处理</p>
+<ul>
+<li>去均值<ul>
+<li>把输入数据各个维度都中心化为 0</li>
+</ul>
+</li>
+<li>归一化<ul>
+<li>幅度归一化到同样的范围</li>
+</ul>
+</li>
+<li>PCA/白化<ul>
+<li>用 PCA 降维；白化是对数据各个特征轴上的幅度归一化</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/a5e9421fba6f1faf53b6340fb2802308.png" alt="去均值，归一化" style="zoom: 67%;"></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/b8f88552197525cfa9261fe44739a18e.png" alt="去相关与白化" style="zoom:67%;"></p>
+<h2 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h2><p>卷积层由一组Filter组成，Filter可以理解为一个简单的二维矩阵</p>
+<p><strong>计算流程</strong>：</p>
+<ul>
+<li>对图片转化的RGB矩阵进行<strong>Patch匹配</strong>，即将图片划分为每个小块，而不是一个像素一个像素来匹配。</li>
+</ul>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-df0a51f10a46347704274ee6ddbb614a_720w.png" alt="Patch"></p>
+<ul>
+<li><p>确定提取局部特征信息的 <strong>Feature</strong> (Filter，Kernel)，一般为$3 \times 3或5\times 5$</p>
+</li>
+<li><p>遍历图像，由设置的步长Stride大小滑动Patch块(蓝色窗口)，将每一个Patch块与Feature对应相乘，求均值，最终得到<strong>Feature Map</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-68a6efb63fbbb0b83ebded0d6268d0fe_720w.png" alt="Feature Map" style="zoom:50%;"></p>
+</li>
+</ul>
+<p>  <img src="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-683c8d63e22eef01a271a08016006d17_720w.png" alt="Feature Map" style="zoom:50%;"></p>
+<blockquote>
+<p>对于一个Feature，经过一次卷积计算后，得到一个Feature Map，对Feature Map中的值，越接近1，说明匹配度越高；接近-1，则与Feature反面匹配度高；接近0，说明无关联。</p>
+</blockquote>
+<p><strong>填充</strong></p>
+<p>上述经过计算流程，空间维度减小了</p>
+<p>假如之后还要继续经历多个卷积层，图片维度下降过快，导致低层特征信息的丢失</p>
+<p>因此，为了在开始的卷积层保留原始图片的信息，更好提取低层特征，我们对输入信息进行边界填充</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/23c9a459bc8e29114063656584d6c3c2.png" alt="填充" style="zoom:80%;"></p>
+<h2 id="非线性激活层"><a href="#非线性激活层" class="headerlink" title="非线性激活层"></a>非线性激活层</h2><p>对于卷积计算得到的Feature Map，我们关注的是匹配度高的信息。因此，为了提高性能，我们舍弃那些关联度不高的信息</p>
+<p><strong>Relu函数</strong></p>
+<script type="math/tex; mode=display">
+f(x)=max(0,x)</script><p>即保留大于等于0的信息</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-f9af9fde70d5d3b7db5562956c6cc213_720w.png" alt="Relu" style="zoom:50%;"></p>
+<h2 id="池化Pooling"><a href="#池化Pooling" class="headerlink" title="池化Pooling"></a>池化Pooling</h2><p><strong>核心思想</strong>，CNN关注的是图像<strong>是否具备</strong>某种特征，不用关注这个特征的具体位置</p>
+<p>图片相邻像素往往是相似的，所以在Feature Map中会有许多相似冗余的信息</p>
+<p>两种方式</p>
+<ul>
+<li>Max Pooling<ul>
+<li>保留了每一小块的最大值，相当于保留了这一小块的最佳匹配结果</li>
+</ul>
+</li>
+<li>Average Pooling</li>
+</ul>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-bdc0421a13e06122b6d13fb84cdf5e9f_720w.png" alt="Pooling" style="zoom:50%;"></p>
+<p><img src="/7cf03a4e/v2-e58c86e2a784a341afe648607ab2f1a7_720w.png" alt="Pooling" style="zoom:50%;"></p>
+<h2 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h2><p>对得到的一系列Feature Map进行维度上的改变，得到对应概率值</p>
+<h1 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58818595">卷积神经网络（CNN）的简单理解</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/27908027">卷积神经网络CNN完全指南终极版（一）</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28173972">卷积神经网络CNN完全指南终极版（二）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.qbitai.com/2020/07/16758.html">什么是CNN？写给小白的机器学习入门贴，Facebook员工打造，47k访问量</a></p>
+<p><a target="_blank" rel="noopener" href="https://xie.infoq.cn/article/c4d846096c92c7dfcd6539075">机器学习算法之——卷积神经网络（CNN）原理讲解</a></p>
+<p><a target="_blank" rel="noopener" href="http://shiyanjun.cn/archives/1963.html">卷积神经网络介绍</a></p>
+<p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/cnn/">卷积神经网络 – CNN</a></p>
 
     </div>
 
@@ -502,14 +592,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">57k</span>
+    <span title="站点总字数">58k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">51 分钟</span>
+    <span title="站点阅读时长">52 分钟</span>
   </span>
 </div><script color="242,129,214" opacity="0.8" zIndex="-1" count="120" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
