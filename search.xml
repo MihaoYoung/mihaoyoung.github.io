@@ -2392,4 +2392,103 @@ PE(pos,2i+1)=cos(\frac{pos}{10000^{\frac{2i}{d_model}}})</script><p>然后将Pos
         <tag>Transformer</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Attention简单学习</title>
+    <url>/8d6977eb/</url>
+    <content><![CDATA[<h1 id="是什么Attention"><a href="#是什么Attention" class="headerlink" title="是什么Attention"></a>是什么Attention</h1><p>引入Attention机制是为了解决传统encoder-decoder模型存在的信息丢失问题</p>
+<p>encoder将输入的信息(句子)压缩为一个定长的向量，然后decoder将其解码转换为对应的信息(句子)，然而，在encoder的压缩过程中，对于较长的信息(句子)，会存在信息丢失的问题。</p>
+<p>因此提出Attention机制，通过<strong>对不同的输入分配不同的权重</strong>，然后在decoder解码过程中<strong>选出对当前决策影响(权重)最大的特征值</strong></p>
+<blockquote>
+<p>优点</p>
+<ul>
+<li>参数少<ul>
+<li>与CNN，RNN相比，复杂度和所需的参数较少</li>
+</ul>
+</li>
+<li>速度快<ul>
+<li>每一步的计算<strong>不依赖与上一步的计算结果</strong>，因此可以进行<strong>并行</strong>计算</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><img src="/8d6977eb/2019-11-13-3step.png" alt="attention原理3步分解"></p>
+<blockquote>
+<p>步骤</p>
+<ul>
+<li>query和key进行<strong>相似度计算</strong>(对齐模型)，得到权值</li>
+<li>将权值进行softmax<strong>归一化</strong>，得到可直接使用的权重</li>
+<li>将权重与value进行<strong>加权求和</strong></li>
+</ul>
+</blockquote>
+<p>相似度计算</p>
+<blockquote>
+<ul>
+<li>点乘<ul>
+<li>$s(q,k)=q^Tk$</li>
+</ul>
+</li>
+<li>矩阵相乘<ul>
+<li>$s(q,k)=q^Tk$</li>
+</ul>
+</li>
+<li>cos相似度<ul>
+<li>$s(q,k)=\frac{q^Tk}{||q||*||k||}$</li>
+</ul>
+</li>
+<li>串联，将q与k拼接起来<ul>
+<li>$s(q,k)=W[q;k]$</li>
+</ul>
+</li>
+<li>多层感知concat<ul>
+<li>$s(q,k)=v_a^Ttanh(W_q + U_k)$</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="本质思想"><a href="#本质思想" class="headerlink" title="本质思想"></a>本质思想</h1><p><strong>从关注全部到关注重点</strong></p>
+<p><img src="/8d6977eb/2019-11-13-only-attention.png" alt="attention原理图"></p>
+<p>将source中的的元素理解成一个个<key,value>数据对，对于Target中的某一个query，计算query与key的相似度，得到每个key对应的value权重，然后对value进行加权求和，得到最终Attention数值。</key,value></p>
+<script type="math/tex; mode=display">
+Attention(Query,Source)=\sum_{i=1}^{S}align(Query,Key)*Value</script><h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="计算区域"><a href="#计算区域" class="headerlink" title="计算区域"></a>计算区域</h2><p><strong>Soft</strong> Attention</p>
+<blockquote>
+<p>对<strong>所有key</strong>求权重概率，每个key都有对应一个权重。</p>
+<p>缺点，计算量较大</p>
+</blockquote>
+<p><strong>Hard</strong> Attention</p>
+<blockquote>
+<p><strong>精确定位</strong>到一个key，即该key的权重概率为1，其余key的概率为0。</p>
+<p>实现</p>
+<ul>
+<li>选取概率最高的输入信息</li>
+<li>在对齐模型的概率分布上进行随机采样</li>
+</ul>
+<p>缺点，损失函数与Attention分布之间的函数不可导，无法在反向传播算法中训练</p>
+</blockquote>
+<p><strong>Local</strong> Attention</p>
+<blockquote>
+<p>综合上述两种Attention，先用Hard Attention定位到某个点，然后以该点为中心得到一个<strong>窗口区域</strong>，在该区域使用Soft Attention</p>
+</blockquote>
+<h2 id="所用信息"><a href="#所用信息" class="headerlink" title="所用信息"></a>所用信息</h2><p>对一段文本使用Attention所需要的信息，包括</p>
+<ul>
+<li>内部信息，该文本本身</li>
+<li>外部信息，除该文本的额外信息</li>
+</ul>
+<p><strong>General</strong> Attention</p>
+<blockquote>
+<p>所有信息参与计算</p>
+<p>通常用于<strong>构建两段文本关系的任务</strong>，如阅读理解中，问题与文章的联系</p>
+<p>query包含外部信息，根据外部query对文本进行对齐</p>
+</blockquote>
+<p><strong>Local</strong> Attention</p>
+<blockquote>
+<p>只使用内部信息，即key，query，value只与输入文本有关</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Transformer</category>
+      </categories>
+      <tags>
+        <tag>Attention</tag>
+      </tags>
+  </entry>
 </search>
