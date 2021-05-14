@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="google0d797e37a75de008.html">
+  <meta name="msvalidate.01" content="F9FEEFCDA94FD78D74D61C9BAD778567" />
+  <meta name="baidu-site-verification" content="code-cF8YWrbY30" />
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mihaoyoung.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="对Transformer几篇相关论文阅读的小笔记和总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformer系列论文阅读">
+<meta property="og:url" content="https://mihaoyoung.github.io/ef1f339e/">
+<meta property="og:site_name" content="养羊小站">
+<meta property="og:description" content="对Transformer几篇相关论文阅读的小笔记和总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/20201224105635731.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/640.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/20210414162359586.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/20210414113658286-1620198501546.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/20210415101857516.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/24367789-e30f1e268cbb734e-1620200105904.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/ce93432eb169c8f9d135e49ea1d7dcea.webp">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210505163417844.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210514155640723.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210505173817956.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-d7b781576e71a2f20a2d80dd26523356_720w.jpg">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/22097296-9320a32f5e2fefa8.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/22097296-bc431f7a42f85809.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/22097296-5c3e0e565733fbd1.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210506105719357.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210506110931523.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210506115247688.png">
+<meta property="article:published_time" content="2021-05-14T07:49:03.000Z">
+<meta property="article:modified_time" content="2021-05-14T07:56:57.884Z">
+<meta property="article:author" content="Mihao">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/20201224105635731.png">
+
+
+<link rel="canonical" href="https://mihaoyoung.github.io/ef1f339e/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Transformer系列论文阅读 | 养羊小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">养羊小站</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个小小博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook" rel="section"><i class="fas fa-book fa-fw"></i>留言板</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E8%AE%BA%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">阅读论文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%BC%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">综述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VIT"><span class="nav-number">3.</span> <span class="nav-text">VIT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">基础模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%B6%B3"><span class="nav-number">3.2.</span> <span class="nav-text">不足</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swin"><span class="nav-number">4.</span> <span class="nav-text">Swin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B-1"><span class="nav-number">4.1.</span> <span class="nav-text">基础模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stage"><span class="nav-number">4.1.1.</span> <span class="nav-text">Stage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#W-MSA"><span class="nav-number">4.1.2.</span> <span class="nav-text">W-MSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shifted-Window-%E5%88%92%E5%88%86"><span class="nav-number">4.1.3.</span> <span class="nav-text">Shifted Window 划分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%B6%B3-1"><span class="nav-number">4.2.</span> <span class="nav-text">不足</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PVT"><span class="nav-number">5.</span> <span class="nav-text">PVT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B-2"><span class="nav-number">5.1.</span> <span class="nav-text">基础模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stage-1"><span class="nav-number">5.1.1.</span> <span class="nav-text">Stage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SRA"><span class="nav-number">5.1.2.</span> <span class="nav-text">SRA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%B6%B3-2"><span class="nav-number">5.2.</span> <span class="nav-text">不足</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TNT"><span class="nav-number">6.</span> <span class="nav-text">TNT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B-3"><span class="nav-number">6.1.</span> <span class="nav-text">基础模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#position-encoding"><span class="nav-number">6.1.1.</span> <span class="nav-text">position encoding</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ConvBERT"><span class="nav-number">7.</span> <span class="nav-text">ConvBERT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B-4"><span class="nav-number">7.1.</span> <span class="nav-text">基础模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tokens-to-Token-ViT"><span class="nav-number">8.</span> <span class="nav-text">Tokens-to-Token ViT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B-5"><span class="nav-number">8.1.</span> <span class="nav-text">基础模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoTrans"><span class="nav-number">9.</span> <span class="nav-text">AutoTrans</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">10.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mihao"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">Mihao</p>
+  <div class="site-description" itemprop="description">努力写出负BUG</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/MihaoYoung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;MihaoYoung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:haominyoung@gmail.com" title="E-Mail → mailto:haominyoung@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1794589604@qq.com" title="QQ-Mail → mailto:1794589604@qq.com" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cn.bing.com/" title="https:&#x2F;&#x2F;cn.bing.com&#x2F;" rel="noopener" target="_blank">Bing</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">BiliBili</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.youtube.com/" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;" rel="noopener" target="_blank">YouTube</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;" rel="noopener" target="_blank">知乎</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mihaoyoung.github.io/ef1f339e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="Mihao">
+      <meta itemprop="description" content="努力写出负BUG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="养羊小站">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Transformer系列论文阅读
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-05-14 15:49:03 / 修改时间：15:56:57" itemprop="dateCreated datePublished" datetime="2021-05-14T15:49:03+08:00">2021-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/ef1f339e/" class="post-meta-item leancloud_visitors" data-flag-title="Transformer系列论文阅读" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/ef1f339e/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/ef1f339e/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">对Transformer几篇相关论文阅读的小笔记和总结</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="阅读论文"><a href="#阅读论文" class="headerlink" title="阅读论文"></a>阅读论文</h1><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2012.12556">A Survey on Visual Transformer</a>[1]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2101.01169">Transformers in Vision: A Survey</a>[2]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2010.11929">An Image Is Worth 16X16 Words: Transformers for Image Recognition at Scale</a>[3]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.14030">Swin Transformer: Hierarchical Vision Transformer using Shifted Windows</a>[4]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.12122">Pyramid Vision Transformer: A Versatile Backbone for Dense Prediction without Convolutions</a>[5]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2103.00112">Transformer in Transformer</a>[6]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2008.02496">ConvBERT: Improving BERT with Span-based Dynamic Convolution</a>[7]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2101.11986">Tokens-to-Token ViT: Training Vision Transformers from Scratch on ImageNet</a>[8]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2009.02070">AutoTrans: Automating Transformer Design via Reinforced Architecture Search</a>[9]</p>
+<h1 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h1><p>[1]，[2]讲述了目前<strong>Visual Transformer</strong>的爆火和Transformer在CV方面的各种应用，</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/20201224105635731.png" alt="Transformer应用" style="zoom: 50%;"></p>
+<p>虽然<strong>Transformer</strong>爆火，但目前CV领域还是由<strong>CNN</strong>主导</p>
+<p>但人们依然很看好Transformer在CV领域的应用于前景，希望将Transformer迁移到CV领域中，</p>
+<p>主要分为两大类</p>
+<ul>
+<li>将self-attention机制与常见的CNN架构结合</li>
+<li>用self-attention机制完全替代CNN，如[3]，[4]，[5]</li>
+</ul>
+<p>[3]提出VIT模型，应用于CV领域的Image Classification，在大规模数据上训练的得到的模型达到不错的效果</p>
+<p>[4]提出Swin Transformer模型，基于VIT模型的改进，应用于Image classification，Object detection，Semantic segmentation</p>
+<p>[5]提出Pyramid Vision Transformer模型，基于VIT模型的改进，应用于Object detection，Semantic segmentation</p>
+<p>[6]提出Transformer in Transformer模型，应用于Image benchmark and downstream tasks</p>
+<p>[7]提出ConvBERT模型，基于BERT的预训练语言模型</p>
+<p>[8]提出Tokens-to-Token ViT模型，基于VIT模型改进</p>
+<p>[9]讨论了Transformer  Model 的自动化设计，对于layer-norm的位置，个数，attention head 的个数，使用哪个激活函数的问题</p>
+<h1 id="VIT"><a href="#VIT" class="headerlink" title="VIT"></a>VIT</h1><p>VIT是早期提出用于CV中<strong>Image classification</strong>的结构，虽然存在着不足，但对最近<strong>Swin Transformer</strong>，<strong>Pyramid Vision Transformer</strong>等模型提出提供了宝贵经验。</p>
+<p>Transformer在NLP中处理的是序列化的数据，而CV中处理的是三维的图像数据（H，W，C）</p>
+<p>所以，VIT提出了<strong>Patch</strong>划分的方法，将三维图像数据<strong>转化为序列化数据</strong></p>
+<h2 id="基础模型"><a href="#基础模型" class="headerlink" title="基础模型"></a>基础模型</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/640.png" alt="Model" style="zoom:50%;"></p>
+<ul>
+<li><p>将图像转化为序列化数据</p>
+<ul>
+<li>将图像划分为一个个Patch，对这一系列Patch进行reshape，从而得到序列化的Patch数据，即Flattened Patch</li>
+</ul>
+<p>对于一张$H \times W \times C$的图片，采用$P \times P$的Patch来划分，得到$N=\frac{H}{P} \times \frac{W}{P}$个patch($P\times P\times C$)，reshape后得到维度$P^2C$的Flattened Patch(向量)，对N个Flattened Patch进行concat之后得到一个$N\times (P^2C)$的二维矩阵，相对于<strong>NLP中输入Transformer的Word Embedding</strong></p>
+<ul>
+<li><strong>Linear Projection</strong>：对维度$P^2C$的Flattened Patch进行维度转化，得到固定长度$D$的特征向量<ul>
+<li>防止模型结构受Patch大小的影响</li>
+</ul>
+</li>
+</ul>
+<p>综上，原本$H \times W \times C$的图片转化为了$N个D$维向量（或一个$N \times D$的二维矩阵）</p>
+</li>
+<li><p>Position embedding</p>
+<ul>
+<li>0-9的紫色框表示各个位置的position embedding，粉色框为经过Linear Projection后的Flattened Patch，二者相加</li>
+</ul>
+</li>
+<li><p>Learnable embedding</p>
+<ul>
+<li>分类标志位[class]，即图中0编号，它经过Encoder后的结果作为整个图像的表示</li>
+<li>假如随意指定1-9作为整个图像的表示，则会导致整体表示偏向这个Embedding信息，即图像表示偏重于反映某个Patch</li>
+</ul>
+</li>
+<li><p>Transformer Encoder</p>
+<ul>
+<li><p>第一层输入，$x$表示一个Patch，$E$表示Linear Projection转化矩阵</p>
+<script type="math/tex; mode=display">
+z_0=[x_{class};x^1_pE;...x_p^NE]+E_{pos}\\
+E\in \Bbb R^{(P^2·C)\times D},E_{pos}\in \Bbb R^{(N+1)\times D}</script></li>
+<li><p>对于第$l$层</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+z^{'}_l=MSA(LN(z_{l-1}))+z_{l-1}\\
+z_l=MLP(LN(z^{'}_l))+z^{'}_l\\
+l = 1...L</script><ul>
+<li>每个块后使用Residual connection，每个块前使用Layernorm</li>
+</ul>
+</li>
+</ul>
+<h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><p>在中等大小的数据集（如 ImageNet）上训练得到的VIT模型准确率低于CNN模型</p>
+<h1 id="Swin"><a href="#Swin" class="headerlink" title="Swin"></a>Swin</h1><p><strong>Swin Transformer</strong>基于VIT进行了改进，可以作为通用backone，应用于Image classification，Object detection，Semantic segmentation</p>
+<ul>
+<li>引入<strong>层次化结构</strong><ul>
+<li>解决CV领域scale变化范围大的问题</li>
+</ul>
+</li>
+<li>将self-attention计算<strong>限制在local window中</strong><ul>
+<li>解决CV使用Transformer计算复杂度为图像size二次方的问题</li>
+</ul>
+</li>
+<li>支持<strong>cross-window connection</strong></li>
+</ul>
+<h2 id="基础模型-1"><a href="#基础模型-1" class="headerlink" title="基础模型"></a>基础模型</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/20210414162359586.png" alt="总体结构"></p>
+<blockquote>
+<p>创新</p>
+<ul>
+<li>引入stage，随着网络深度增加，<strong>合并patch</strong></li>
+<li>使用<strong>基于Shifted Windows</strong>的W-MSA替换标准的MSA</li>
+<li>提出<strong>Shifted Window划分</strong></li>
+</ul>
+</blockquote>
+<h3 id="Stage"><a href="#Stage" class="headerlink" title="Stage"></a>Stage</h3><p><strong>引入4个stage</strong>，每个stage的操作类似于上述的VIT模型</p>
+<blockquote>
+<p>区别</p>
+<p>Swin随着网络深度的加深，patch的数量在不断减少，且每个patch的感知范围在不断扩大，而VIT模型的patch保持不变</p>
+</blockquote>
+<ul>
+<li><strong>Patch Partition</strong>：如VIT模型将图像转化为序列化数据，将原始图像划分为一个个Patch，但<strong>彼此不重叠</strong><ul>
+<li>根据设置的Patch大小（$4 \times 4$），对输入的Image（$H\times W\times 3$）划分为$\frac{H}{4} \times \frac{W}{4}$个Patch</li>
+<li>将原始图像的像素值作为其 <strong>Feature</strong></li>
+<li>每个Patch的维度为$4 \times 4 \times 3 = 48$</li>
+</ul>
+</li>
+<li><p><strong>Stage1</strong></p>
+<ul>
+<li><strong>Linear Embedding</strong>：将 Feature 映射到任意维度，记作$C$</li>
+<li><strong>Transformer Block</strong>：进行Self-Attention运算，不改变token数量</li>
+</ul>
+</li>
+<li><p><strong>Stage2</strong></p>
+<ul>
+<li><strong>Patch Merging</strong>：对$2 \times 2$的相邻Patch进行合并，通过linear layer将Feature映射到$4C$维度    <ul>
+<li>合并过后，Patch数量降为$\frac{1}{4}$，MLP作用后，维度为$2C$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Stage3，Stage4</strong><ul>
+<li>类似于Stage2，最终得到一个层次化的结构</li>
+</ul>
+</li>
+</ul>
+<h3 id="W-MSA"><a href="#W-MSA" class="headerlink" title="W-MSA"></a>W-MSA</h3><p>每个window包含$M \times M$个patch，整个图像包含$h \times w$个patch，总共$\frac{h}{4} \times \frac{w}{4}$个Patch</p>
+<p>复杂度计算</p>
+<script type="math/tex; mode=display">
+\Omega(MSA) = 4hwC^2 + 2(hw)^2C\\
+\Omega(W-MSA)=4hwC^2 + 2M^2hwC</script><p>当$M$固定大小时，$\Omega(W-MSA)$为<strong>线性增长</strong></p>
+<h3 id="Shifted-Window-划分"><a href="#Shifted-Window-划分" class="headerlink" title="Shifted Window 划分"></a>Shifted Window 划分</h3><p>在连续的Swin Transformer Block之间交替进行两种划分配置，进而保持 <strong>non-overlapped windows</strong> 的高效计算同时引入 <strong>cross-window connection</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/20210414113658286-1620198501546.png" alt="Shifted Windows划分"></p>
+<ul>
+<li><strong>Layer1</strong>：将$8\times 8$的Feature Map 划分为$2 \times 2$个window，每个window大小为$4 \times4,即M=4$</li>
+<li><strong>Layer2</strong>：将Layer1的一系列window移动$(\lfloor\frac{M}{2} \rfloor,\lfloor\frac{M}{2} \rfloor)$个像素</li>
+</ul>
+<p><strong>存在问题</strong></p>
+<ul>
+<li>可能会生成<strong>过多</strong>window，范围$[\lceil\frac{h}{M} \rceil\times\lceil\frac{w}{M} \rceil,(\lceil\frac{h}{M} \rceil+1)\times(\lceil\frac{w}{M} \rceil+1)]$</li>
+<li>生成window大小不一致，部分window较小</li>
+</ul>
+<p><strong>解决方案</strong></p>
+<p><strong>Cyclic Shift</strong></p>
+<p>经过循环填补，<strong>Layer2</strong>的window划分类似于<strong>Layer1</strong>，此时的batch window由不相邻的sub-window构成，采用<strong>masking mechanism</strong>来限制seft attention在sub-window中的计算</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/20210415101857516.png" alt="Cyclic Shift"></p>
+<h2 id="不足-1"><a href="#不足-1" class="headerlink" title="不足"></a>不足</h2><p>图像分类上比ViT、DeiT等Transformer类型的网络效果更好，但是比不过CNN类型的EfficientNet，猜测Swin Transformer还是更加适用于更加复杂、尺度变化更多的任务。</p>
+<p>Swin Transformer没有提供类似反卷积的上采样的算法</p>
+<p>每一个window的Q，K，V都是独立的，即没有CNN的权值共享特性</p>
+<h1 id="PVT"><a href="#PVT" class="headerlink" title="PVT"></a>PVT</h1><p><strong>Pyramid Vision Transformer</strong>同样基于VIT模型进行改进，是一种使用Transformer模型的无卷积骨干网络，主要用于除图像分类外的密集预测任务。</p>
+<ul>
+<li>引入金字塔结构        <ul>
+<li>Feature Map的<strong>分辨率</strong>随着网络加深，<strong>逐渐减小</strong></li>
+<li>Feature Map 的<strong>Channel数</strong>随着网络加深，<strong>逐渐增大</strong></li>
+<li>解决了VIT模型中，输入高分辨率图像产生高内存占用甚至显存溢出的问题</li>
+</ul>
+</li>
+<li>PVT继承了CNN和Transformer的优势，通过简单的替换CNN骨干使其成为不同视觉任务的统一骨干结构</li>
+<li>在object detection，semantic and instance segmentation 任务上取得优越性</li>
+</ul>
+<h2 id="基础模型-2"><a href="#基础模型-2" class="headerlink" title="基础模型"></a>基础模型</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/24367789-e30f1e268cbb734e-1620200105904.png" alt="PVT"></p>
+<blockquote>
+<p> 创新</p>
+<ul>
+<li>引入stage，随着网络深度增加，Feature Map的<strong>分辨率</strong>，<strong>逐渐减小</strong>，<strong>Channel数</strong>，<strong>逐渐增大</strong></li>
+<li>使用<strong>spatial-reduction attention(SRA)</strong>替换标准的MSA</li>
+</ul>
+</blockquote>
+<h3 id="Stage-1"><a href="#Stage-1" class="headerlink" title="Stage"></a>Stage</h3><ul>
+<li><strong>Stage1</strong><ul>
+<li><strong>patch embedding</strong>：对输入的$H\times W\times 3$ 图像(Feature Map)进行token化，设定其patch的大小$p\times p$，将RGB图像划分为$\frac{HW}{P^2}$个patch<ul>
+<li>对这一系列的patch进行展开，然后传入<strong>linear projection</strong>中进行Patch Embedding</li>
+<li>将结果<strong>reshape</strong>后得到大小$\frac{HW}{P^2}\times C$的embedded patch</li>
+</ul>
+</li>
+<li>将embedded patch 和其对应的<strong>position embedding</strong> 一起传入Transformer Encoder中<ul>
+<li>SRA处理：使用函数$Reshape(x,R_i)$将传入的embedding patch进行变形，由$\Bbb R^{(HW)\times C}$转换为$\Bbb R^{\frac{HW}{R_i^2}\times(R_i^2C)}$，然后乘以一个$W^s\in \Bbb R^{(R_i^2C)\times C}$矩阵，进而将原本的空间规模降为$\frac{1}{R_i^2}$，即$\Bbb R^{\frac{HW}{R_i^2}\times C}$，这是<strong>SRA的核心</strong></li>
+</ul>
+</li>
+<li>将Transformer Encoder的结果进行reshape得到$\frac{H}{P}\times\frac{W}{P}\times C$ Feature Map，即$F_1$</li>
+</ul>
+</li>
+<li><strong>Stage2，Stage3，Stage4</strong><ul>
+<li>由上一个Stage的输出作为输入，重复流程</li>
+</ul>
+</li>
+</ul>
+<h3 id="SRA"><a href="#SRA" class="headerlink" title="SRA"></a>SRA</h3><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/ce93432eb169c8f9d135e49ea1d7dcea.webp" alt="SRA"></p>
+<p>SRA的核心是减少K与V的空间规模，也就是<K,V>对的数量，对比于MHA，K与V的空间规模降为其$\frac{1}{R_i^2}$</K,V></p>
+<p><strong>处理过程</strong></p>
+<script type="math/tex; mode=display">
+SRA(Q,K,V)=Concat(head_0,...,head_{N_{i}})W^o\\
+head_j=Attention(QW_j^Q,SR(K)W_j^V,SR(V)W_j^V)</script><p>SR(·)为spatial-reduction operation，$W^s$是一个linear projection，它把input sequence的维度降到$C_i$。</p>
+<script type="math/tex; mode=display">
+SR(x)=Norm(Reshape(x,R_i)W^s)</script><h2 id="不足-2"><a href="#不足-2" class="headerlink" title="不足"></a>不足</h2><ul>
+<li>随着输入图片的增大，PVT的资源消耗增长率比ResNet高</li>
+</ul>
+<h1 id="TNT"><a href="#TNT" class="headerlink" title="TNT"></a>TNT</h1><p><strong>Transformer in Transformer</strong>，用于视觉识别</p>
+<ul>
+<li>对patch-level和pixel-level representation都进行建模<ul>
+<li>解决VIT相关模型忽略了每个patch内部固有结构信息的问题</li>
+</ul>
+</li>
+<li>堆叠TNT Block来构建TNT模型</li>
+</ul>
+<h2 id="基础模型-3"><a href="#基础模型-3" class="headerlink" title="基础模型"></a>基础模型</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210505163417844.png" alt="TNT"></p>
+<blockquote>
+<p>创新</p>
+<ul>
+<li><strong>Inner Transformer Block</strong>用于提取pixel embedding的局部结构信息</li>
+<li><strong>Outer Transformer Block</strong>用于提取patch embedding的全局信息</li>
+<li>通过Linear Projection将pixel embedding投影到patch embedding space</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>将输入图像划分为一个个Patch，</p>
+</li>
+<li><p><strong>Unfold &amp; Linear</strong>：将输入的Patch，转换为对应的Patch Embedding，Pixel Embedding</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210514155640723.png" alt="TNT"></p>
+<ul>
+<li><p>Patch</p>
+<script type="math/tex; mode=display">
+\gamma_0=[Y_0^1,...Y_0^n]\in\Bbb R^{n \times p^{'}\times p^{'} \times c}\\
+Y_0^i\in \Bbb R^{p^{'}\times p^{'} \times c}</script></li>
+<li><p>Pixel</p>
+<script type="math/tex; mode=display">
+Y_0^i=[y_0^{i,1},...,y_0^{i,m}]\\
+m=p^{'2}</script></li>
+</ul>
+</li>
+<li><p>TNT Block</p>
+<ul>
+<li><p>inner transformer block</p>
+<script type="math/tex; mode=display">
+Y_l^{'i}=Y_{l-1}^{i}+MSA(LN(Y_{l-1}^{i}))\\
+Y_l^{i}=Y_{l}^{'i}+MLP(LN(Y_{l}^{'i}))\\</script></li>
+<li><p>outer transformer block 输入，$Vec()$将Pixel展开成向量，b为bias</p>
+<script type="math/tex; mode=display">
+Z_{l-1}^i=Z_{l-1}^i+Vec(Y_{l-1}^{i})W_{l-1}+b_{l-1}</script></li>
+<li><p>outer transformer block</p>
+<script type="math/tex; mode=display">
+Z_l^{'i}=Z_{l-1}^{i}+MSA(LN(Z_{l-1}^{i}))\\
+Z_l^{i}=Z_{l}^{'i}+MLP(LN(Z_{l}^{'i}))\\</script></li>
+<li><p>TNT block</p>
+<script type="math/tex; mode=display">
+\gamma_l,Z_l=TNT(\gamma_{l-1},Z_{l-1})</script></li>
+</ul>
+</li>
+</ul>
+<h3 id="position-encoding"><a href="#position-encoding" class="headerlink" title="position encoding"></a>position encoding</h3><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210505173817956.png" alt="position encoding"></p>
+<ul>
+<li>Pixel position encoding 在每一个Patch是共享的</li>
+</ul>
+<h1 id="ConvBERT"><a href="#ConvBERT" class="headerlink" title="ConvBERT"></a>ConvBERT</h1><p><strong>ConvBERT</strong>是一种基于span的动态卷积模型</p>
+<ul>
+<li>提出span-based dynamic convolution来代替一些冗余的self-attention head<ul>
+<li>减少了预训练的计算花销，提高了local dependencies的建模能力</li>
+</ul>
+</li>
+<li>提出mixed attention block<ul>
+<li>结合span-based dynamic convolution和剩余的self-attention head</li>
+<li>更高效地学习 global and local context</li>
+</ul>
+</li>
+<li>基于BERT结合mixed attention block，建立ConvBERT模型<ul>
+<li>在各种downstream tasks中表现比BERT及其变体模型优越</li>
+<li>且更少的训练花销和更少的模型参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础模型-4"><a href="#基础模型-4" class="headerlink" title="基础模型"></a>基础模型</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/v2-d7b781576e71a2f20a2d80dd26523356_720w.jpg" alt="Span-based dynamic convolution" style="zoom: 50%;"></p>
+<ul>
+<li><p><strong>self-attention</strong>：使用所有token来捕获全局依赖关系，但由观察得知，BERT模型学习的更多是局部依赖关系</p>
+<ul>
+<li><p>随着序列增长，复杂度呈现二次增长</p>
+</li>
+<li><p>故传统BERT模型存在大量冗余</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/22097296-9320a32f5e2fefa8.png" alt="attention map" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>dynamic convolution</strong>：使用一个Kernel Generator来为每一个word embedding生成自己的Kernel</p>
+<ul>
+<li>但对于上下文相同的word生成的Kernel是相同的，无法解决一词多义的问题</li>
+</ul>
+</li>
+<li><p><strong>span-based dynamic convolution</strong>：通过输入的word embedding和其周围的word embedding结合来生成Kernel</p>
+<ul>
+<li>解决一词多义的问题</li>
+</ul>
+</li>
+</ul>
+<p><strong>Span-based dynamic convolution</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/22097296-bc431f7a42f85809.png" alt="Span-based dynamic convolution" style="zoom: 80%;"></p>
+<p>生成dynamic Kernel</p>
+<script type="math/tex; mode=display">
+f(Q,K_s)=softmax(W_f(Q\circ K_s))</script><p>span-based dynamic convolution公式</p>
+<script type="math/tex; mode=display">
+SDConv(Q,K_s,V;W_f,i)=LConv(V,softmax(W_f(Q \circ K_s)),i)</script><p><strong>ConvBERT架构</strong></p>
+<ul>
+<li>Mixed Attention<ul>
+<li>结合Self-Attention和Span-based dynamic convolution</li>
+<li>Self-Attention捕获全局信息，Span-based dynamic convolution捕获局部信息</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/22097296-5c3e0e565733fbd1.png" alt="ConvBERT" style="zoom:80%;"></p>
+<script type="math/tex; mode=display">
+MixedAttention(K,Q,K_s,V;W_f)=Cat(SelfAttention(Q,K,V),SDConv(Q,K_s,V;W_f))</script><ul>
+<li><p>Bottleneck design for Self-Attention</p>
+<ul>
+<li>使用bottleneck structure来减少attention head</li>
+<li>将输入的embedding映射到更低维度</li>
+</ul>
+</li>
+<li><p>Grouped Feed-Forward module</p>
+<ul>
+<li>对Feed-Forward的改进，减少参数数量<script type="math/tex; mode=display">
+M=\prod_{i=0}^{g}[f_{\frac{d}{g} \rightarrow \frac{m}{g}}^i(H_{[:,i-1:i\times \frac{d}{g}]})\\
+M^{'} = GeLU(M)\\
+H^{'}=\prod_{i=0}^{g}[f_{\frac{d}{g} \rightarrow \frac{m}{g}}^i(M_{[:,i-1:i\times \frac{d}{g}]}^{'})]</script></li>
+</ul>
+</li>
+</ul>
+<h1 id="Tokens-to-Token-ViT"><a href="#Tokens-to-Token-ViT" class="headerlink" title="Tokens-to-Token ViT"></a>Tokens-to-Token ViT</h1><p><strong>Tokens-to-Token Vit</strong>是基于Vit模型进行改进的</p>
+<ul>
+<li>提出Tokens-to-token<ul>
+<li>解决Vit无法对图像相邻像素的局部结构信息（边缘，线条，纹理）进行建模</li>
+<li>对token进行局部建模，保留token局部结构信息并且减少token长度</li>
+</ul>
+</li>
+<li>结合了deep-narrow结构的高效backone<ul>
+<li>解决Vit冗余attention对feature richness的限制</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础模型-5"><a href="#基础模型-5" class="headerlink" title="基础模型"></a>基础模型</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210506105719357.png" alt="T2T"></p>
+<blockquote>
+<p>创新</p>
+<ul>
+<li><strong>Tokens to token Module</strong>：对图像的local structure 信息进行建模，并且减少了token的长度<ul>
+<li><strong>re-structurization</strong></li>
+<li><strong>soft split</strong></li>
+</ul>
+</li>
+<li><strong>T2T-ViT backone</strong>：应用了<strong>deep-narrow</strong>结构，减少了attention冗余，提高feature richness</li>
+</ul>
+</blockquote>
+<p><strong>Tokens to token Module</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210506110931523.png" alt="T2T process"></p>
+<ul>
+<li><p>Re-structurization</p>
+<ul>
+<li><p>对输入进行传统Transformer处理</p>
+<script type="math/tex; mode=display">
+T^{'}=MLP(MSA(T))</script></li>
+<li><p>Reshape：将$T^{‘}\in \Bbb R^{l\times c}$转为$I \in \Bbb R^{h \times w\times c}$</p>
+<script type="math/tex; mode=display">
+I=Reshape(T^{'})</script></li>
+</ul>
+</li>
+<li><p>Soft Split</p>
+<ul>
+<li><p>建立local structure信息，减少token长度$l$</p>
+</li>
+<li><p>避免re-structurization过程中信息丢失，在split中采取overlap机制，将每一个patch与其周围的patch联系起来，从而捕获周围pixel和patch的信息</p>
+<script type="math/tex; mode=display">
+l_0=\lfloor\frac{h+2p-k}{k-s}+1 \rfloor \times \lfloor\frac{w+2p-k}{k-s}+1 \rfloor</script><script type="math/tex; mode=display">
+T_{i+1}=SS(T_i)</script></li>
+</ul>
+</li>
+</ul>
+<p><strong>T2T-ViT backone</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20210506115247688.png" alt="backone"></p>
+<h1 id="AutoTrans"><a href="#AutoTrans" class="headerlink" title="AutoTrans"></a>AutoTrans</h1><ul>
+<li><strong>comprehensive search space</strong><ul>
+<li>对layer-norm的位置设置</li>
+</ul>
+</li>
+<li><strong>PL strategy and parameter sharing strategy </strong><ul>
+<li>对attention head数量的设置</li>
+</ul>
+</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p>感谢下列文章提供的帮助，推荐大伙们阅读</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/266311690">用Transformer完全替代CNN</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360513527">Swin Transformer对CNN的降维打击</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/353222035">大白话Pyramid Vision Transformer</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/355848545">Transformer in Transformer论文解读</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3f424a7f12de">ConvBERT：使用基于区间的动态卷积来提升BERT</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Mihao
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://mihaoyoung.github.io/ef1f339e/" title="Transformer系列论文阅读">https://mihaoyoung.github.io/ef1f339e/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Transformer/" rel="tag"><i class="fas fa-tags"></i> Transformer</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fas fa-tags"></i> 论文阅读</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/fd80b557/" rel="prev" title="swin-transformer图像分类测试">
+                  <i class="fa fa-chevron-left"></i> swin-transformer图像分类测试
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mihao</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">66k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+  </span>
+</div><script color="242,129,214" opacity="0.8" zIndex="-1" count="120" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+<span>本站已运行<span id="showDays"></span></span>
+<script>
+  var seconds = 1000;
+  var minutes = seconds * 60;
+  var hours = minutes * 60;
+  var days = hours * 24;
+  var years = days * 365;
+  var birthDay = Date.UTC(2021,02,20,08,00,00); // 这里设置建站时间
+  setInterval(function() {
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    var now = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = now - birthDay;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById('showDays').innerHTML=""+diffYears+"年"+diffDays+"天"+diffHours+"小时"+diffMinutes+"分钟"+diffSeconds+"秒";
+  }, 1000);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    // window.MathJax = {
+    //  tex: {
+    //    inlineMath: {'[+]': [['$', '$']]},
+    //    tags: 'ams'
+    //  },
+    //  options: {
+    //    renderActions: {
+    //      findScript: [10, doc => {
+    //        document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+    //          const display = !!node.type.match(/; *mode=display/);
+    //          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+    //          const text = document.createTextNode('');
+    //          node.parentNode.replaceChild(text, node);
+    //          math.start = {node: text, delim: '', n: 0};
+    //          math.end = {node: text, delim: '', n: 0};
+    //         doc.math.push(math);
+    //        });
+    //      }, '', false],
+    //      insertedScript: [200, () => {
+    //        document.querySelectorAll('mjx-container').forEach(node => {
+    //          const target = node.parentNode;
+    //          if (target.nodeName.toLowerCase() === 'li') {
+    //            target.parentNode.classList.add('has-jax');
+    //          }
+    //        });
+    //     }, '', false]
+    //   }
+    //  }
+    // };
+	window.MathJax = {
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/ef1f339e/",
+    }, {"enable":true,"appId":"M7be75T70gn9gGNMraKahAvs-MdYXbMMI","appKey":"eg4W7uPbXRv7MmaSV1CpwACg","placeholder":"请在这里留言","avatar":"mp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":true,"serverURLs":null,"enableQQ":true,"requiredFields":["nick"]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
