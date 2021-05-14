@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="google0d797e37a75de008.html">
+  <meta name="msvalidate.01" content="F9FEEFCDA94FD78D74D61C9BAD778567" />
+  <meta name="baidu-site-verification" content="code-cF8YWrbY30" />
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mihaoyoung.github.io","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="对Transformer基本模型的学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformer简单学习">
+<meta property="og:url" content="https://mihaoyoung.github.io/5d3de09a/">
+<meta property="og:site_name" content="养羊小站">
+<meta property="og:description" content="对Transformer基本模型的学习笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic2.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/transformer_encoder.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic4.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic7.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic8.png">
+<meta property="og:image" content="https://mihaoyoung.github.io/5d3de09a/pic9.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/a7445eec-3dd8-4e62-948c-e3c3f9b3a987_self-attention_head.svg">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic13.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/ee0b5ada-211f-4d33-ba6b-91a2ace50714_self-attention_multihead.svg">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/640">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic16.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic24.jpg">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/multi_head_attention.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic23.png">
+<meta property="article:published_time" content="2021-05-14T08:10:20.000Z">
+<meta property="article:modified_time" content="2021-05-14T08:12:55.347Z">
+<meta property="article:author" content="Mihao">
+<meta property="article:tag" content="Transformer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/pic2.png">
+
+
+<link rel="canonical" href="https://mihaoyoung.github.io/5d3de09a/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Transformer简单学习 | 养羊小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">养羊小站</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个小小博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook" rel="section"><i class="fas fa-book fa-fw"></i>留言板</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E4%BA%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">简单了解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">基本结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E7%94%A8encoder-decoder%E6%9E%B6%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">采用encoder-decoder架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Encoder"><span class="nav-number">2.2.</span> <span class="nav-text">Encoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Self-Attention"><span class="nav-number">2.3.</span> <span class="nav-text">Self-Attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Headed-Attention"><span class="nav-number">2.4.</span> <span class="nav-text">Multi-Headed Attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-amp-Norm"><span class="nav-number">2.5.</span> <span class="nav-text">Add &amp; Norm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Position-wise-Feed-Forward-Network"><span class="nav-number">2.6.</span> <span class="nav-text">Position-wise Feed-Forward Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Positional-Encoding"><span class="nav-number">2.7.</span> <span class="nav-text">Positional Encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decoder"><span class="nav-number">2.8.</span> <span class="nav-text">Decoder</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%98%85%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text">参考阅读</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mihao"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">Mihao</p>
+  <div class="site-description" itemprop="description">努力写出负BUG</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/MihaoYoung" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;MihaoYoung" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:haominyoung@gmail.com" title="E-Mail → mailto:haominyoung@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1794589604@qq.com" title="QQ-Mail → mailto:1794589604@qq.com" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll animated">
+    <div class="links-of-blogroll-title"><i class="fas fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://cn.bing.com/" title="https:&#x2F;&#x2F;cn.bing.com&#x2F;" rel="noopener" target="_blank">Bing</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.bilibili.com/" title="https:&#x2F;&#x2F;www.bilibili.com&#x2F;" rel="noopener" target="_blank">BiliBili</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.youtube.com/" title="https:&#x2F;&#x2F;www.youtube.com&#x2F;" rel="noopener" target="_blank">YouTube</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.zhihu.com/" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;" rel="noopener" target="_blank">知乎</a>
+        </li>
+    </ul>
+  </div>
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mihaoyoung.github.io/5d3de09a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="Mihao">
+      <meta itemprop="description" content="努力写出负BUG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="养羊小站">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Transformer简单学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-05-14 16:10:20 / 修改时间：16:12:55" itemprop="dateCreated datePublished" datetime="2021-05-14T16:10:20+08:00">2021-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/5d3de09a/" class="post-meta-item leancloud_visitors" data-flag-title="Transformer简单学习" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/5d3de09a/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/5d3de09a/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">对Transformer基本模型的学习笔记</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="简单了解"><a href="#简单了解" class="headerlink" title="简单了解"></a>简单了解</h1><p>Transformer是一个基于Attention机制的encoder-decoder模型，丢弃了循环与卷积结构，而<strong>采用Self-Attention机制</strong>。</p>
+<p>与RNN模型不同，Transformer模型把序列中的所有word进行<strong>并行</strong>处理，同时使用<strong>Self-Attention</strong>机制对句子中所有word之间的关系直接进行建模，没有考虑各自的位置。</p>
+<h1 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h1><h2 id="采用encoder-decoder架构"><a href="#采用encoder-decoder架构" class="headerlink" title="采用encoder-decoder架构"></a>采用encoder-decoder架构</h2><p>Transformer将多个encoder-decoder堆叠在了一起</p>
+<p>简化版</p>
+<p>encoder</p>
+<blockquote>
+<p>包含self-attention和Feed Forward Neural Network</p>
+<p>self-attention让当前节点不仅仅关注当前的word，还能获得上下文的语义</p>
+</blockquote>
+<p>decoder</p>
+<blockquote>
+<p>包含Self-Attention，Encoder-Decoder Attention和Feed Froward Neural Network</p>
+<p>Encoder-Decoder Attention 让当前节点获取当前需要重点关注的内容</p>
+</blockquote>
+<p>Transformer首先对输入的数据进行embedding，然后将得到的数据输入到encoder，self-attention对数据进行处理过后传入Feed Froward，Feed Froward进行并行计算，将得到的输出传入到下一个encoder</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic2.png" alt="简化版" style="zoom:50%;"></p>
+<h2 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/transformer_encoder.png" alt="Encoder" style="zoom:50%;"></p>
+<p>组成</p>
+<blockquote>
+<ul>
+<li>Multi-Head Attention</li>
+<li>Residual connection</li>
+<li>Normalisation</li>
+<li>Position-wise Feed-Forward Networks</li>
+</ul>
+</blockquote>
+<h2 id="Self-Attention"><a href="#Self-Attention" class="headerlink" title="Self-Attention"></a>Self-Attention</h2><p>Self-Attention利用了Attention机制，计算每个word与其他所有word(包括自身)之间的关联，然后根据<strong>对齐模型</strong>分布得到加权表示作为该word的新表示，同时考虑了上下文信息。</p>
+<p>Self-Attention 可以捕获句子中长距离的相互依赖特征，从而缩短远距离依赖</p>
+<p>采用了残差网络的short-cut机制（还未理解）</p>
+<p><strong>处理过程</strong></p>
+<p>首先，Self-Attention用embedding向量与随机初始化的矩阵相乘，生成三个向量Query，Key，Value。</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic4.png" alt="Self-Attention处理过程1" style="zoom:67%;"></p>
+<p>计算Self-Attention的score，该score决定了对每个位置encoder一个word时，对输入句子其余word的关注程度。由Query与Key进行点乘计算得到。</p>
+<p>然后进行score归一化，将点乘结果乘以一个缩放因子$\frac{1}{\sqrt{d_k}}$（该缩放因子可以防止结果过大，使得结果经过softmax计算后落入饱和区间）</p>
+<p>再进行<strong>softmax</strong>计算，得到每个word对当前位置的word的相关性大小。</p>
+<p>对Value与softmax的值进行加权，得到Self-Attention在当前节点的值</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic7.png" alt="Self-Attention处理过程2" style="zoom: 67%;"></p>
+<p>也可以采用矩阵方式，直接计算出Query，Key，Value矩阵，来提高计算速度</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic8.png" alt="矩阵计算方式" style="zoom: 50%;"></p>
+<p><img src="/5d3de09a/pic9.png" alt="矩阵计算方式" style="zoom:50%;"></p>
+<p>该Attention又被称为<strong>Scaled Dot-Product Attention</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/a7445eec-3dd8-4e62-948c-e3c3f9b3a987_self-attention_head.svg" alt="Scaled Dot-Product Attention" style="zoom: 50%;"></p>
+<h2 id="Multi-Headed-Attention"><a href="#Multi-Headed-Attention" class="headerlink" title="Multi-Headed Attention"></a>Multi-Headed Attention</h2><p>初始化多组Q，K，V矩阵，然后对于生成的多个特征矩阵Z进行压缩(列排列)得到一个大矩阵，然后用一个随机初始化矩阵与该矩阵相乘，得到最终矩阵</p>
+<script type="math/tex; mode=display">
+Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V</script><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic13.png" alt="Multi-Headed Attention流程" style="zoom: 50%;"></p>
+<p>最终，生成的Z被传入下一个模块，Position-wise Feed-Forward Network</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/ee0b5ada-211f-4d33-ba6b-91a2ace50714_self-attention_multihead.svg" alt="MSA" style="zoom:50%;"></p>
+<h2 id="Add-amp-Norm"><a href="#Add-amp-Norm" class="headerlink" title="Add &amp; Norm"></a>Add &amp; Norm</h2><p>计算公式</p>
+<script type="math/tex; mode=display">
+LayerNorm(X+MultiHeadAttention(X))\\
+LayerNorm(X+FeedForward(X))</script><p>X表示<strong>Multi-Head Attention</strong> 或者 <strong>Feed Forward</strong> 的输入，<strong>MultiHeadAttention(X)</strong> 和 <strong>FeedForward(X)</strong> 表示输出</p>
+<p><strong>Add</strong>表示Residual connection，通常用于解决多层网络训练的问题，可以让网络只关注当前差异的部分，在 ResNet 中经常用到。</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/640" alt="Add" style="zoom:50%;"></p>
+<p><strong>Norm</strong>表示Layer Normalisation，通常用于 RNN 结构，Layer Normalization 会将每一层神经元的输入都转成均值方差都一样的，这样可以加快收敛。</p>
+<h2 id="Position-wise-Feed-Forward-Network"><a href="#Position-wise-Feed-Forward-Network" class="headerlink" title="Position-wise Feed-Forward Network"></a>Position-wise Feed-Forward Network</h2><p>一个前馈全连接网络，一共两层</p>
+<p>第一层的激活函数是 ReLU，</p>
+<p>第二层是一个线性激活函数， $FFN(Z)=max(0,ZW_1+b_1)W_2+b_2$</p>
+<h2 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional Encoding"></a>Positional Encoding</h2><p>Transformer在encoder和decoder之间引入一个额外向量<strong>Position Encoding</strong>，该向量可以决定当前word的位置，从而使Transformer可以解释输入序列中word的顺序。</p>
+<p>计算方法</p>
+<script type="math/tex; mode=display">
+PE(pos,2i)=sin(\frac{pos}{10000^{\frac{2i}{d_model}}})\\
+PE(pos,2i+1)=cos(\frac{pos}{10000^{\frac{2i}{d_model}}})</script><p>然后将Position Encoding与embedding相加，作为输入传入下一层</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic16.png" alt="Position Encoding" style="zoom: 50%;"></p>
+<h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic24.jpg" alt="Decoder" style="zoom:50%;"></p>
+<p>相比于Encoder，在最下层多了一个<strong>Masked Multi-Head Attention</strong></p>
+<p><strong>Masked</strong></p>
+<p>在解码过程中，结果是一个time_step一个time_step生成的，在当前time_step解码输出只能依赖当前时刻之前的输出，所以使用 Mask 将后面的掩盖</p>
+<p>两种方法</p>
+<blockquote>
+<ul>
+<li>Padding Mask</li>
+<li>Sequence Mask</li>
+</ul>
+</blockquote>
+<p> <img src="https://gitee.com/mihaoyoung/blog_image/raw/master/multi_head_attention.png" alt="Masked"></p>
+<p><strong>输出</strong></p>
+<p>当Decoder层全部执行完毕后，通过在结尾加一个全连接层和softmax层，将输出的向量映射为我们需要的word</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/pic23.png" alt="output" style="zoom:50%;"></p>
+<h1 id="参考阅读"><a href="#参考阅读" class="headerlink" title="参考阅读"></a>参考阅读</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/m0pphf3ZA-ieymkU1iWK5g">Transformer 模型详解</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Mihao
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://mihaoyoung.github.io/5d3de09a/" title="Transformer简单学习">https://mihaoyoung.github.io/5d3de09a/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Transformer/" rel="tag"><i class="fas fa-tags"></i> Transformer</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ef1f339e/" rel="prev" title="Transformer系列论文阅读">
+                  <i class="fa fa-chevron-left"></i> Transformer系列论文阅读
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mihao</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">69k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:02</span>
+  </span>
+</div><script color="242,129,214" opacity="0.8" zIndex="-1" count="120" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+<span>本站已运行<span id="showDays"></span></span>
+<script>
+  var seconds = 1000;
+  var minutes = seconds * 60;
+  var hours = minutes * 60;
+  var days = hours * 24;
+  var years = days * 365;
+  var birthDay = Date.UTC(2021,02,20,08,00,00); // 这里设置建站时间
+  setInterval(function() {
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    var now = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = now - birthDay;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById('showDays').innerHTML=""+diffYears+"年"+diffDays+"天"+diffHours+"小时"+diffMinutes+"分钟"+diffSeconds+"秒";
+  }, 1000);
+</script>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    // window.MathJax = {
+    //  tex: {
+    //    inlineMath: {'[+]': [['$', '$']]},
+    //    tags: 'ams'
+    //  },
+    //  options: {
+    //    renderActions: {
+    //      findScript: [10, doc => {
+    //        document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+    //          const display = !!node.type.match(/; *mode=display/);
+    //          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+    //          const text = document.createTextNode('');
+    //          node.parentNode.replaceChild(text, node);
+    //          math.start = {node: text, delim: '', n: 0};
+    //          math.end = {node: text, delim: '', n: 0};
+    //         doc.math.push(math);
+    //        });
+    //      }, '', false],
+    //      insertedScript: [200, () => {
+    //        document.querySelectorAll('mjx-container').forEach(node => {
+    //          const target = node.parentNode;
+    //          if (target.nodeName.toLowerCase() === 'li') {
+    //            target.parentNode.classList.add('has-jax');
+    //          }
+    //        });
+    //     }, '', false]
+    //   }
+    //  }
+    // };
+	window.MathJax = {
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/5d3de09a/",
+    }, {"enable":true,"appId":"M7be75T70gn9gGNMraKahAvs-MdYXbMMI","appKey":"eg4W7uPbXRv7MmaSV1CpwACg","placeholder":"请在这里留言","avatar":"mp","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"comment_count":true,"recordIP":true,"serverURLs":null,"enableQQ":true,"requiredFields":["nick"]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
