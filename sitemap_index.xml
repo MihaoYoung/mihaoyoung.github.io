@@ -270,20 +270,6 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/MySQL/</loc>
-    <lastmod>2021-10-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://mihaoyoung.github.io/tags/LeetCode/</loc>
-    <lastmod>2021-10-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://mihaoyoung.github.io/tags/Sringboot/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
@@ -292,6 +278,20 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/tags/MyBatis/</loc>
+    <lastmod>2021-10-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/MySQL/</loc>
+    <lastmod>2021-10-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/tags/LeetCode/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -354,14 +354,14 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</loc>
+    <loc>https://mihaoyoung.github.io/tags/%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/tags/%E6%95%B0%E7%BB%84/</loc>
+    <loc>https://mihaoyoung.github.io/tags/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -398,13 +398,6 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2021-10-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://mihaoyoung.github.io/categories/%E5%90%8E%E7%AB%AF/Java/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
@@ -412,7 +405,7 @@
   </url>
   
   <url>
-    <loc>https://mihaoyoung.github.io/categories/MySQL/</loc>
+    <loc>https://mihaoyoung.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -420,6 +413,13 @@
   
   <url>
     <loc>https://mihaoyoung.github.io/categories/Sringboot/</loc>
+    <lastmod>2021-10-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mihaoyoung.github.io/categories/MySQL/</loc>
     <lastmod>2021-10-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

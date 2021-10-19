@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -210,6 +210,11 @@
             
               <div class="mt-3">
   
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Mihao
+    </span>
+  
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
@@ -238,6 +243,14 @@
   
 
   
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
   
 </div>
 
@@ -316,11 +329,11 @@
 <p><img src="/d49360d3/image-20210221205753363.png" srcset="/img/loading.gif" lazyload alt="image-20210221205753363" style="zoom:100%;"></p>
 <p>ens33下的inet会有一串ip，记住</p>
 <p>然后输入</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">vim /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">vim /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></div></td></tr></table></figure>
 <p>修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yes">BROOTPROTO&#x3D;static<br>ONBOOT&#x3D;yes<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs yes">BROOTPROTO&#x3D;static<br>ONBOOT&#x3D;yes<br></code></pre></div></td></tr></table></figure>
 <p>添加</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">IPADDR</span>=刚刚生成的ip<br><span class="hljs-attr">NETMASK</span>=子网掩码<br><span class="hljs-attr">GATEWAY</span>=默认网关<br><span class="hljs-attr">DNS1</span>=DNS<br></code></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ini"><span class="hljs-attr">IPADDR</span>=刚刚生成的ip<br><span class="hljs-attr">NETMASK</span>=子网掩码<br><span class="hljs-attr">GATEWAY</span>=默认网关<br><span class="hljs-attr">DNS1</span>=DNS<br></code></pre></div></td></tr></table></figure>
 <p>打开网络与共享中心</p>
 <p>点击你所连接的网络</p>
 <p><img src="/d49360d3/image-20210221210909932.png" srcset="/img/loading.gif" lazyload alt="image-20210221210909932" style="zoom:50%;"></p>
@@ -328,9 +341,9 @@
 <p><img src="/d49360d3/image-20210221211130883.png" srcset="/img/loading.gif" lazyload alt="image-20210221211130883" style="zoom:80%;"></p>
 <p>将对应信息填入即可，按esc退出编辑，输入<code>:wq</code>保存并退出</p>
 <p>输入以下命令，重启网卡</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">systemctl restart network.service<br></code></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">systemctl restart network.service<br></code></pre></div></td></tr></table></figure>
 <p>检验是否可以连接外网</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">ping www.baidu.com<br></code></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs text">ping www.baidu.com<br></code></pre></div></td></tr></table></figure>
 <p>若有数据，即成功</p>
 <p><img src="/d49360d3/image-20210221212843755.png" srcset="/img/loading.gif" lazyload alt="image-20210221212843755" style="zoom:75%;"></p>
 <h1 id="多节点打造"><a href="#多节点打造" class="headerlink" title="多节点打造"></a>多节点打造</h1><p>关闭Linux——右键刚刚创建的CentOS7——快照——拍摄快照</p>
