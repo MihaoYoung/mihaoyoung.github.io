@@ -13,23 +13,39 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="努力写出负BUG">
+  <meta name="description" content="Core-tuning是一种finetune的方法，主要是提高自监督pretrained model在下游任务的性能。
+关键
+
+正负样本
+对比损失
+权重
+">
   <meta name="author" content="Mihao">
   <meta name="keywords" content="">
-  <meta name="description" content="努力写出负BUG">
+  <meta name="description" content="Core-tuning是一种finetune的方法，主要是提高自监督pretrained model在下游任务的性能。 关键  正负样本 对比损失 权重">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Core-tuning论文阅读">
 <meta property="og:url" content="https://mihaoyoung.github.io/4c2c1b49/">
 <meta property="og:site_name" content="养羊小站">
-<meta property="og:description" content="努力写出负BUG">
+<meta property="og:description" content="Core-tuning是一种finetune的方法，主要是提高自监督pretrained model在下游任务的性能。 关键  正负样本 对比损失 权重">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211021234925367.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211021235714032.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022000428639.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022000536552.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022000624169.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022001442803.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022001656128.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022002150119.png">
+<meta property="og:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022002657690.png">
 <meta property="article:published_time" content="2021-10-20T15:23:45.000Z">
-<meta property="article:modified_time" content="2021-10-20T17:09:27.869Z">
+<meta property="article:modified_time" content="2021-10-21T16:39:01.113Z">
 <meta property="article:author" content="Mihao">
 <meta property="article:tag" content="论文阅读">
 <meta property="article:tag" content="迁移学习">
 <meta property="article:tag" content="自监督">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211021234925367.png">
   
   <title>Core-tuning论文阅读 - 养羊小站</title>
 
@@ -207,7 +223,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      0 字
+      3.7k 字
     </span>
   
 
@@ -216,7 +232,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      11 分钟
     </span>
   
 
@@ -257,12 +273,154 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：26 分钟前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              
+              <p>Core-tuning是一种finetune的方法，主要是提高自监督pretrained model在下游任务的性能。</p>
+<p><strong>关键</strong></p>
+<ul>
+<li>正负样本</li>
+<li>对比损失</li>
+<li>权重</li>
+</ul>
+<a id="more"></a>
+<h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p>论文地址<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2102.06605">Unleashing the Power of Contrastive Self-Supervised Visual Models via Contrast-Regularized Fine-Tuning</a></p>
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p>使用<strong>contrastive loss</strong>，可以使模型在finetune过程中得到更好的优化和学习到更好的类区分表达能力</p>
+<p>于是作者基于cross-entropy方法进行改进，将对比学习的思想融入到finetune方法中</p>
+<h2 id="Cross-entropy的不足"><a href="#Cross-entropy的不足" class="headerlink" title="Cross-entropy的不足"></a>Cross-entropy的不足</h2><blockquote>
+<p>Although cross-entropy tends to separate inter-class features, the resulting models still have limited capability for reducing intra-class feature scattering that exists in CSL models.  </p>
+</blockquote>
+<p>单纯使用cross-entropy，虽然可以分离不同类之间的特征，但在下游任务进行finetune时，不能很好地减少pretrained model已学习到的类之间区分特征的影响。</p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211021234925367.png" srcset="/img/loading.gif" lazyload alt="image-20211021234925367"></p>
+<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><p><strong>构建正负样本</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211021235714032.png" srcset="/img/loading.gif" lazyload alt="image-20211021235714032"></p>
+<p>作者采用features mixup策略来构建正负样本，不同于论文<sup><a href="#fn_ 1" id="reffn_ 1"> 1</a></sup>单纯引入对比损失，更好地提高了finetune的效果</p>
+<blockquote>
+<p>Very recently, one work [19] explored contrastive learning to fine-tune language models. However, it simply add the contrastive loss to the objective of fine-tuning and cannot theoretically explain why it boosts fine-tuning.   </p>
+</blockquote>
+<ul>
+<li>生成hard smaple pairs（正负样本对）来提高计算效能</li>
+<li>同时平滑决策边界，提高了模型的泛化能力</li>
+</ul>
+<p><strong>contrast loss</strong></p>
+<ul>
+<li>在cross-entropy可以学习到不错的类之间区分能力的基础上，增加了额外的正则化。使得模型可以学到每个类的low-entropy feature cluster和high-entropy feature space，即同类聚集程度高，不同类间分离度大</li>
+<li>优化contrastive loss可以比单纯使用cross-entropy收敛到更小的值，增加了额外的优化性能</li>
+</ul>
+<p><strong>总结</strong> </p>
+<ul>
+<li><p>论文中，对比损失和正负样本的构建这两个是相辅相成的</p>
+</li>
+<li><p>正负样本的构建，这是core-tuning实现的重要依赖</p>
+<ul>
+<li><blockquote>
+<p> contrastive learning highly relies on positive/negative sample pairs, but the majority of sample features are easy-to-contrast and may produce negligible contrastive loss gradients. </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>contrast loss也是通过正负样本才能对让模型对类更好地区分，同时平滑决策边界</p>
+</li>
+</ul>
+<h1 id="方法与实现"><a href="#方法与实现" class="headerlink" title="方法与实现"></a>方法与实现</h1><h2 id="对比损失函数"><a href="#对比损失函数" class="headerlink" title="对比损失函数"></a>对比损失函数</h2><p>给定一个样本特征$z_i$作为anchor，$A_i$为anchor $z_i$集合，将与anchor同类的作为positive pairs，集合记为$P_i$，不同类的作为negative pairs，所有特征经过$l_2-normalized$</p>
+<script type="math/tex; mode=display">
+L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\tau)}}{\sum_{z_k\in A_i}e^{z^T_iz_k/\tau}}</script><p><strong>理论证明推导后续补充……</strong></p>
+<h2 id="构建正负样本"><a href="#构建正负样本" class="headerlink" title="构建正负样本"></a>构建正负样本</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022000428639.png" srcset="/img/loading.gif" lazyload alt="image-20211022000428639"></p>
+<p><strong>Mixing hard positive pairs</strong></p>
+<p>通过计算余弦相似度来选择hardest positive data和hardest negative data</p>
+<p>$z^{hp}$在正样本里与anchor相似度最低，$z^{hn}$在负样本里与anchor相似度最高</p>
+<p><strong>Mixing hard negative pairs</strong></p>
+<p>随机选择一个负样本</p>
+<p><strong>总结</strong></p>
+<p>一个batch中的每一个样本（称为anchor）均对应生成一个正样本和一个负样本，故<strong>总样本规模为3xbatch_size</strong></p>
+<ul>
+<li><p>正样本包含两部分：positive data 和 negative data， 通过$\lambda$控制权重</p>
+<ul>
+<li>positive： 选取该batch样本中与anchor同类，但特征相似度最小的样本</li>
+<li>negative：选取该batch样本中与anchor不同类，但特征相似度最高的样本</li>
+<li>该样本是由positive 和 negative 合成得到的，可能是不存在于原batch样本中的</li>
+</ul>
+</li>
+<li><p>负样本为batch中随机抽取与anchor不同类的样本，但开源代码实现中，可能为与anchor同类的样本，但作者说不会对性能造成影响</p>
+<ul>
+<li><div class="hljs code-wrapper"><pre><code class="lang-python"># hard negative pair generation. 
+    order = np.arange(batch_size) 
+    random.shuffle(order)   
+    # We randomly shuffle the sample order to find negative pairs. Even if a few pairs are not negative here, it won&#39;t affect the overall functionality. 
+    features2 = features[order]    
+    y_2 = one_hot_labels[order]
+</code></pre></div>
+</li>
+<li><p>该样本是由positive 和 negative 合成得到的，可能是不存在于原batch样本中的</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="权重设置"><a href="#权重设置" class="headerlink" title="权重设置"></a>权重设置</h2><p><strong>Hard Positive Reweighting</strong></p>
+<p>作者认为，hard positives 在对比学习中包含更多有用的信息，因此提高相应的权重</p>
+<blockquote>
+<p>However, since hard pairs are more informative for contrastive learning, we propose to assign higher importance weights to hard positive pairs.  </p>
+</blockquote>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022000536552.png" srcset="/img/loading.gif" lazyload alt="image-20211022000536552"></p>
+<p><strong>Smooth Classifier Learning</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022000624169.png" srcset="/img/loading.gif" lazyload alt="image-20211022000624169"></p>
+<h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022001442803.png" srcset="/img/loading.gif" lazyload alt="image-20211022001442803"></p>
+<p>由于目前还没有其它应用于自监督pretrained model finetune的loss计算方法，作者将cross-entropy在supervised上的finetune作为baseline，其它在supervised上finetune的方法应用于训练自监督pretrained model作为参考</p>
+<p>实验证明，Core-tuning对自监督pretrianed model的训练效果不错。</p>
+<p>（有时间阅读表格中的finetune方法）</p>
+<h2 id="值得注意的图表"><a href="#值得注意的图表" class="headerlink" title="值得注意的图表"></a>值得注意的图表</h2><p><strong>平滑边界</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022001656128.png" srcset="/img/loading.gif" lazyload alt="image-20211022001656128"></p>
+<p>可以看出平滑边界是一个有效提高性能的方法，<strong>需掌握</strong></p>
+<p><strong>思考</strong></p>
+<ul>
+<li>是否有其他实现平滑边界的方法？</li>
+</ul>
+<p><strong>正负样本</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022002150119.png" srcset="/img/loading.gif" lazyload alt="image-20211022002150119"></p>
+<p>可以看出，正负样本对于contrast loss的性能是有一定影响的，<strong>需掌握</strong></p>
+<p><strong>思考</strong></p>
+<ul>
+<li>正负样本的构建方法是否可替代？</li>
+</ul>
+<p><strong>权重设置</strong></p>
+<p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211022002657690.png" srcset="/img/loading.gif" lazyload alt="image-20211022002657690"></p>
+<p>作者觉得contrast loss更应该关注正样本的信息，于是提高相应权重</p>
+<blockquote>
+<p>That is, contrastive learning highly relies on positive/negative sample pairs, but the majority of sample features are easy-to-contrast (cf. Figure 1 (a)) [20, 60] and may produce negligible contrastive loss gradients.  </p>
+</blockquote>
+<p><strong>思考</strong></p>
+<ul>
+<li>正样本的作用，为什么是关键</li>
+<li>实现权重分配的方法</li>
+<li>权重分配思想，<strong>需牢记</strong></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>个人感觉，core-tuning是来优化自监督网络的pretrained model，本身的训练过程和自监督是没有关系的，实际做的是有监督训练。</p>
+<p>但作者把对比学习的思想融入进来是一个不错的idea，而且构建正负样本也很有意思，值得学习和借鉴。</p>
+<p><strong>思考</strong></p>
+<ul>
+<li><p>正样本为两个不同类样本的合成，因此会是一个新的“类”，原本两个样本处于这两个类的分离边界附近</p>
+<ul>
+<li><p>由此加入正样本训练可以使得，正样本与原两个样本远离（因为是不同类），促使原两个样本类在训练过程中分离更快？</p>
+</li>
+<li><blockquote>
+<p>the majority of sample pairs are easy-to-contrast, which may induce negligible contrastive loss gradients that contribute little to<br>learning discriminative representations.  </p>
+</blockquote>
+</li>
+<li><p>是否可以调整挑选样本指标，如正样本由三个相邻的不同类的样本合成，是否也可能促进三个类分离更快？</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>由于负样本与anchor相似度较小(默认$\lambda &gt;= 0.8$)，与不同类相似度较高，由此处于类的边界地带</p>
+<ul>
+<li>加入正负样本可以使得训练过程中，缓和不同类之间的差异，使得决策边界更平滑。</li>
+</ul>
+</li>
+</ul>
+
             </div>
             <hr>
             <div>
@@ -499,6 +657,48 @@
 
 
 
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
 
 
 
