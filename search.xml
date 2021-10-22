@@ -158,4 +158,110 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
         <tag>自监督</tag>
       </tags>
   </entry>
+  <entry>
+    <title>RepMLP论文阅读</title>
+    <url>/bbac9d9a/</url>
+    <content><![CDATA[<p>RepMLP利用<strong>结构重参数化</strong>对MLP进行改进，优化了传统MLP模型参数规模大，训练速度慢等缺点。</p>
+<p><strong>关键</strong></p>
+<ul>
+<li>结构重参数化<ul>
+<li>卷积和FC的转换，分组FC</li>
+</ul>
+</li>
+<li>图片的三要素<ul>
+<li>local prior，global capacity， positional perception</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p>论文地址<a href="https://arxiv.org/pdf/2105.01883.pdf">RepMLP: Re-parameterizing Convolutions into Fully-connected Layers for Image Recognition</a></p>
+<p>详细讲解可看作者在知乎的论文解读<a href="https://zhuanlan.zhihu.com/p/375422742">热点讨论：MLP，RepMLP，全连接与“内卷”</a></p>
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/image-20211023004702079.png" alt="image-20211023004702079"></p>
+<p>利用<strong>结构重参数化</strong>提高MLP性能，采用training和inference的训练模式。</p>
+<ul>
+<li><p>整体结构</p>
+<ul>
+<li>training: Global Perceptron, Partition Perceptron, Local Perceptron</li>
+<li>inference: 将training的三个结构转换为单纯的FC</li>
+</ul>
+</li>
+<li><p>为什么选择MLP</p>
+<ul>
+<li>FC可以很好地捕获全局信息，但不能捕获局部信息<blockquote>
+<p>Compared to convolutional layers, FC layers are more efficient,<br>better at modeling the long-range dependencies and positional patterns, but worse at capturing the local structures, hence usually less favored for image recognition.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>利用卷积结构</p>
+<ul>
+<li>卷积可以很好地学习到局部信息</li>
+</ul>
+</li>
+<li><p>应用场景</p>
+<ul>
+<li>RepMLP主要是为提高准确率和吞吐量而设计的，而不是为了更少的参数<blockquote>
+<p>   It should not be left unmentioned that RepMLP is designed for the application scenarios where the major concerns are the inference throughput  and accuracy, less concerning the number of parameters.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="CNN的优点与不足"><a href="#CNN的优点与不足" class="headerlink" title="CNN的优点与不足"></a>CNN的优点与不足</h2><p><strong>优点</strong></p>
+<ul>
+<li>卷积可以很好的捕获一张图片的局部信息<ul>
+<li><strong>local prior</strong>: 图片中某一个像素点与其周围像素点的关联程度要比更远距离的像素点的关联程度的大</li>
+<li>通过卷积核可以将一个像素点和其周围像素点的特征联系起来，这也是CNN成功的原因之一<blockquote>
+<p>   The locality of images (i.e., a pixel is more related to its neighbors than the distant pixels) makes Convolutional Neural Network (ConvNet) successful in image recognition, as a conv layer only processes a local neighborhood.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>传统CNN通过堆叠卷积层来捕获全局信息，但效果差，成本高</li>
+</ul>
+<blockquote>
+<p>   Traditional ConvNets model  the long-range dependencies by the large receptive fields formed by deep stacks of conv layers [29]. However, repeating local operations is computationally inefficient and may cause optimization difficulties.</p>
+</blockquote>
+<h2 id="FC的优势及改进方法"><a href="#FC的优势及改进方法" class="headerlink" title="FC的优势及改进方法"></a>FC的优势及改进方法</h2><p><strong>优势</strong></p>
+<ul>
+<li>对比于CNN，FC可以捕获到图片的全局信息和位置信息</li>
+</ul>
+<blockquote>
+<p>   we can enjoy the positional perception (because its parameters are position-related) and global capacity (because every output point is related to every input  point).</p>
+</blockquote>
+<p><strong>结构重参数化</strong></p>
+<ul>
+<li><p>Global Perceptron</p>
+<ul>
+<li>对feature map进行<strong>切分</strong>，可以减少参数量，但是破坏了不同块之间的联系</li>
+<li><blockquote>
+<p>   However, splitting breaks the correlations among different partitions of the same channel. In other words, the model will view the partitions separately, totally unaware that they were positioned side by side</p>
+</blockquote>
+</li>
+<li>通过<strong>平均池化层</strong>来学习不同块之间的联系，然后通过<strong>BN+2 layersMLP</strong>(需思考为什么)，由于<strong>自动广播</strong>机制可以直接相加</li>
+</ul>
+</li>
+<li><p>Partition Perceptron</p>
+<ul>
+<li>参考分组卷积使用分组FC，可以减少参数量</li>
+<li>实现：将一维vector转化为二维feature map，采用1x1的卷积核实现分组卷积，再转换为一维vector，实现分组FC(值得学习的思路)</li>
+</ul>
+</li>
+<li><p>Local Perceptron</p>
+<ul>
+<li>保持分辨率不变，经过多个卷积分支，分组数量与Partition Perceptron相同。(需思考为什么)</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+      </categories>
+      <tags>
+        <tag>结构重参数化</tag>
+      </tags>
+  </entry>
 </search>
