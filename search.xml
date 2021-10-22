@@ -261,6 +261,7 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
         <category>论文阅读</category>
       </categories>
       <tags>
+        <tag>论文阅读</tag>
         <tag>结构重参数化</tag>
       </tags>
   </entry>
