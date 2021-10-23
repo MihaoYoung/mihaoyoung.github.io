@@ -256,6 +256,30 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
 </ul>
 </li>
 </ul>
+<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul>
+<li>利用了图像的三个要素，全局信息，局部信息，位置信息</li>
+<li><p>结构重参数化</p>
+<ul>
+<li>提出一种简单的转换方式</li>
+</ul>
+</li>
+<li><p>采用FC分组</p>
+</li>
+</ul>
+<h1 id="方法与实现"><a href="#方法与实现" class="headerlink" title="方法与实现"></a>方法与实现</h1><h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>RepMLP是MLP的变体，解决的传统MLP开销大的问题，同时也可以替换CNN模型中的MLP层，从而提高模型性能。</p>
+<p><strong>思考</strong></p>
+<ul>
+<li>理解卷积是一种特殊的FC，存在一个FC可以替代卷积核操作（阅读代码，加深理解）</li>
+<li><p>借鉴分组卷积使用分组FC，作者采用升维方式，利用1x1卷积核实现分组</p>
+<ul>
+<li>分组思想是否有别的应用（思考）</li>
+<li>升维思想，维度转换的灵活应用，特殊卷积核的使用</li>
+</ul>
+</li>
+<li><p>图片的三要素包含了图像的丰富信息</p>
+</li>
+<li>参数转换策略</li>
+</ul>
 ]]></content>
       <categories>
         <category>论文阅读</category>
