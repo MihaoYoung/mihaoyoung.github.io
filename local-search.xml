@@ -4,6 +4,64 @@
   
   
   <entry>
+    <title>MNE论文阅读</title>
+    <link href="/8af5cf34/"/>
+    <url>/8af5cf34/</url>
+    
+    <content type="html"><![CDATA[<p>MNE通过融合相邻特征进行特征增强操作，在image search 和 few shot learning task(小样本学习)上取得不错的效果</p><p><strong>关键</strong></p><ul><li>融合样本特征的<strong>相邻样本</strong></li><li>记忆存储模块 episodic memory</li><li>树结构</li></ul><a id="more"></a><h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p>论文地址<a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf"># Memory-Based Neighbourhood Embedding for Visual Recognition</a></p><p>MNE通过融合相邻特征进行特征增强操作，在视觉识别上取得不错的效果</p><p><strong>关键</strong></p><ul><li>融合样本特征的<strong>相邻样本</strong></li><li>记忆存储模块 episodic memory<ul><li>存放<strong>多个batch</strong>的特征，在该模块中寻找样本特征的相邻特征</li></ul></li><li><p>树结构，<strong>自下而上</strong>融合特征</p><ul><li>样本特征位于根节点，采用<strong>k-mean方法</strong>查找相邻特征，放置于叶子结点</li><li><strong>迭代式</strong>自下而上融合相邻特征</li><li>结合<strong>attention机制</strong>，采用<strong>有监督</strong>的方式，提高同类别或相似类别的相邻特征的融合权重 </li></ul></li><li><p><strong>多loss训练</strong></p></li></ul><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/Pasted image 20211104183941.png" alt="Pasted image 20211104183941"></p><p><strong>相同类别或相似类别的图像在映射到语义空间中也是相似或相邻的</strong></p><blockquote><p>   Images from the same or related classes are desired to  be mapped to nearby points on a manifold, which is critical to many applications like few-shot learning [41, 31, 37],   visual search [7, 13, 45], face/person recognition [20, 26,  43, 2] and fine-grained retrieval [19, 18].</p></blockquote><h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul><li>结合<strong>Context-based Feature Learning</strong><ul><li>采用k-mean方式寻找相邻特征，并融合到样本特征中</li></ul></li><li>结合<strong>GNN</strong><ul><li>采用树结构来构造样本特征和相邻特征的关系</li><li>结合attention机制，自下而上融合相邻特征信息到样本特征中</li></ul></li></ul><h1 id="方法与实现"><a href="#方法与实现" class="headerlink" title="方法与实现"></a>方法与实现</h1><h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul><li>作者采用k-mean查找相邻特征<ul><li>通过计算特征间余弦相似度是否可以</li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>论文阅读</tag>
+      
+      <tag>特征增强</tag>
+      
+      <tag>多loss</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>TUP论文阅读</title>
+    <link href="/3847555c/"/>
+    <url>/3847555c/</url>
+    
+    <content type="html"><![CDATA[<p>TUP将target dataset加入到source dataset中，一起进行自监督预训练（如MOCO），之后对pretrained model在target dataset上采用ACKMeans进行finetune</p><p><strong>关键</strong></p><ul><li>dataset合并</li><li>ACKMeans</li></ul><a id="more"></a><h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p>论文地址<a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Li_Improve_Unsupervised_Pretraining_for_Few-Label_Transfer_ICCV_2021_paper.pdf">Improve Unsupervised Pretraining for Few-label Transfer</a></p><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/Pasted image 20211104213800.png" alt="Pasted image 20211104213800"></p><p>将无标注的target dataset（实际上每类至少有一个标注）和无标注的source dataset一起进行自监督预训练，称为<strong>Target-aware Unsupervised Pretraining</strong>，因此pretrained model的features representation对target dataset有很好的聚类作用，TUP借助聚类可以找到<strong>eigen-samples</strong>，即聚类中心的样本，通过该样本对其他无标注样本进行标注，从而利用这些伪标注样本进行finetune，可以得到一个好的特征表达。而好的特征表达还可以为下一轮的训练找到更好的eigen-samples，从而起到一个环的效果。</p><h2 id="聚类信息的优点"><a href="#聚类信息的优点" class="headerlink" title="聚类信息的优点"></a>聚类信息的优点</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/Pasted image 20211104215852.png" alt="Pasted image 20211104215852"></p><p>作者对比了无标注目标数据集在无监督pretrained model和有监督pretrained model的聚类效果，发现有监督的聚类效果更好，从而finetune的结果也更好。</p><p>因此作者认为，如果无标注目标数据集在无监督上也可以取得不错的聚类效果，那么就可以提高finetune的性能。</p><h2 id="自监督的聚类效果不好的原因"><a href="#自监督的聚类效果不好的原因" class="headerlink" title="自监督的聚类效果不好的原因"></a>自监督的聚类效果不好的原因</h2><p>自监督网络采用对比学习的方式，将同类的样本聚集，不同类的样本远离。</p><p>假设特征空间是一个球体，那么对比学习使得特征信息分布在了整个球体上。</p><blockquote><p>   In this sense, we can find that contrastive learning is indeed to cluster the pretraining unlabeled data, but it encourages the learned representation to  uniformly distribute in the whole space.</p></blockquote><p>因此，当目标数据集的分布和源数据集的分布相差很大时，目标数据集就无法在无监督预训练模型上得到一个好的聚类效果。</p><blockquote><p>   Therefore, if the  target dataset has some domain gap with the source dataset,  their feature representations will scatter and hard to cluster.</p></blockquote><h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul><li>dataset合并<ul><li>通过合并目标数据集和源数据集，自监督预训练model可以学到一个更适合目标数据集的特征表示，从而目标数据集在该模型的特征表示中有<strong>更好的聚类效果</strong></li><li>对于两个数据集的<strong>权重占比</strong>，是一个值得考虑的问题</li></ul></li><li>ACKMeans<ul><li>将锚点引入到传统的KMeans算法中，提高了聚类的多样化和全面性</li></ul></li></ul><h1 id="方法与实现"><a href="#方法与实现" class="headerlink" title="方法与实现"></a>方法与实现</h1><h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>TUP是finetune在无监督上的有效尝试，并且也取得不错的效果。</p><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul><li>TUP始终还是利用了少许的标签信息，是否可以再一步优化，进行完全无监督finetune</li><li>预训练成本高，是否有其他将target dataset信息融入到预训练模型的方法<ul><li>source pretrained + target pretrained + finetune 可不可行？</li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>论文阅读</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>论文阅读</tag>
+      
+      <tag>迁移学习</tag>
+      
+      <tag>无监督</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>RepMLP论文阅读</title>
     <link href="/bbac9d9a/"/>
     <url>/bbac9d9a/</url>
