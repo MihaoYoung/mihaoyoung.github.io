@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>MNE论文阅读</title>
+    <url>/8af5cf34/</url>
+    <content><![CDATA[<p>MNE通过融合相邻特征进行特征增强操作，在image search 和 few shot learning task(小样本学习)上取得不错的效果</p>
+<p><strong>关键</strong></p>
+<ul>
+<li>融合样本特征的<strong>相邻样本</strong></li>
+<li>记忆存储模块 episodic memory</li>
+<li>树结构</li>
+</ul>
+<a id="more"></a>
+<h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p>论文地址<a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf">Memory-Based Neighbourhood Embedding for Visual Recognition</a></p>
+<p>MNE通过融合相邻特征进行特征增强操作，在视觉识别上取得不错的效果</p>
+<p><strong>关键</strong></p>
+<ul>
+<li>融合样本特征的<strong>相邻样本</strong></li>
+<li>记忆存储模块 episodic memory<ul>
+<li>存放<strong>多个batch</strong>的特征，在该模块中寻找样本特征的相邻特征</li>
+</ul>
+</li>
+<li><p>树结构，<strong>自下而上</strong>融合特征</p>
+<ul>
+<li>样本特征位于根节点，采用<strong>k-mean方法</strong>查找相邻特征，放置于叶子结点</li>
+<li><strong>迭代式</strong>自下而上融合相邻特征</li>
+<li>结合<strong>attention机制</strong>，采用<strong>有监督</strong>的方式，提高同类别或相似类别的相邻特征的融合权重 </li>
+</ul>
+</li>
+<li><p><strong>多loss训练</strong></p>
+</li>
+</ul>
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/Pasted image 20211104183941.png" alt="Pasted image 20211104183941"></p>
+<p><strong>相同类别或相似类别的图像在映射到语义空间中也是相似或相邻的</strong></p>
+<blockquote>
+<p>   Images from the same or related classes are desired to  be mapped to nearby points on a manifold, which is critical to many applications like few-shot learning [41, 31, 37],   visual search [7, 13, 45], face/person recognition [20, 26,  43, 2] and fine-grained retrieval [19, 18].</p>
+</blockquote>
+<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul>
+<li>结合<strong>Context-based Feature Learning</strong><ul>
+<li>采用k-mean方式寻找相邻特征，并融合到样本特征中</li>
+</ul>
+</li>
+<li>结合<strong>GNN</strong><ul>
+<li>采用树结构来构造样本特征和相邻特征的关系</li>
+<li>结合attention机制，自下而上融合相邻特征信息到样本特征中</li>
+</ul>
+</li>
+</ul>
+<h1 id="方法与实现"><a href="#方法与实现" class="headerlink" title="方法与实现"></a>方法与实现</h1><h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul>
+<li>作者采用k-mean查找相邻特征<ul>
+<li>通过计算特征间余弦相似度是否可以</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+        <tag>特征增强</tag>
+        <tag>多loss</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Core-tuning论文阅读</title>
     <url>/4c2c1b49/</url>
     <content><![CDATA[<p>Core-tuning是一种finetune的方法，主要是提高自监督pretrained model在下游任务的性能。</p>
@@ -290,103 +352,6 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
       </tags>
   </entry>
   <entry>
-    <title>已读论文</title>
-    <url>/39c6cef1/</url>
-    <content><![CDATA[<p>目前已读的论文列表</p>
-<a id="more"></a>
-<ul>
-<li>Unleashing the Power of Contrastive Self-Supervised Visual Models via Contrast-Regularized Fine-Tuning <ul>
-<li><a href="https://arxiv.org/pdf/2102.06605.pdf">PDF</a> <a href="https://mihaoyoung.github.io/4c2c1b49/">论文阅读</a></li>
-<li>迁移学习，自监督，特征增强</li>
-</ul>
-</li>
-<li>RepMLP: Re-parameterizing Convolutions into Fully-connected Layers for Image Recognition<ul>
-<li><a href="https://arxiv.org/pdf/2105.01883.pdf">PDF</a> <a href="https://mihaoyoung.github.io/bbac9d9a/">论文阅读</a></li>
-<li>MLP，结构重参数化</li>
-</ul>
-</li>
-<li>Improve Unsupervised Pretraining for Few-label Transfer <ul>
-<li><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Li_Improve_Unsupervised_Pretraining_for_Few-Label_Transfer_ICCV_2021_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/3847555c/">论文阅读</a></li>
-<li>特征增强，多loss，小样本学习</li>
-</ul>
-</li>
-<li>Memory-Based Neighbourhood Embedding for Visual Recognition <ul>
-<li><a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/8af5cf34/">论文阅读</a></li>
-<li>迁移学习，无监督，小样本学习</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文阅读</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MNE论文阅读</title>
-    <url>/8af5cf34/</url>
-    <content><![CDATA[<p>MNE通过融合相邻特征进行特征增强操作，在image search 和 few shot learning task(小样本学习)上取得不错的效果</p>
-<p><strong>关键</strong></p>
-<ul>
-<li>融合样本特征的<strong>相邻样本</strong></li>
-<li>记忆存储模块 episodic memory</li>
-<li>树结构</li>
-</ul>
-<a id="more"></a>
-<h1 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h1><p>论文地址<a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf">Memory-Based Neighbourhood Embedding for Visual Recognition</a></p>
-<p>MNE通过融合相邻特征进行特征增强操作，在视觉识别上取得不错的效果</p>
-<p><strong>关键</strong></p>
-<ul>
-<li>融合样本特征的<strong>相邻样本</strong></li>
-<li>记忆存储模块 episodic memory<ul>
-<li>存放<strong>多个batch</strong>的特征，在该模块中寻找样本特征的相邻特征</li>
-</ul>
-</li>
-<li><p>树结构，<strong>自下而上</strong>融合特征</p>
-<ul>
-<li>样本特征位于根节点，采用<strong>k-mean方法</strong>查找相邻特征，放置于叶子结点</li>
-<li><strong>迭代式</strong>自下而上融合相邻特征</li>
-<li>结合<strong>attention机制</strong>，采用<strong>有监督</strong>的方式，提高同类别或相似类别的相邻特征的融合权重 </li>
-</ul>
-</li>
-<li><p><strong>多loss训练</strong></p>
-</li>
-</ul>
-<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><p><img src="https://gitee.com/mihaoyoung/blog_image/raw/master/Pasted image 20211104183941.png" alt="Pasted image 20211104183941"></p>
-<p><strong>相同类别或相似类别的图像在映射到语义空间中也是相似或相邻的</strong></p>
-<blockquote>
-<p>   Images from the same or related classes are desired to  be mapped to nearby points on a manifold, which is critical to many applications like few-shot learning [41, 31, 37],   visual search [7, 13, 45], face/person recognition [20, 26,  43, 2] and fine-grained retrieval [19, 18].</p>
-</blockquote>
-<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul>
-<li>结合<strong>Context-based Feature Learning</strong><ul>
-<li>采用k-mean方式寻找相邻特征，并融合到样本特征中</li>
-</ul>
-</li>
-<li>结合<strong>GNN</strong><ul>
-<li>采用树结构来构造样本特征和相邻特征的关系</li>
-<li>结合attention机制，自下而上融合相邻特征信息到样本特征中</li>
-</ul>
-</li>
-</ul>
-<h1 id="方法与实现"><a href="#方法与实现" class="headerlink" title="方法与实现"></a>方法与实现</h1><h1 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h1><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul>
-<li>作者采用k-mean查找相邻特征<ul>
-<li>通过计算特征间余弦相似度是否可以</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文阅读</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
-        <tag>特征增强</tag>
-        <tag>多loss</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TUP论文阅读</title>
     <url>/3847555c/</url>
     <content><![CDATA[<p>TUP将target dataset加入到source dataset中，一起进行自监督预训练（如MOCO），之后对pretrained model在target dataset上采用ACKMeans进行finetune</p>
@@ -438,6 +403,41 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
         <tag>论文阅读</tag>
         <tag>迁移学习</tag>
         <tag>无监督</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>已读论文</title>
+    <url>/39c6cef1/</url>
+    <content><![CDATA[<p>目前已读的论文列表</p>
+<a id="more"></a>
+<ul>
+<li>Unleashing the Power of Contrastive Self-Supervised Visual Models via Contrast-Regularized Fine-Tuning <ul>
+<li><a href="https://arxiv.org/pdf/2102.06605.pdf">PDF</a> <a href="https://mihaoyoung.github.io/4c2c1b49/">论文阅读</a></li>
+<li>迁移学习，自监督，特征增强</li>
+</ul>
+</li>
+<li>RepMLP: Re-parameterizing Convolutions into Fully-connected Layers for Image Recognition<ul>
+<li><a href="https://arxiv.org/pdf/2105.01883.pdf">PDF</a> <a href="https://mihaoyoung.github.io/bbac9d9a/">论文阅读</a></li>
+<li>MLP，结构重参数化</li>
+</ul>
+</li>
+<li>Improve Unsupervised Pretraining for Few-label Transfer <ul>
+<li><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Li_Improve_Unsupervised_Pretraining_for_Few-Label_Transfer_ICCV_2021_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/3847555c/">论文阅读</a></li>
+<li>特征增强，多loss，小样本学习</li>
+</ul>
+</li>
+<li>Memory-Based Neighbourhood Embedding for Visual Recognition <ul>
+<li><a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/8af5cf34/">论文阅读</a></li>
+<li>迁移学习，无监督，小样本学习</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
       </tags>
   </entry>
 </search>
