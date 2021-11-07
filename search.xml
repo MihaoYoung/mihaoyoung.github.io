@@ -352,6 +352,41 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
       </tags>
   </entry>
   <entry>
+    <title>已读论文</title>
+    <url>/39c6cef1/</url>
+    <content><![CDATA[<p>目前已读的论文列表</p>
+<a id="more"></a>
+<ul>
+<li>Unleashing the Power of Contrastive Self-Supervised Visual Models via Contrast-Regularized Fine-Tuning <ul>
+<li><a href="https://arxiv.org/pdf/2102.06605.pdf">PDF</a> <a href="https://mihaoyoung.github.io/4c2c1b49/">论文阅读</a></li>
+<li>迁移学习，自监督，特征增强</li>
+</ul>
+</li>
+<li>RepMLP: Re-parameterizing Convolutions into Fully-connected Layers for Image Recognition<ul>
+<li><a href="https://arxiv.org/pdf/2105.01883.pdf">PDF</a> <a href="https://mihaoyoung.github.io/bbac9d9a/">论文阅读</a></li>
+<li>MLP，结构重参数化</li>
+</ul>
+</li>
+<li>Improve Unsupervised Pretraining for Few-label Transfer <ul>
+<li><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Li_Improve_Unsupervised_Pretraining_for_Few-Label_Transfer_ICCV_2021_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/3847555c/">论文阅读</a></li>
+<li>特征增强，多loss，小样本学习</li>
+</ul>
+</li>
+<li>Memory-Based Neighbourhood Embedding for Visual Recognition <ul>
+<li><a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/8af5cf34/">论文阅读</a></li>
+<li>迁移学习，无监督，小样本学习</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>论文阅读</category>
+      </categories>
+      <tags>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TUP论文阅读</title>
     <url>/3847555c/</url>
     <content><![CDATA[<p>TUP将target dataset加入到source dataset中，一起进行自监督预训练（如MOCO），之后对pretrained model在target dataset上采用ACKMeans进行finetune</p>
@@ -403,41 +438,6 @@ L_{con}=-\frac{1}{n|P_i|}\sum^{n}_{i=1}\sum_{z_j\in P_i}log\frac{e^{(z^T_iz_j/\t
         <tag>论文阅读</tag>
         <tag>迁移学习</tag>
         <tag>无监督</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>已读论文</title>
-    <url>/39c6cef1/</url>
-    <content><![CDATA[<p>目前已读的论文列表</p>
-<a id="more"></a>
-<ul>
-<li>Unleashing the Power of Contrastive Self-Supervised Visual Models via Contrast-Regularized Fine-Tuning <ul>
-<li><a href="https://arxiv.org/pdf/2102.06605.pdf">PDF</a> <a href="https://mihaoyoung.github.io/4c2c1b49/">论文阅读</a></li>
-<li>迁移学习，自监督，特征增强</li>
-</ul>
-</li>
-<li>RepMLP: Re-parameterizing Convolutions into Fully-connected Layers for Image Recognition<ul>
-<li><a href="https://arxiv.org/pdf/2105.01883.pdf">PDF</a> <a href="https://mihaoyoung.github.io/bbac9d9a/">论文阅读</a></li>
-<li>MLP，结构重参数化</li>
-</ul>
-</li>
-<li>Improve Unsupervised Pretraining for Few-label Transfer <ul>
-<li><a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Li_Improve_Unsupervised_Pretraining_for_Few-Label_Transfer_ICCV_2021_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/3847555c/">论文阅读</a></li>
-<li>特征增强，多loss，小样本学习</li>
-</ul>
-</li>
-<li>Memory-Based Neighbourhood Embedding for Visual Recognition <ul>
-<li><a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Li_Memory-Based_Neighbourhood_Embedding_for_Visual_Recognition_ICCV_2019_paper.pdf">PDF</a> <a href="https://mihaoyoung.github.io/8af5cf34/">论文阅读</a></li>
-<li>迁移学习，无监督，小样本学习</li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>论文阅读</category>
-      </categories>
-      <tags>
-        <tag>论文阅读</tag>
       </tags>
   </entry>
 </search>
